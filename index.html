@@ -3,118 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя тестовая страница</title>
+    <title>Разработка ПО для ПЛК и SCADA | ИП tvboxc44-dev</title>
     <style>
-        /* Стили для внешнего вида сайта */
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131c2e;
+            --accent-blue: #00d2ff;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            padding: 0;
+            line-height: 1.6;
         }
 
-        .card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
+        header {
+            background: linear-gradient(180deg, #111827 0%, var(--bg-color) 100%);
+            padding: 60px 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 400px;
-            width: 100%;
+            border-bottom: 1px solid #1e293b;
         }
 
-        .avatar {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .badge {
+            background-color: rgba(0, 210, 255, 0.1);
+            color: var(--accent-blue);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
         }
 
         h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 32px;
+            margin: 0 0 15px 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-blue);
+        }
+
+        .icon {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin: 0 0 10px 0;
             color: #ffffff;
         }
 
-        p {
-            color: #94a3b8;
-            font-size: 16px;
-            line-height: 1.5;
-            margin-bottom: 30px;
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin: 0;
         }
 
-        .btn {
-            display: block;
-            background: #3b82f6;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
+        .cta-section {
+            background: radial-gradient(circle at top, #1e293b 0%, var(--bg-color) 100%);
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn-contact {
+            display: inline-block;
+            background-color: var(--accent-blue);
+            color: #000000;
+            padding: 14px 32px;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-            margin-bottom: 12px;
-        }
-
-        .btn:hover {
-            background: #2563eb;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
-        }
-
-        /* Интерактивная кнопка со скриптом */
-        .btn-alert {
-            background: #10b981;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-            border: none;
-            width: 100%;
+            font-weight: 700;
             font-size: 16px;
-            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+            margin-top: 15px;
+            box-shadow: 0 4px 20px rgba(0, 210, 255, 0.3);
         }
 
-        .btn-alert:hover {
-            background: #059669;
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        .btn-contact:hover {
+            background-color: #00b8e6;
+            transform: scale(1.02);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid #1e293b;
+            margin-top: 60px;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <!-- Круглая цветная аватарка -->
-        <div class="avatar">🚀</div>
+    <header>
+        <div class="badge">Услуги для АСУ ТП</div>
+        <h1>Инженерные решения для автоматизации</h1>
+        <p class="subtitle">Профессиональная разработка и адаптация программного обеспечения для промышленного оборудования и диспетчеризации.</p>
+    </header>
+
+    <div class="container">
         
-        <!-- Заголовки и текст -->
-        <h1>Сайт успешно запущен!</h1>
-        <p>Это моя тестовая страница на GitHub Pages. Код работает, стили загрузились, всё выглядит отлично.</p>
-        
-        <!-- Обычная ссылка-кнопка (замените google.com на нужный сайт) -->
-        <a href="https://google.com" target="_blank" class="btn">Открыть поисковик</a>
-        
-        <!-- Интерактивная кнопка, которая вызовет окно в браузере -->
-        <button class="btn btn-alert" onclick="showAlert()">Нажми на меня</button>
+        <div class="services-grid">
+            <!-- Карточка 1 -->
+            <div class="service-card">
+                <div class="icon">⚙️</div>
+                <h3>Программирование ПЛК</h3>
+                <p>Разработка надежного ПО для промышленных контроллеров (Siemens, ОВЕН, Schneider Electric и др.) под ваши технологические процессы.</p>
+            </div>
+
+            <!-- Карточка 2 -->
+            <div class="service-card">
+                <div class="icon">🖥️</div>
+                <h3>Разработка SCADA</h3>
+                <p>Создание понятных и информативных интерфейсов оператора (HMI/SCADA). Настройка трендов, архивации и системы аварийных сообщений.</p>
+            </div>
+
+            <!-- Карточка 3 -->
+            <div class="service-card">
+                <div class="icon">🔄</div>
+                <h3>Адаптация и модернизация</h3>
+                <p>Доработка и перенос существующего кода под новые задачи, интеграция стороннего оборудования в общую сеть предприятия.</p>
+            </div>
+        </div>
+
+        <!-- Блок обратной связи -->
+        <div class="cta-section">
+            <h2>Нужен надежный софт для производства?</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">Обсудим вашу задачу, техническое задание или проект автоматизации.</p>
+            
+            <!-- Твоя рабочая ссылка из мессенджера Max -->
+            <a href="https://max.ru/u/f9LHodD0cOLeS2-JO2himf5QTSC2o-nzjBdjfhF7tbSGjMuS_N56za1CAN4" target="_blank" class="btn-contact">Написать в мессенджер Max</a>
+        </div>
+
     </div>
 
-    <script>
-        // Простой JavaScript, который сработает при нажатии на зеленую кнопку
-        function showAlert() {
-            alert('Ура! Интерактивная кнопка на JavaScript тоже работает!');
-        }
-    </script>
+    <footer>
+        <p>© 2026 ИП tvboxc44-dev. Все права защищены. Разработка систем АСУ ТП.</p>
+    </footer>
 
 </body>
 </html>
