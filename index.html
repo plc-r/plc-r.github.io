@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя тестовая страница</title>
+    <style>
+        /* Стили для внешнего вида сайта */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: block;
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            margin-bottom: 12px;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Интерактивная кнопка со скриптом */
+        .btn-alert {
+            background: #10b981;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            border: none;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-alert:hover {
+            background: #059669;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <!-- Круглая цветная аватарка -->
+        <div class="avatar">🚀</div>
+        
+        <!-- Заголовки и текст -->
+        <h1>Сайт успешно запущен!</h1>
+        <p>Это моя тестовая страница на GitHub Pages. Код работает, стили загрузились, всё выглядит отлично.</p>
+        
+        <!-- Обычная ссылка-кнопка (замените google.com на нужный сайт) -->
+        <a href="https://google.com" target="_blank" class="btn">Открыть поисковик</a>
+        
+        <!-- Интерактивная кнопка, которая вызовет окно в браузере -->
+        <button class="btn btn-alert" onclick="showAlert()">Нажми на меня</button>
+    </div>
+
+    <script>
+        // Простой JavaScript, который сработает при нажатии на зеленую кнопку
+        function showAlert() {
+            alert('Ура! Интерактивная кнопка на JavaScript тоже работает!');
+        }
+    </script>
+
+</body>
+</html>
