@@ -174,9 +174,9 @@
                 <!-- Карточка 1: Программирование ПЛК + 10-битный демультиплексор INT в BITS -->
                 <div class="service-card">
                     <div class="svg-container">
-                        <svg xmlns="http://w3.org" viewBox="0 0 400 180" width="100%" height="100%">
+                         <svg xmlns="http://w3.org" viewBox="0 0 400 180" width="100%" height="100%">
                           <rect width="400" height="180" fill="#060913" opacity="0.4"/>
-                          <text x="20" y="20" fill="#64748b" font-family="monospace" font-size="11" font-weight="bold">LOGIC_FBD // INT_TO_10BITS</text>
+                          
                           
                           <!-- Входная линия и аналоговое значение INT -->
                           <path d="M 15 90 L 75 90" stroke="var(--accent-blue)" stroke-width="2" fill="none"/>
@@ -186,80 +186,90 @@
                           <text x="18" y="100" fill="var(--accent-blue)" font-family="monospace" font-size="9">IN_WORD</text>
 
                           <!-- Функциональный блок FBD -->
-                          <g transform="translate(75, 25)">
-                            <rect width="135" height="135" rx="4" fill="var(--card-bg)" stroke="#334155" stroke-width="2"/>
-                            <text x="67.5" y="18" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">INT_TO_10BITS</text>
-                            <text x="8" y="68" fill="var(--accent-blue)" font-family="monospace" font-size="10">IN</text>
+                          <g transform="translate(75, 15)">
+                            <rect width="135" height="145" rx="4" fill="var(--card-bg)" stroke="#334155" stroke-width="2"/>
+                            <text x="67.5" y="16" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">INT_TO_10BITS</text>
+                            <text x="8" y="75" fill="var(--accent-blue)" font-family="monospace" font-size="10" font-weight="bold">IN</text>
                             
-                            <!-- Внутренние метки выходов -->
+                            <!-- Внутренние метки выходов, выстроенные ровно под шаг линий -->
                             <g font-family="monospace" font-size="8" fill="#9ca3af" text-anchor="end">
-                              <text x="128" y="36">Q0</text> <text x="128" y="47">Q1</text>
-                              <text x="128" y="58">Q2</text> <text x="128" y="69">Q3</text>
-                              <text x="128" y="80">Q4</text> <text x="128" y="91">Q5</text>
-                              <text x="128" y="102">Q6</text> <text x="128" y="113">Q7</text>
-                              <text x="128" y="124">Q8</text> <text x="128" y="135">Q9</text>
+                              <text x="128" y="32">Q0</text>
+                              <text x="128" y="43">Q1</text>
+                              <text x="128" y="54">Q2</text>
+                              <text x="128" y="65">Q3</text>
+                              <text x="128" y="76">Q4</text>
+                              <text x="128" y="87">Q5</text>
+                              <text x="128" y="98">Q6</text>
+                              <text x="128" y="109">Q7</text>
+                              <text x="128" y="120">Q8</text>
+                              <text x="128" y="131">Q9</text>
                             </g>
                           </g>
 
-                          <!-- 10 Выходных каналов (Линии связи, Светодиоды, Тексты) -->
-                          <!-- Каналы генерируются динамически скриптом, но заложим их ID в разметку -->
-                          <g transform="translate(210, 0)">
-                            <!-- Динамическая сетка битов (шаг по Y = 11px) -->
-                            <!-- Q0 -->
-                            <path d="M 0 61 L 30 61" stroke="#334155" stroke-width="1.5" id="js-fbd-l0"/>
-                            <circle id="js-fbd-led0" cx="36" cy="61" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t0" x="46" y="64" fill="var(--text-muted)" font-family="monospace" font-size="9">B0:0</text>
-                            
-                            <!-- Q1 -->
-                            <path d="M 0 72 L 30 72" stroke="#334155" stroke-width="1.5" id="js-fbd-l1"/>
-                            <circle id="js-fbd-led1" cx="36" cy="72" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t1" x="46" y="75" fill="var(--text-muted)" font-family="monospace" font-size="9">B1:0</text>
-                            
-                            <!-- Q2 -->
-                            <path d="M 0 83 L 30 83" stroke="#334155" stroke-width="1.5" id="js-fbd-l2"/>
-                            <circle id="js-fbd-led2" cx="36" cy="83" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t2" x="46" y="86" fill="var(--text-muted)" font-family="monospace" font-size="9">B2:0</text>
-                            
-                            <!-- Q3 -->
-                            <path d="M 0 94 L 30 94" stroke="#334155" stroke-width="1.5" id="js-fbd-l3"/>
-                            <circle id="js-fbd-led3" cx="36" cy="94" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t3" x="46" y="97" fill="var(--text-muted)" font-family="monospace" font-size="9">B3:0</text>
-                            
-                            <!-- Q4 -->
-                            <path d="M 0 105 L 30 105" stroke="#334155" stroke-width="1.5" id="js-fbd-l4"/>
-                            <circle id="js-fbd-led4" cx="36" cy="105" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t4" x="46" y="108" fill="var(--text-muted)" font-family="monospace" font-size="9">B4:0</text>
-                            
-                            <!-- Q5 -->
-                            <path d="M 0 116 L 30 116" stroke="#334155" stroke-width="1.5" id="js-fbd-l5"/>
-                            <circle id="js-fbd-led5" cx="36" cy="116" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t5" x="46" y="119" fill="var(--text-muted)" font-family="monospace" font-size="9">B5:0</text>
-                            
-                            <!-- Q6 -->
-                            <path d="M 0 127 L 30 127" stroke="#334155" stroke-width="1.5" id="js-fbd-l6"/>
-                            <circle id="js-fbd-led6" cx="36" cy="127" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t6" x="46" y="130" fill="var(--text-muted)" font-family="monospace" font-size="9">B6:0</text>
-                            
-                            <!-- Q7 -->
-                            <path d="M 0 138 L 30 138" stroke="#334155" stroke-width="1.5" id="js-fbd-l7"/>
-                            <circle id="js-fbd-led7" cx="36" cy="138" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t7" x="46" y="141" fill="var(--text-muted)" font-family="monospace" font-size="9">B7:0</text>
-                            
-                            <!-- Q8 -->
-                            <path d="M 0 149 L 30 149" stroke="#334155" stroke-width="1.5" id="js-fbd-l8"/>
-                            <circle id="js-fbd-led8" cx="36" cy="149" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t8" x="46" y="152" fill="var(--text-muted)" font-family="monospace" font-size="9">B8:0</text>
-                            
-                            <!-- Q9 -->
-                            <path d="M 0 160 L 30 160" stroke="#334155" stroke-width="1.5" id="js-fbd-l9"/>
-                            <circle id="js-fbd-led9" cx="36" cy="160" r="3.5" fill="#223147"/>
-                            <text id="js-fbd-t9" x="46" y="163" fill="var(--text-muted)" font-family="monospace" font-size="9">B9:0</text>
-                          </g>
+                          <!-- 10 Выходных каналов встык к блоку (Шаг по Y = 11px) -->
+                          <!-- Q0 -->
+                          <path d="M 210 44 L 240 44" stroke="#334155" stroke-width="1.5" id="js-fbd-l0"/>
+                          <circle id="js-fbd-led0" cx="246" cy="44" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t0" x="256" y="47" fill="var(--text-muted)" font-family="monospace" font-size="9">B0:0</text>
+                          
+                          <!-- Q1 -->
+                          <path d="M 210 55 L 240 55" stroke="#334155" stroke-width="1.5" id="js-fbd-l1"/>
+                          <circle id="js-fbd-led1" cx="246" cy="55" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t1" x="256" y="58" fill="var(--text-muted)" font-family="monospace" font-size="9">B1:0</text>
+                          
+                          <!-- Q2 -->
+                          <path d="M 210 66 L 240 66" stroke="#334155" stroke-width="1.5" id="js-fbd-l2"/>
+                          <circle id="js-fbd-led2" cx="246" cy="66" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t2" x="256" y="69" fill="var(--text-muted)" font-family="monospace" font-size="9">B2:0</text>
+                          
+                          <!-- Q3 -->
+                          <path d="M 210 77 L 240 77" stroke="#334155" stroke-width="1.5" id="js-fbd-l3"/>
+                          <circle id="js-fbd-led3" cx="246" cy="77" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t3" x="256" y="80" fill="var(--text-muted)" font-family="monospace" font-size="9">B3:0</text>
+                          
+                          <!-- Q4 -->
+                          <path d="M 210 88 L 240 88" stroke="#334155" stroke-width="1.5" id="js-fbd-l4"/>
+                          <circle id="js-fbd-led4" cx="246" cy="88" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t4" x="256" y="91" fill="var(--text-muted)" font-family="monospace" font-size="9">B4:0</text>
+                          
+                          <!-- Q5 -->
+                          <path d="M 210 99 L 240 99" stroke="#334155" stroke-width="1.5" id="js-fbd-l5"/>
+                          <circle id="js-fbd-led5" cx="246" cy="99" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t5" x="256" y="102" fill="var(--text-muted)" font-family="monospace" font-size="9">B5:0</text>
+                          
+                          <!-- Q6 -->
+                          <path d="M 210 110 L 240 110" stroke="#334155" stroke-width="1.5" id="js-fbd-l6"/>
+                          <circle id="js-fbd-led6" cx="246" cy="110" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t6" x="256" y="113" fill="var(--text-muted)" font-family="monospace" font-size="9">B6:0</text>
+                          
+                          <!-- Q7 -->
+                          <path d="M 210 121 L 240 121" stroke="#334155" stroke-width="1.5" id="js-fbd-l7"/>
+                          <circle id="js-fbd-led7" cx="246" cy="121" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t7" x="256" y="124" fill="var(--text-muted)" font-family="monospace" font-size="9">B7:0</text>
+                          
+                          <!-- Q8 -->
+                          <path d="M 210 132 L 240 132" stroke="#334155" stroke-width="1.5" id="js-fbd-l8"/>
+                          <circle id="js-fbd-led8" cx="246" cy="132" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t8" x="256" y="135" fill="var(--text-muted)" font-family="monospace" font-size="9">B8:0</text>
+                          
+                          <!-- Q9 -->
+                          <path d="M 210 143 L 240 143" stroke="#334155" stroke-width="1.5" id="js-fbd-l9"/>
+                          <circle id="js-fbd-led9" cx="246" cy="143" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t9" x="256" y="146" fill="var(--text-muted)" font-family="monospace" font-size="9">B9:0</text>
                         </svg>
+
+
                     </div>
                     <h3>Программирование ПЛК</h3>
                     <p>Разработка надежного, отказоустойчивого программного обеспечения для промышленных контроллеров (Siemens, ОВЕН, Schneider Electric и др.) строго под ваши технологические процессы.</p>
                 </div>
+
+
+
+
+
+
+
 
 
 
@@ -273,7 +283,7 @@
                           <rect width="400" height="195" fill="#060913" opacity="0.4"/>
                           <text x="15" y="16" fill="#64748b" font-family="monospace" font-size="10" font-weight="bold">HVAC_SCADA // LIVE_TREND_MONITOR</text>
                           
-                          <title>SCADA-интерфейс вентиляции: Симметричные центробежные вентиляторы-улитки</title>
+                          <title>SCADA-интерфейс вентиляции: Автономная SVG-анимация вращения турбин</title>
 
                           <!-- ВЕРХНИЙ КАНАЛ: ВЫТЯЖКА (Справа налево ◄) -->
                           <rect x="15" y="25" width="370" height="45" rx="4" fill="var(--bg-color)" stroke="#334155" stroke-width="1.5"/>
@@ -287,20 +297,24 @@
                             <path d="M 23 24 L 2 32 L 23 42" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                           </g>
 
-                          <!-- 2. Вытяжной вентилятор-улитка на позиции 285 -->
+                          <!-- 2. Вытяжной вентилятор-улитка на позиции 285 (Встроенная SVG-анимация вращения) -->
                           <g transform="translate(285, 25)">
                             <title>Центробежный вытяжной вентилятор (Радиальная улитка)</title>
                             <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="#a855f7" stroke-width="1.8"/>
                             <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="#a855f7" stroke-width="1" stroke-dasharray="2,2"/>
                             
                             <g transform="translate(22.5, 22.5)">
-                              <g style="animation: hvac-perfect-spin 2.2s linear infinite; transform-origin: 0px 0px;">
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(60)"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(120)"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(180)"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(240)"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(300)"/>
+                              <!-- Группа лопастей с автономным тегом animateTransform (Вращение на 360 градусов) -->
+                              <g>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
+                                
+                                <!-- Жесткий инлайновый запуск вращения: от 0 до 360 градусов относительно точки 0,0 -->
+                                <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="2s" repeatCount="indefinite"/>
                               </g>
                               <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
                             </g>
@@ -315,8 +329,6 @@
                             <line x1="3" y1="27" x2="15" y2="27" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
                             <line x1="3" y1="36" x2="15" y2="36" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
                           </g>
-
-
                           <!-- НИЖНИЙ КАНАЛ: ПРИТОК (Слева направо ►) -->
                           <rect x="15" y="75" width="370" height="45" rx="4" fill="var(--bg-color)" stroke="#334155" stroke-width="1.5"/>
 
@@ -339,7 +351,7 @@
                             <path d="M 2 24 L 23 32 L 2 42" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                           </g>
 
-                          <!-- 3. ВОДЯНОЙ КАЛОРИФЕР НАГРЕВА (+) со смесительным узлом -->
+                          <!-- 3. Водяной калорифер нагрева (+) со смесительным узлом -->
                           <g transform="translate(145, 75)">
                             <title>HEATER (+): Водяной калорифер со смесительным узлом</title>
                             <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.08)" stroke="var(--accent-red)" stroke-width="1.8"/>
@@ -353,35 +365,36 @@
                             <polygon points="23,62 15,58 15,66" fill="var(--accent-red)"/>
                           </g>
 
-                          <!-- 4. ВОДЯНОЙ ВОЗДУХООХЛАДИТЕЛЬ (-) С НОВЫМ СМЕСИТЕЛЬНЫМ УЗЛОМ ПО ТЗ -->
+                          <!-- 4. Водяной воздухоохладитель (-) со смесительным узлом холода -->
                           <g transform="translate(180, 75)">
                             <title>COOLER (-): Охладитель со смесительным контуром хладоносителя</title>
                             <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.08)" stroke="var(--accent-blue)" stroke-width="1.8"/>
                             <line x1="7" y1="22.5" x2="18" y2="22.5" stroke="var(--accent-blue)" stroke-width="2" stroke-linecap="round"/>
                             
-                            <!-- Добавленный смесительный узел для холода в сине-бирюзовых тонах -->
                             <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="#334155" stroke-width="1.2"/>
-                            <!-- Циркуляционный насос контура хладоносителя -->
                             <circle cx="6" cy="54" r="3" fill="var(--card-bg)" stroke="var(--accent-blue)" stroke-width="0.8"/>
-                            <!-- Регулирующий клапан контура охлаждения -->
                             <polygon points="15,62 23,58 23,66" fill="var(--accent-blue)"/>
                             <polygon points="23,62 15,58 15,66" fill="var(--accent-blue)"/>
                           </g>
 
-                          <!-- 5. КВАДРАТНЫЙ ЦЕНТРОБЕЖНЫЙ ВЕНТИЛЯТОР (УЛИТКА) на позиции 285 -->
+                          <!-- 5. Приточный вентилятор-улитка на позиции 285 (Встроенная SVG-анимация вращения) -->
                           <g transform="translate(285, 75)">
                             <title>Центробежный приточный вентилятор (Радиальная улитка)</title>
                             <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="#a855f7" stroke-width="1.8"/>
                             <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="#a855f7" stroke-width="1" stroke-dasharray="2,2"/>
                             
                             <g transform="translate(22.5, 22.5)">
-                              <g style="animation: hvac-perfect-spin 1.8s linear infinite; transform-origin: 0px 0px;">
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(60)"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(120)"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(180)"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(240)"/>
-                                <rect x="-3.5" y="-13" width="7" height="13" rx="3.5" fill="#a855f7" opacity="0.85" transform="rotate(300)"/>
+                              <!-- Группа лопастей с автономным тегом animateTransform (Вращение на 360 градусов) -->
+                              <g>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
+                                <line x1="0" y1="0" x2="0" y2="-13" stroke="#a855f7" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
+                                
+                                <!-- Жесткий инлайновый запуск вращения: от 0 до 360 градусов относительно точки 0,0 (Чуть быстрее вытяжки) -->
+                                <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="1.6s" repeatCount="indefinite"/>
                               </g>
                               <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
                             </g>
@@ -412,6 +425,9 @@
                     <h3>Разработка SCADA</h3>
                     <p>Создание интуитивно понятных, информативных и эргономичных интерфейсов оператора (HMI/SCADA). Качественная настройка исторических трендов, архивации и интеллектуальных систем аварийных сообщений.</p>
                 </div>
+
+
+
 
 
 
@@ -515,37 +531,52 @@
                           </g>
 
 
-                          <!-- СУПЕРСОВРЕМЕННЫЙ КОЛЛАБОРАТИВНЫЙ РОБОТ (КОБОТ) -->
-                          <g transform="translate(320, 25)">
-                            <title>Промышленный кобот: безопасная совместная работа робота и человека в контуре АСУ ТП</title>
 
-                            <!-- Ноги андроида -->
+                          <!-- СУПЕРСОВРЕМЕННЫЙ РОБОТ OPTIMUS ТАНЦУЕТ  -->
+                          <g transform="translate(320, 25)">
+                            <title>Tesla Optimus: Робот танцует Skibidi от Little Big! SKIBIDI-WA-PA-PA!</title>
+                            <!-- Ноги андроида (немного пружинят за счет микро-анимации всего тела) -->
                             <rect x="14" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
                             <rect x="30" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
                             <rect x="12" y="140" width="10" height="4" rx="1" fill="#1e293b"/>
                             <rect x="28" y="140" width="10" height="4" rx="1" fill="#1e293b"/>
 
-                            <!-- Анатомическое белое туловище Optimus -->
-                            <path d="M 2 45 L 48 45 L 38 115 L 12 115 Z" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
-                            <!-- Черная центральная карбоновая вставка -->
-                            <path d="M 16 45 L 34 45 L 30 85 L 20 85 Z" fill="#0f172a"/>
-                            <line x1="16" y1="95" x2="34" y2="95" stroke="#94a3b8" stroke-width="0.8"/>
+                            <!-- Анатомическое белое туловище Optimus (качается влево-вправо) -->
+                            <g>
+                              <path d="M 2 45 L 48 45 L 38 115 L 12 115 Z" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
+                              <path d="M 16 45 L 34 45 L 30 85 L 20 85 Z" fill="#0f172a"/>
+                              <line x1="16" y1="95" x2="34" y2="95" stroke="#94a3b8" stroke-width="0.8"/>
+                              <rect x="19" y="37" width="12" height="8" fill="#334155"/>
+                              <ellipse cx="25" cy="24" rx="13" ry="14" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
+                              <ellipse cx="25" cy="23" rx="10" ry="11" fill="#020617"/>
+                              <circle cx="25" cy="20" r="1" fill="var(--accent-blue)" opacity="0.8"/>
+                              
+                              <!-- Качание корпуса влево-вправо под бит Skibidi -->
+                              <animateTransform attributeName="transform" type="rotate" values="-2 25 80; 2 25 80; -2 25 80" dur="0.6s" repeatCount="indefinite" additive="sum"/>
+                            </g>
 
-                            <!-- Тонкая шея-шарнир -->
-                            <rect x="19" y="37" width="12" height="8" fill="#334155"/>
+                            <!-- ЛЕВАЯ РУКА (Согнута перед грудью, качается вверх-вниз) -->
+                            <g transform="translate(2, 48)">
+                              <path d="M 0 0 L -8 20 L 15 20" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M 0 0 L -8 20 L 15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <circle cx="15" cy="20" r="1.5" fill="#1e293b"/>
+                              
+                              <!-- Ритмичные махи локтем Skibidi (Фаза 1) -->
+                              <animateTransform attributeName="transform" type="rotate" values="-15 0 0; 20 0 0; -15 0 0" dur="0.6s" repeatCount="indefinite" additive="sum"/>
+                            </g>
 
-                            <!-- Минималистичная овальная голова Tesla Bot -->
-                            <ellipse cx="25" cy="24" rx="13" ry="14" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
-                            <!-- Черный глянцевый визор-лицо -->
-                            <ellipse cx="25" cy="23" rx="10" ry="11" fill="#020617"/>
-                            <circle cx="25" cy="20" r="1" fill="var(--accent-blue)" opacity="0.8"/>
-
-                            <!-- Руки андроида -->
-                            <path d="M 2 48 Q -10 75, 0 100" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
-                            <path d="M 2 48 Q -10 75, 0 100" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M 48 48 Q 60 75, 50 100" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
-                            <path d="M 48 48 Q 60 75, 50 100" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round"/>
+                            <!-- ПРАВАЯ РУКА (Двигается в противофазе к левой) -->
+                            <g transform="translate(46, 48)">
+                              <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <circle cx="-15" cy="20" r="1.5" fill="#1e293b"/>
+                              
+                              <!-- Ритмичные махи локтем Skibidi в противофазе (Фаза 2) -->
+                              <animateTransform attributeName="transform" type="rotate" values="20 0 0; -15 0 0; 20 0 0" dur="0.6s" repeatCount="indefinite" additive="sum"/>
+                            </g>
                           </g>
+
+
                         </svg>
                     </div>
                     <h3>Адаптация и модернизация</h3>
