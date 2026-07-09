@@ -169,59 +169,96 @@
 
 
 
-                <!-- Карточка 1: Программирование ПЛК + Логика FBD и побитовое разложение -->
+                <!-- Карточка 1: Программирование ПЛК + 10-битный демультиплексор INT в BITS -->
                 <div class="service-card">
                     <div class="svg-container">
                         <svg xmlns="http://w3.org" viewBox="0 0 400 180" width="100%" height="100%">
                           <rect width="400" height="180" fill="#060913" opacity="0.4"/>
-                          <text x="20" y="22" fill="#64748b" font-family="monospace" font-size="11" font-weight="bold">LOGIC_FBD // UNPACK_WORD</text>
+                          <text x="20" y="20" fill="#64748b" font-family="monospace" font-size="11" font-weight="bold">LOGIC_FBD // INT_TO_10BITS</text>
                           
-                          <!-- Входная линия и аналоговое значение -->
-                          <path d="M 20 90 L 90 90" stroke="var(--accent-blue)" stroke-width="2" fill="none"/>
-                          <circle cx="20" cy="90" r="3" fill="var(--accent-blue)"/>
-                          <rect x="25" y="65" width="55" height="20" rx="3" fill="#060913" stroke="#1e293b"/>
-                          <text id="js-fbd-input" x="52" y="79" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">70.2%</text>
-                          <text x="25" y="102" fill="var(--accent-blue)" font-family="monospace" font-size="9">IN_WORD</text>
+                          <!-- Входная линия и аналоговое значение INT -->
+                          <path d="M 15 90 L 75 90" stroke="var(--accent-blue)" stroke-width="2" fill="none"/>
+                          <circle cx="15" cy="90" r="3" fill="var(--accent-blue)"/>
+                          <rect x="18" y="65" width="53" height="20" rx="3" fill="#060913" stroke="#1e293b"/>
+                          <text id="js-fbd-input" x="44" y="79" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">0</text>
+                          <text x="18" y="100" fill="var(--accent-blue)" font-family="monospace" font-size="9">IN_WORD</text>
 
-                          <!-- Функциональный блок FBD (Демультиплексор / Разложение) -->
-                          <g transform="translate(90, 40)">
-                            <rect width="130" height="100" rx="4" fill="var(--card-bg)" stroke="#334155" stroke-width="2"/>
-                            <text x="65" y="22" fill="#ffffff" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">WORD_TO_BITS</text>
+                          <!-- Функциональный блок FBD -->
+                          <g transform="translate(75, 25)">
+                            <rect width="135" height="135" rx="4" fill="var(--card-bg)" stroke="#334155" stroke-width="2"/>
+                            <text x="67.5" y="18" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">INT_TO_10BITS</text>
+                            <text x="8" y="68" fill="var(--accent-blue)" font-family="monospace" font-size="10">IN</text>
                             
-                            <!-- Внутренние метки входов/выходов -->
-                            <text x="8" y="54" fill="var(--accent-blue)" font-family="monospace" font-size="10">IN</text>
-                            <text x="122" y="44" fill="#9ca3af" font-family="monospace" font-size="9" text-anchor="end">.0 (HIGH)</text>
-                            <text x="122" y="64" fill="#9ca3af" font-family="monospace" font-size="9" text-anchor="end">.1 (NORM)</text>
-                            <text x="122" y="84" fill="#9ca3af" font-family="monospace" font-size="9" text-anchor="end">.2 (LOW)</text>
+                            <!-- Внутренние метки выходов -->
+                            <g font-family="monospace" font-size="8" fill="#9ca3af" text-anchor="end">
+                              <text x="128" y="36">Q0</text> <text x="128" y="47">Q1</text>
+                              <text x="128" y="58">Q2</text> <text x="128" y="69">Q3</text>
+                              <text x="128" y="80">Q4</text> <text x="128" y="91">Q5</text>
+                              <text x="128" y="102">Q6</text> <text x="128" y="113">Q7</text>
+                              <text x="128" y="124">Q8</text> <text x="128" y="135">Q9</text>
+                            </g>
                           </g>
 
-                          <!-- Выходные линии связи к битам -->
-                          <path d="M 220 80 L 260 80" stroke="#334155" stroke-width="2" id="js-fbd-line0"/>
-                          <path d="M 220 100 L 260 100" stroke="#334155" stroke-width="2" id="js-fbd-line1"/>
-                          <path d="M 220 120 L 260 120" stroke="#334155" stroke-width="2" id="js-fbd-line2"/>
-
-                          <!-- БИТ 0: Авария верхнего уровня -->
-                          <g transform="translate(260, 68)">
-                            <circle id="js-fbd-led0" cx="12" cy="12" r="5" fill="#223147"/>
-                            <text id="js-fbd-bit0" x="28" y="16" fill="var(--text-muted)" font-family="monospace" font-size="11" font-weight="bold">Err_High = 0</text>
-                          </g>
-
-                          <!-- БИТ 1: Нормальная работа -->
-                          <g transform="translate(260, 88)">
-                            <circle id="js-fbd-led1" cx="12" cy="12" r="5" fill="var(--accent-green)"/>
-                            <text id="js-fbd-bit1" x="28" y="16" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold">Norm_Work = 1</text>
-                          </g>
-
-                          <!-- БИТ 2: Сухой ход (Авария нижнего уровня) -->
-                          <g transform="translate(260, 108)">
-                            <circle id="js-fbd-led2" cx="12" cy="12" r="5" fill="#223147"/>
-                            <text id="js-fbd-bit2" x="28" y="16" fill="var(--text-muted)" font-family="monospace" font-size="11" font-weight="bold">Err_Low = 0</text>
+                          <!-- 10 Выходных каналов (Линии связи, Светодиоды, Тексты) -->
+                          <!-- Каналы генерируются динамически скриптом, но заложим их ID в разметку -->
+                          <g transform="translate(210, 0)">
+                            <!-- Динамическая сетка битов (шаг по Y = 11px) -->
+                            <!-- Q0 -->
+                            <path d="M 0 61 L 30 61" stroke="#334155" stroke-width="1.5" id="js-fbd-l0"/>
+                            <circle id="js-fbd-led0" cx="36" cy="61" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t0" x="46" y="64" fill="var(--text-muted)" font-family="monospace" font-size="9">B0:0</text>
+                            
+                            <!-- Q1 -->
+                            <path d="M 0 72 L 30 72" stroke="#334155" stroke-width="1.5" id="js-fbd-l1"/>
+                            <circle id="js-fbd-led1" cx="36" cy="72" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t1" x="46" y="75" fill="var(--text-muted)" font-family="monospace" font-size="9">B1:0</text>
+                            
+                            <!-- Q2 -->
+                            <path d="M 0 83 L 30 83" stroke="#334155" stroke-width="1.5" id="js-fbd-l2"/>
+                            <circle id="js-fbd-led2" cx="36" cy="83" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t2" x="46" y="86" fill="var(--text-muted)" font-family="monospace" font-size="9">B2:0</text>
+                            
+                            <!-- Q3 -->
+                            <path d="M 0 94 L 30 94" stroke="#334155" stroke-width="1.5" id="js-fbd-l3"/>
+                            <circle id="js-fbd-led3" cx="36" cy="94" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t3" x="46" y="97" fill="var(--text-muted)" font-family="monospace" font-size="9">B3:0</text>
+                            
+                            <!-- Q4 -->
+                            <path d="M 0 105 L 30 105" stroke="#334155" stroke-width="1.5" id="js-fbd-l4"/>
+                            <circle id="js-fbd-led4" cx="36" cy="105" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t4" x="46" y="108" fill="var(--text-muted)" font-family="monospace" font-size="9">B4:0</text>
+                            
+                            <!-- Q5 -->
+                            <path d="M 0 116 L 30 116" stroke="#334155" stroke-width="1.5" id="js-fbd-l5"/>
+                            <circle id="js-fbd-led5" cx="36" cy="116" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t5" x="46" y="119" fill="var(--text-muted)" font-family="monospace" font-size="9">B5:0</text>
+                            
+                            <!-- Q6 -->
+                            <path d="M 0 127 L 30 127" stroke="#334155" stroke-width="1.5" id="js-fbd-l6"/>
+                            <circle id="js-fbd-led6" cx="36" cy="127" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t6" x="46" y="130" fill="var(--text-muted)" font-family="monospace" font-size="9">B6:0</text>
+                            
+                            <!-- Q7 -->
+                            <path d="M 0 138 L 30 138" stroke="#334155" stroke-width="1.5" id="js-fbd-l7"/>
+                            <circle id="js-fbd-led7" cx="36" cy="138" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t7" x="46" y="141" fill="var(--text-muted)" font-family="monospace" font-size="9">B7:0</text>
+                            
+                            <!-- Q8 -->
+                            <path d="M 0 149 L 30 149" stroke="#334155" stroke-width="1.5" id="js-fbd-l8"/>
+                            <circle id="js-fbd-led8" cx="36" cy="149" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t8" x="46" y="152" fill="var(--text-muted)" font-family="monospace" font-size="9">B8:0</text>
+                            
+                            <!-- Q9 -->
+                            <path d="M 0 160 L 30 160" stroke="#334155" stroke-width="1.5" id="js-fbd-l9"/>
+                            <circle id="js-fbd-led9" cx="36" cy="160" r="3.5" fill="#223147"/>
+                            <text id="js-fbd-t9" x="46" y="163" fill="var(--text-muted)" font-family="monospace" font-size="9">B9:0</text>
                           </g>
                         </svg>
                     </div>
                     <h3>Программирование ПЛК</h3>
                     <p>Разработка надежного, отказоустойчивого программного обеспечения для промышленных контроллеров (Siemens, ОВЕН, Schneider Electric и др.) строго под ваши технологические процессы.</p>
                 </div>
+
 
 
 
@@ -472,20 +509,11 @@
 
 
 
-    <!-- Скрипт опрашивания датчиков, логики FBD и живого терминала логов -->
+    <!-- Скрипт опрашивания датчиков, 10-битной логики ПЛК и терминала логов -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Элементы FBD логики (Карточка 1)
+            // Элементы 10-битной логики ПЛК
             const fbdIn = document.getElementById("js-fbd-input");
-            const fbdLine0 = document.getElementById("js-fbd-line0");
-            const fbdLine1 = document.getElementById("js-fbd-line1");
-            const fbdLine2 = document.getElementById("js-fbd-line2");
-            const fbdLed0 = document.getElementById("js-fbd-led0");
-            const fbdLed1 = document.getElementById("js-fbd-led1");
-            const fbdLed2 = document.getElementById("js-fbd-led2");
-            const fbdBit0 = document.getElementById("js-fbd-bit0");
-            const fbdBit1 = document.getElementById("js-fbd-bit1");
-            const fbdBit2 = document.getElementById("js-fbd-bit2");
 
             // Элементы вентиляции (Карточка 2)
             const txtTemp = document.getElementById("js-hvac-temp");
@@ -500,96 +528,83 @@
             // Консоль терминала отладки
             const consoleLog = document.getElementById("js-console-log");
 
-            // Базовые переменные техпроцесса
-            let simLevel = 70.2;
+            // Переменные техпроцесса
+            let intValue = 0; // Наше 10-битное число (0-1023)
             let temp = 21.5; let hum = 45.0;
             let frequency = 50.0; let gcal = 142.7;
 
             // Функция симуляции работы реального оборудования
             setInterval(() => {
-                simLevel += (Math.random() - 0.5) * 1.5;
+                // Генерируем случайное промышленное число в диапазоне 10 бит (0 - 1023)
+                intValue = Math.floor(Math.random() * 1024);
+
+                // Изменения параметров климата и частоты
                 temp += (Math.random() - 0.5) * 0.2;
                 hum += (Math.random() - 0.5) * 0.3;
                 frequency += (Math.random() - 0.5) * 0.4;
                 gcal += 0.01;
 
-                if (simLevel < 12) simLevel = 12; if (simLevel > 88) simLevel = 88;
                 if (temp < 20) temp = 20; if (temp > 23) temp = 23;
                 if (hum < 41) hum = 41; if (hum > 49) hum = 49;
                 if (frequency < 45) frequency = 45; if (frequency > 52) frequency = 52;
 
                 if (txtTemp) txtTemp.textContent = `T: ${temp.toFixed(1)}°C`;
                 if (txtHum) txtHum.textContent = `H: ${hum.toFixed(1)}%`;
-
                 const hzStr = `${frequency.toFixed(1)} Hz`;
-                const gcalStr = `${gcal.toFixed(1)} Gcal`;
                 if (txtHz) txtHz.textContent = hzStr;
-                if (txtGcal) txtGcal.textContent = gcalStr;
+                if (txtGcal) txtGcal.textContent = `${gcal.toFixed(1)} Gcal`;
                 if (vncHz) vncHz.textContent = hzStr;
                 if (vncGcal) vncGcal.textContent = `${gcal.toFixed(1)} Gc`;
 
-                if (fbdIn) fbdIn.textContent = `${simLevel.toFixed(1)}%`;
+                // Отображаем 10-битное число на входе FBD блока
+                if (fbdIn) fbdIn.textContent = intValue;
 
-                let b0 = 0, b1 = 1, b2 = 0;
-                let c0 = "#223147", c1 = "var(--accent-green)", c2 = "#223147";
+                // МАТЕМАТИЧЕСКИЙ ЦИКЛ ПОБИТОВОГО РАЗЛОЖЕНИЯ НА 10 КАНАЛОВ
+                for (let i = 0; i < 10; i++) {
+                    const line = document.getElementById(`js-fbd-l${i}`);
+                    const led = document.getElementById(`js-fbd-led${i}`);
+                    const text = document.getElementById(`js-fbd-t${i}`);
 
-                if (simLevel > 80) {
-                    b0 = 1; b1 = 0; b2 = 0;
-                    c0 = "var(--accent-red)"; c1 = "#223147"; c2 = "#223147";
-                } else if (simLevel < 20) {
-                    b0 = 0; b1 = 0; b2 = 1;
-                    c0 = "#223147"; c1 = "#223147"; c2 = "var(--accent-red)";
+                    // Вычисляем состояние i-го бита через битовый сдвиг
+                    let bitActive = (intValue & (1 << i)) ? 1 : 0;
+
+                    if (line && led && text) {
+                        // Подсвечиваем красным активные биты
+                        line.setAttribute("stroke", bitActive ? "var(--accent-red)" : "#334155");
+                        led.setAttribute("fill", bitActive ? "var(--accent-red)" : "#223147");
+                        text.textContent = `B${i}:${bitActive}`;
+                        text.setAttribute("fill", bitActive ? "#ffffff" : "var(--text-muted)");
+                        text.style.fontWeight = bitActive ? "bold" : "normal";
+                    }
                 }
-
-                if (fbdBit0) { fbdBit0.textContent = `Err_High = ${b0}`; fbdBit0.setAttribute("fill", b0 ? "var(--accent-red)" : "var(--text-muted)"); }
-                if (fbdBit1) { fbdBit1.textContent = `Norm_Work = ${b1}`; fbdBit1.setAttribute("fill", b1 ? "var(--accent-green)" : "var(--text-muted)"); }
-                if (fbdBit2) { fbdBit2.textContent = `Err_Low = ${b2}`; fbdBit2.setAttribute("fill", b2 ? "var(--accent-red)" : "var(--text-muted)"); }
-                
-                if (fbdLed0) fbdLed0.setAttribute("fill", c0);
-                if (fbdLed1) fbdLed1.setAttribute("fill", c1);
-                if (fbdLed2) fbdLed2.setAttribute("fill", c2);
-
-                if (fbdLine0) fbdLine0.setAttribute("stroke", b0 ? "var(--accent-red)" : "#334155");
-                if (fbdLine1) fbdLine1.setAttribute("stroke", b1 ? "var(--accent-green)" : "#334155");
-                if (fbdLine2) fbdLine2.setAttribute("stroke", b2 ? "var(--accent-red)" : "#334155");
 
             }, 1500);
 
-            // ЖИВОЙ ДВИЖОК ЛОГОВ ДЛЯ СЕТЕВОГО ТЕРМИНАЛА
+            // Движок логов нижнего терминала
             const logTemplates = [
                 { type: 'modbus', text: () => `[MODBUS RTU] Tx: [01 03 00 20 00 02 C5 41] // Rx: Ok, Freq=${frequency.toFixed(1)}Hz`, color: 'var(--accent-orange)' },
                 { type: 'mbus', text: () => `[M-Bus] Requesting Heat Meter SL01... Answer: ${gcal.toFixed(3)} Gcal`, color: 'var(--accent-green)' },
-                { type: 'plc', text: () => `[PLC_CPU] Unpacking process image: level=${simLevel.toFixed(1)}%, high_alarm=${simLevel > 80 ? '1' : '0'}`, color: 'var(--accent-blue)' },
+                { type: 'plc', text: () => `[PLC_CPU] Unpacked INT=${intValue} to binary string: ${intValue.toString(2).padStart(10, '0')}`, color: 'var(--accent-blue)' },
                 { type: 'vnc', text: () => `[VNC_SERVER] Sent frame update to mobile client (Optimized 16-bit color)`, color: '#a855f7' },
                 { type: 'can', text: () => `[CAN_BUS] Broadcast heartbeat ID=0x10A length=8 [00 FF 22 00 00 11 AA BB]`, color: '#eab308' }
             ];
 
             setInterval(() => {
                 if (!consoleLog) return;
-
-                // Выбираем случайный шаблон лога
                 const logItem = logTemplates[Math.floor(Math.random() * logTemplates.length)];
                 const timeStr = new Date().toLocaleTimeString();
-                
-                // Создаем строку для консоли
                 const logLine = document.createElement("div");
                 logLine.style.color = logItem.color;
                 logLine.style.marginBottom = "4px";
                 logLine.textContent = `[${timeStr}] ${logItem.text()}`;
-                
-                // Добавляем запись в лог
                 consoleLog.appendChild(logLine);
-
-                // Ограничиваем количество строк в консоли до 30 (чтобы не забивать память)
-                if (consoleLog.children.length > 30) {
-                    consoleLog.removeChild(consoleLog.firstChild);
-                }
-
-                // Автоматическая прокрутка вниз к новому сообщению
+                if (consoleLog.children.length > 30) consoleLog.removeChild(consoleLog.firstChild);
                 consoleLog.scrollTop = consoleLog.scrollHeight;
-            }, 1000); // Новая строчка лога генерируется каждую секунду
+            }, 1000);
         });
     </script>
+
+
 
 
 </body>
