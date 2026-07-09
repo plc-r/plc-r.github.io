@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разработка ПО для ПЛК и SCADA | ИП tvboxc44-dev</title>
+    <style>
+        :root {
+            --bg-color: #060913;
+            --card-bg: #0d1527;
+            --accent-blue: #00d2ff;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #64748b;
+            --border-color: #1e293b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(rgba(0, 210, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 210, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(180deg, #090d16 0%, rgba(6, 9, 19, 0.8) 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(8px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-layout { display: block; }
+
+
+
+        .badge {
+            background-color: rgba(0, 210, 255, 0.08);
+            color: var(--accent-blue);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            box-shadow: inset 0 0 8px rgba(0, 210, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 0 0 15px 0;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(120deg, #ffffff 40%, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 18px;
+            max-width: 650px;
+            margin: 0 auto 30px auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 25px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px -15px rgba(0,0,0,0.5);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.15);
+        }
+
+        .svg-container {
+            width: 100%;
+            height: 190px;
+            margin-bottom: 20px;
+            background-color: #060913;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        h3 { font-size: 22px; margin: 0 0 12px 0; color: #ffffff; font-weight: 600; }
+        .service-card p { color: var(--text-muted); font-size: 15px; margin: 0; }
+
+        .cta-section {
+            background: radial-gradient(circle at top, #111e36 0%, var(--bg-color) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            margin-top: 60px;
+            box-shadow: 0 15px 40px -20px rgba(0,0,0,0.8);
+        }
+
+        .btn-contact {
+            display: inline-block;
+            background-color: var(--accent-blue);
+            color: #000000;
+            padding: 15px 36px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 25px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-contact:hover {
+            background-color: #00b8e6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 210, 255, 0.5);
+        }
+
+        footer { text-align: center; padding: 50px 20px; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border-color); margin-top: 80px; }
+
+        .flow-line {
+            stroke-dasharray: 8, 6;
+            animation: flow-anim 1.2s linear infinite;
+        }
+        @keyframes flow-anim { 100% { stroke-dashoffset: -14; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="badge">Услуги для АСУ ТП</div>
+        <h1>Инженерные решения для автоматизации</h1>
+        <p class="subtitle">Профессиональная разработка и адаптация программного обеспечения для промышленного оборудования и диспетчеризации.</p>
+    </header>
+
+    <div class="container">
+        <div class="main-layout">
+            <main class="services-grid">
+
+
+
+                <!-- Карточка 1: Программирование ПЛК + Логика FBD и побитовое разложение -->
+                <div class="service-card">
+                    <div class="svg-container">
+                        <svg xmlns="http://w3.org" viewBox="0 0 400 180" width="100%" height="100%">
+                          <rect width="400" height="180" fill="#060913" opacity="0.4"/>
+                          <text x="20" y="22" fill="#64748b" font-family="monospace" font-size="11" font-weight="bold">LOGIC_FBD // UNPACK_WORD</text>
+                          
+                          <!-- Входная линия и аналоговое значение -->
+                          <path d="M 20 90 L 90 90" stroke="var(--accent-blue)" stroke-width="2" fill="none"/>
+                          <circle cx="20" cy="90" r="3" fill="var(--accent-blue)"/>
+                          <rect x="25" y="65" width="55" height="20" rx="3" fill="#060913" stroke="#1e293b"/>
+                          <text id="js-fbd-input" x="52" y="79" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">70.2%</text>
+                          <text x="25" y="102" fill="var(--accent-blue)" font-family="monospace" font-size="9">IN_WORD</text>
+
+                          <!-- Функциональный блок FBD (Демультиплексор / Разложение) -->
+                          <g transform="translate(90, 40)">
+                            <rect width="130" height="100" rx="4" fill="var(--card-bg)" stroke="#334155" stroke-width="2"/>
+                            <text x="65" y="22" fill="#ffffff" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">WORD_TO_BITS</text>
+                            
+                            <!-- Внутренние метки входов/выходов -->
+                            <text x="8" y="54" fill="var(--accent-blue)" font-family="monospace" font-size="10">IN</text>
+                            <text x="122" y="44" fill="#9ca3af" font-family="monospace" font-size="9" text-anchor="end">.0 (HIGH)</text>
+                            <text x="122" y="64" fill="#9ca3af" font-family="monospace" font-size="9" text-anchor="end">.1 (NORM)</text>
+                            <text x="122" y="84" fill="#9ca3af" font-family="monospace" font-size="9" text-anchor="end">.2 (LOW)</text>
+                          </g>
+
+                          <!-- Выходные линии связи к битам -->
+                          <path d="M 220 80 L 260 80" stroke="#334155" stroke-width="2" id="js-fbd-line0"/>
+                          <path d="M 220 100 L 260 100" stroke="#334155" stroke-width="2" id="js-fbd-line1"/>
+                          <path d="M 220 120 L 260 120" stroke="#334155" stroke-width="2" id="js-fbd-line2"/>
+
+                          <!-- БИТ 0: Авария верхнего уровня -->
+                          <g transform="translate(260, 68)">
+                            <circle id="js-fbd-led0" cx="12" cy="12" r="5" fill="#223147"/>
+                            <text id="js-fbd-bit0" x="28" y="16" fill="var(--text-muted)" font-family="monospace" font-size="11" font-weight="bold">Err_High = 0</text>
+                          </g>
+
+                          <!-- БИТ 1: Нормальная работа -->
+                          <g transform="translate(260, 88)">
+                            <circle id="js-fbd-led1" cx="12" cy="12" r="5" fill="var(--accent-green)"/>
+                            <text id="js-fbd-bit1" x="28" y="16" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold">Norm_Work = 1</text>
+                          </g>
+
+                          <!-- БИТ 2: Сухой ход (Авария нижнего уровня) -->
+                          <g transform="translate(260, 108)">
+                            <circle id="js-fbd-led2" cx="12" cy="12" r="5" fill="#223147"/>
+                            <text id="js-fbd-bit2" x="28" y="16" fill="var(--text-muted)" font-family="monospace" font-size="11" font-weight="bold">Err_Low = 0</text>
+                          </g>
+                        </svg>
+                    </div>
+                    <h3>Программирование ПЛК</h3>
+                    <p>Разработка надежного, отказоустойчивого программного обеспечения для промышленных контроллеров (Siemens, ОВЕН, Schneider Electric и др.) строго под ваши технологические процессы.</p>
+                </div>
+
+
+
+
+
+                <!-- Карточка 2: Разработка SCADA + Инфографика Вентиляции HVAC -->
+                <div class="service-card">
+                    <div class="svg-container">
+                        <svg xmlns="http://w3.org" viewBox="0 0 400 190" width="100%" height="100%">
+                          <rect width="400" height="190" fill="#060913" opacity="0.4"/>
+                          <text x="20" y="25" fill="#64748b" font-family="monospace" font-size="11" font-weight="bold">HVAC_CONTROL // AIR_FLOW</text>
+                          
+                          <!-- Главный короб воздуховода -->
+                          <rect x="20" y="50" width="360" height="90" rx="8" fill="var(--bg-color)" stroke="#334155" stroke-width="2"/>
+                          <line x1="20" y1="95" x2="380" y2="95" stroke="#131c2e" stroke-width="1"/>
+                          
+                          <!-- Камера вентилятора -->
+                          <g>
+                            <circle cx="90" cy="95" r="30" fill="var(--card-bg)" stroke="#334155" stroke-width="1.5"/>
+                            
+                            <!-- Переносим всю группу в точку (90,95). Её личный центр — это 0,0 -->
+                            <g transform="translate(90, 95)">
+                              <g style="animation: hvac-perfect-spin 2.5s linear infinite; transform-origin: 0px 0px;">
+                                <path d="M 0 0 Q -15 -22 0 -38 Q 15 -22 0 0 Q 15 22 0 38 Q -15 22 0 0" fill="var(--accent-blue)" opacity="0.45"/>
+                                <path d="M 0 0 Q 22 -15 38 0 Q 22 15 0 0 Q -22 15 -38 0 Q -22 -15 0 0" fill="var(--accent-blue)" opacity="0.45"/>
+                              </g>
+                            </g>
+                            
+                            <!-- Прячем анимацию вращения в изолированный стиль без конфликтов -->
+                            <style>
+                              @keyframes hvac-perfect-spin {
+                                from { transform: rotate(0deg); }
+                                to { transform: rotate(360deg); }
+                              }
+                            </style>
+                            
+                            <circle cx="90" cy="95" r="6" fill="#ffffff"/>
+                            <text x="90" y="165" fill="#9ca3af" font-family="monospace" font-size="11" text-anchor="middle">FAN-101</text>
+                          </g>
+                          
+                          <!-- Стрелка индикации потока -->
+                          <path d="M 140 95 L 160 95 M 154 89 L 160 95 L 154 101" class="flow-line" stroke="var(--accent-blue)" stroke-width="2" fill="none"/>
+                          
+                          <!-- Фильтр-очиститель -->
+                          <g>
+                            <rect x="195" y="55" width="10" height="80" fill="var(--accent-orange)" opacity="0.15"/>
+                            <line x1="200" y1="55" x2="200" y2="135" stroke="var(--accent-orange)" stroke-width="3" stroke-dasharray="5,3"/>
+                            <text x="200" y="165" fill="#9ca3af" font-family="monospace" font-size="11" text-anchor="middle">FILTER</text>
+                          </g>
+                          
+                          <!-- Модуль телеметрии параметров климата -->
+                          <g transform="translate(255, 75)">
+                            <rect width="105" height="42" rx="5" fill="#060913" stroke="#1e293b"/>
+                            <text id="js-hvac-temp" x="12" y="18" fill="#ffffff" font-family="monospace" font-size="12" font-weight="bold">T: 21.5°C</text>
+                            <text id="js-hvac-hum" x="12" y="34" fill="var(--accent-blue)" font-family="monospace" font-size="12" font-weight="bold">H: 45.0%</text>
+                          </g>
+                        </svg>
+                    </div>
+                    <h3>Разработка SCADA</h3>
+                    <p>Создание интуитивно понятных, информативных и эргономичных интерфейсов оператора (HMI/SCADA). Качественная настройка исторических трендов, архивации и интеллектуальных систем аварийных сообщений.</p>
+                </div>
+
+
+
+
+
+
+
+
+
+                  <!-- Карточка 3: Адаптация и модернизация + Tesla Optimus Bot и Чистая Инфографика -->
+                <div class="service-card">
+                    <div class="svg-container">
+                        <svg xmlns="http://w3.org" viewBox="0 0 400 180" width="100%" height="100%">
+                          <rect width="400" height="180" fill="#060913" opacity="0.4"/>
+                          
+                          <!-- ЦЕНТРАЛЬНЫЙ КОНВЕРТЕР / ШЛЮЗ -->
+                          <g transform="translate(135, 55)">
+                            <rect width="80" height="55" rx="5" fill="var(--card-bg)" stroke="var(--accent-blue)" stroke-width="2"/>
+                            <text x="40" y="24" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">GW-100</text>
+                            <text x="40" y="42" fill="var(--accent-blue)" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">ETH / VNC</text>
+                            <circle cx="15" cy="40" r="2.5" fill="var(--accent-green)"/>
+                            <circle cx="25" cy="40" r="2.5" fill="var(--accent-green)"/>
+                          </g>
+
+                          <!-- ЛЕВЫЙ ПОТОК: Modbus RTU и Частотный преобразователь -->
+                          <g>
+                            <path d="M 135 65 L 85 65" stroke="var(--accent-orange)" stroke-width="1.5" fill="none"/>
+                            <path d="M 135 65 L 85 65" class="flow-line" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+                            <!-- Исправлено положение текста Modbus RTU: поднят выше и сдвинут в центр линии -->
+                            <text x="110" y="58" fill="var(--accent-orange)" font-family="monospace" font-size="8" text-anchor="middle">Modbus RTU</text>
+                            
+                            <rect x="20" y="45" width="65" height="40" rx="3" fill="#0b0f19" stroke="#334155" stroke-width="1.5"/>
+                            <text x="52.5" y="62" fill="#9ca3af" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">FC_DRIVE</text>
+                            <text id="js-modbus-hz" x="52.5" y="76" fill="var(--accent-orange)" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">50.0 Hz</text>
+                          </g>
+
+                          <!-- НИЖНИЙ ПОТОК: M-Bus и Теплосчетчик -->
+                          <g>
+                            <path d="M 175 110 L 175 135" stroke="var(--accent-green)" stroke-width="1.5" fill="none"/>
+                            <text x="182" y="125" fill="var(--accent-green)" font-family="monospace" font-size="8">M-Bus</text>
+                            
+                            <rect x="135" y="135" width="80" height="35" rx="3" fill="#0b0f19" stroke="#334155" stroke-width="1.5"/>
+                            <text x="175" y="149" fill="#9ca3af" font-family="monospace" font-size="9" text-anchor="middle">HEAT_METER</text>
+                            <text id="js-mbus-gcal" x="175" y="162" fill="var(--accent-green)" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">142.7 Gcal</text>
+                          </g>
+
+                          <!-- ВЕРХНИЙ ПОТОК: CAN Bus уходит строго в Шлюз GW-100 -->
+                          <g>
+                            <path d="M 175 55 L 175 30 L 20 30" stroke="#eab308" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+                            <text x="95" y="24" fill="#eab308" font-family="monospace" font-size="8">CAN Bus Link</text>
+                          </g>
+
+                          <!-- СВОБОДНО ПАРИЯЩИЙ ТЕЛЕФОН ПО WI-FI -->
+                          <g transform="translate(245, 55)">
+                            <path d="M -30 22 L 5 22" stroke="var(--accent-blue)" stroke-width="1.5" fill="none"/>
+                            <path d="M -30 22 L 5 22" class="flow-line" stroke="#ffffff" stroke-width="1" opacity="0.6"/>
+                            <!-- Исправлено положение текста Wi-Fi: приподнят над линией связи, чтобы не заезжать на телефон -->
+                            <text x="-12" y="14" fill="var(--accent-blue)" font-family="monospace" font-size="8" text-anchor="middle">Wi-Fi</text>
+
+                            <rect x="5" y="-12" width="36" height="68" rx="4" fill="#060913" stroke="#2d3748" stroke-width="1.5"/>
+                            <rect x="8" y="-8" width="30" height="60" rx="2" fill="var(--card-bg)"/>
+                            <text x="23" y="4" fill="var(--accent-blue)" font-family="monospace" font-size="6" font-weight="bold" text-anchor="middle">VNC Client</text>
+                            <text id="js-vnc-hz" x="23" y="22" fill="var(--accent-orange)" font-family="monospace" font-size="7" font-weight="bold" text-anchor="middle">50.0Hz</text>
+                            <text id="js-vnc-gcal" x="23" y="36" fill="var(--accent-green)" font-family="monospace" font-size="6" font-weight="bold" text-anchor="middle">142.7 Gc</text>
+                            <circle cx="13" cy="0" r="1" fill="var(--accent-green)"/>
+                          </g>
+
+                          <!-- СУПЕРСОВРЕМЕННЫЙ РОБОТ OPTIMUS (TESLA BOT) -->
+                          <g transform="translate(320, 25)">
+                            <!-- Ноги андроида -->
+                            <rect x="14" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
+                            <rect x="30" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
+                            <rect x="12" y="140" width="10" height="4" rx="1" fill="#1e293b"/>
+                            <rect x="28" y="140" width="10" height="4" rx="1" fill="#1e293b"/>
+
+                            <!-- Анатомическое белое туловище Optimus -->
+                            <path d="M 2 45 L 48 45 L 38 115 L 12 115 Z" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
+                            <!-- Черная центральная карбоновая вставка -->
+                            <path d="M 16 45 L 34 45 L 30 85 L 20 85 Z" fill="#0f172a"/>
+                            <line x1="16" y1="95" x2="34" y2="95" stroke="#94a3b8" stroke-width="0.8"/>
+
+                            <!-- Тонкая шея-шарнир -->
+                            <rect x="19" y="37" width="12" height="8" fill="#334155"/>
+
+                            <!-- Минималистичная овальная голова Tesla Bot -->
+                            <ellipse cx="25" cy="24" rx="13" ry="14" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
+                            <!-- Черный глянцевый визор-лицо -->
+                            <ellipse cx="25" cy="23" rx="10" ry="11" fill="#020617"/>
+                            <circle cx="25" cy="20" r="1" fill="var(--accent-blue)" opacity="0.8"/>
+
+                            <!-- Руки андроида -->
+                            <path d="M 2 48 Q -10 75, 0 100" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M 2 48 Q -10 75, 0 100" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M 48 48 Q 60 75, 50 100" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M 48 48 Q 60 75, 50 100" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round"/>
+                          </g>
+                        </svg>
+                    </div>
+                    <h3>Адаптация и модернизация</h3>
+                    <p>Оперативная доработка и перенос существующего программного кода под новые производственные задачи, бесшовная интеграция стороннего оборудования в общую сеть предприятия.</p>
+                </div>
+
+
+
+
+
+
+            
+
+
+
+</main>
+
+
+
+
+
+
+            
+            <!-- Блок обратной связи (CTA) -->
+            <section class="cta-section">
+                <h2>Нужен надежный софт для производства?</h2>
+                <p style="color: var(--text-muted); max-width: 500px; margin: 10px auto 25px auto; font-size: 16px;">Обсудим вашу задачу, техническое задание или текущий проект автоматизации оборудования.</p>
+                <a href="https://t.me" class="btn-contact" target="_blank">Написать в мессенджер Max</a>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ИП Фролов Р.А. Все права защищены. Разработка систем АСУ ТП.</p>
+    </footer>
+
+
+
+
+
+    <!-- Скрипт опрашивания датчиков и логики FBD / Мониторинга -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Элементы FBD логики (Карточка 1)
+            const fbdIn = document.getElementById("js-fbd-input");
+            const fbdLine0 = document.getElementById("js-fbd-line0");
+            const fbdLine1 = document.getElementById("js-fbd-line1");
+            const fbdLine2 = document.getElementById("js-fbd-line2");
+            const fbdLed0 = document.getElementById("js-fbd-led0");
+            const fbdLed1 = document.getElementById("js-fbd-led1");
+            const fbdLed2 = document.getElementById("js-fbd-led2");
+            const fbdBit0 = document.getElementById("js-fbd-bit0");
+            const fbdBit1 = document.getElementById("js-fbd-bit1");
+            const fbdBit2 = document.getElementById("js-fbd-bit2");
+
+            // Элементы вентиляции (Карточка 2)
+            const txtTemp = document.getElementById("js-hvac-temp");
+            const txtHum = document.getElementById("js-hvac-hum");
+
+            // Элементы протоколов и дисплея Бендера (Карточка 3)
+            const txtHz = document.getElementById("js-modbus-hz");
+            const txtGcal = document.getElementById("js-mbus-gcal");
+            const vncHz = document.getElementById("js-vnc-hz");
+            const vncGcal = document.getElementById("js-vnc-gcal");
+
+            // Базовые переменные техпроцесса
+            let simLevel = 70.2;
+            let temp = 21.5; let hum = 45.0;
+            let frequency = 50.0; let gcal = 142.7;
+
+            setInterval(() => {
+                // Симуляция шума и изменений на производстве
+                simLevel += (Math.random() - 0.5) * 1.5;
+                temp += (Math.random() - 0.5) * 0.2;
+                hum += (Math.random() - 0.5) * 0.3;
+                frequency += (Math.random() - 0.5) * 0.4;
+                gcal += 0.01; // Накопление тепла
+
+                // Границы симуляции
+                if (simLevel < 12) simLevel = 12; if (simLevel > 88) simLevel = 88;
+                if (temp < 20) temp = 20; if (temp > 23) temp = 23;
+                if (hum < 41) hum = 41; if (hum > 49) hum = 49;
+                if (frequency < 45) frequency = 45; if (frequency > 52) frequency = 52;
+
+                // 1. Вывод климат-контроля (SCADA)
+                if (txtTemp) txtTemp.textContent = `T: ${temp.toFixed(1)}°C`;
+                if (txtHum) txtHum.textContent = `H: ${hum.toFixed(1)}%`;
+
+                // 2. Вывод частоты и тепла (Шлюз протоколов + Экраны Бендера)
+                const hzStr = `${frequency.toFixed(1)} Hz`;
+                const gcalStr = `${gcal.toFixed(1)} Gcal`;
+                if (txtHz) txtHz.textContent = hzStr;
+                if (txtGcal) txtGcal.textContent = gcalStr;
+                if (vncHz) vncHz.textContent = hzStr;
+                if (vncGcal) vncGcal.textContent = `${gcal.toFixed(1)} Gc`;
+
+                // 3. Вычисление побитовой FBD логики по уровню
+                if (fbdIn) fbdIn.textContent = `${simLevel.toFixed(1)}%`;
+
+                // Инициализируем биты по умолчанию
+                let b0 = 0, b1 = 1, b2 = 0;
+                let c0 = "#223147", c1 = "var(--accent-green)", c2 = "#223147";
+
+                if (simLevel > 80) { // Авария верхнего уровня
+                    b0 = 1; b1 = 0; b2 = 0;
+                    c0 = "var(--accent-red)"; c1 = "#223147"; c2 = "#223147";
+                } else if (simLevel < 20) { // Сухой ход
+                    b0 = 0; b1 = 0; b2 = 1;
+                    c0 = "#223147"; c1 = "#223147"; c2 = "var(--accent-red)";
+                }
+
+                // Обновляем биты и светодиоды на FBD схеме
+                if (fbdBit0) { fbdBit0.textContent = `Err_High = ${b0}`; fbdBit0.setAttribute("fill", b0 ? "var(--accent-red)" : "var(--text-muted)"); }
+                if (fbdBit1) { fbdBit1.textContent = `Norm_Work = ${b1}`; fbdBit1.setAttribute("fill", b1 ? "var(--accent-green)" : "var(--text-muted)"); }
+                if (fbdBit2) { fbdBit2.textContent = `Err_Low = ${b2}`; fbdBit2.setAttribute("fill", b2 ? "var(--accent-red)" : "var(--text-muted)"); }
+                
+                if (fbdLed0) fbdLed0.setAttribute("fill", c0);
+                if (fbdLed1) fbdLed1.setAttribute("fill", c1);
+                if (fbdLed2) fbdLed2.setAttribute("fill", c2);
+
+                if (fbdLine0) fbdLine0.setAttribute("stroke", b0 ? "var(--accent-red)" : "#334155");
+                if (fbdLine1) fbdLine1.setAttribute("stroke", b1 ? "var(--accent-green)" : "#334155");
+                if (fbdLine2) fbdLine2.setAttribute("stroke", b2 ? "var(--accent-red)" : "#334155");
+
+            }, 1500);
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
