@@ -149,6 +149,141 @@
             box-shadow: 0 6px 30px rgba(0, 210, 255, 0.5);
         }
 
+        /* === БЛОК ЭТАПОВ СТУДИИ ЛЕБЕДЕВА === */
+        .als-compact-workflow {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px 20px 40px 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        .als-flow-ribbon {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .als-ribbon-step {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .als-ribbon-step:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 229, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 229, 255, 0.06);
+        }
+
+        .step-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .step-num {
+            font-family: monospace;
+            font-size: 32px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.12);
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .als-ribbon-step:hover .step-num {
+            color: var(--accent-cyan);
+        }
+
+        .meta-right-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+
+        .step-badge {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.06);
+            padding: 3px 8px;
+            border-radius: 4px;
+            line-height: 1;
+        }
+
+        .step-icon-right {
+            font-size: 22px;
+            line-height: 1;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .icon-orange { filter: drop-shadow(0 0 6px rgba(255, 183, 3, 0.2)); }
+        .icon-cyan   { filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.3)); }
+        .icon-mint   { filter: drop-shadow(0 0 6px rgba(0, 255, 170, 0.3)); }
+
+        .als-ribbon-step:hover .step-icon-right { transform: scale(1.1); }
+        .als-ribbon-step:hover .icon-orange { filter: drop-shadow(0 0 10px rgba(255, 183, 3, 0.6)); }
+        .als-ribbon-step:hover .icon-cyan   { filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.7)); }
+        .als-ribbon-step:hover .icon-mint   { filter: drop-shadow(0 0 10px rgba(0, 255, 170, 0.7)); }
+
+        .als-ribbon-step h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: var(--text-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+        }
+
+        .step-single-text {
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .step-sub-note {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: auto;
+            padding-top: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.03);
+            width: 100%;
+        }
+
+        @media (min-width: 992px) {
+            .als-ribbon-step:not(:last-child)::after {
+                content: '→';
+                position: absolute;
+                right: -14px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 20px;
+                font-weight: bold;
+                color: #27354a;
+                z-index: 10;
+            }
+        }
+
+
+		
         footer { text-align: center; padding: 50px 20px; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border-color); margin-top: 80px; }
 
         .flow-line {
@@ -670,6 +805,71 @@
         </div>
     </div>
 
+    <!-- ======================================================== -->
+    <!-- НАЧАЛО БЛОКА: ЭТАПЫ РАБОТЫ (СТУДИЯ ЛЕБЕДЕВА) -->
+    <!-- ======================================================== -->
+    <div style="width: 100%; max-width: 1200px; padding: 60px 20px; box-sizing: border-box; margin: 0 auto;">
+        <div class="als-flow-ribbon">
+          
+          <!-- Шаг 1 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">01</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Старт</span>
+                <div class="step-icon-right icon-orange">📋</div>
+              </div>
+            </div>
+            <h3>Обсуждение и ТЗ</h3>
+            <p class="step-single-text">Рассказываете, что хотите получить, или присылаете ТЗ.</p>
+            <span class="step-sub-note">Сделаем как удобнее вам</span>
+          </div>
+      
+          <!-- Шаг 2 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">02</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Разработка</span>
+                <div class="step-icon-right icon-cyan">🖥️</div>
+              </div>
+            </div>
+            <h3>Разработка ПО</h3>
+            <p class="step-single-text">Корректирую ТЗ при необходимости и пишу код. Передаю вам на обкатку.</p>
+            <span class="step-sub-note">Включаю таймер на 4 недели</span>
+          </div>
+      
+          <!-- Шаг 3 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">03</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Оплата</span>
+                <div class="step-icon-right icon-mint">🤝</div>
+              </div>
+            </div>
+            <h3>Проверка в деле</h3>
+            <p class="step-single-text">Крутите систему в работе. Рассчитываемся.</p>
+            <span class="step-sub-note">Лично приеду и подстрахую, если что-то пойдет не так</span>
+          </div>
+      
+          <!-- Шаг 4 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">04</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Финиш</span>
+                <div class="step-icon-right icon-cyan">🚀</div>
+              </div>
+            </div>
+            <h3>Полный запуск</h3>
+            <p class="step-single-text">Передаю инструкции и документацию. Высылаем код снятия демо-режима.</p>
+            <span class="step-sub-note">Система готова к бесперебойной работе</span>
+          </div>
+      
+        </div>
+    </div>
+    <!-- ======================================================== -->
 
 
 
