@@ -149,7 +149,7 @@
             box-shadow: 0 6px 30px rgba(0, 210, 255, 0.5);
         }
 
-        /* === БЛОК ЭТАПОВ СТУДИИ ЛЕБЕДЕВА === */
+        /* === БЛОК ЭТАПОВ СТУДИИ  === */
         .als-compact-workflow {
             width: 100%;
             max-width: 1200px;
@@ -291,7 +291,17 @@
             animation: flow-anim 1.2s linear infinite;
         }
         @keyframes flow-anim { 100% { stroke-dashoffset: -14; } }
-    </style>
+    
+	        @media (max-width: 991px) {
+            .als-flow-ribbon { grid-template-columns: 1fr !important; gap: 16px !important; }
+            .als-ribbon-step { width: 100% !important; }
+            .als-ribbon-step:hover { transform: translateX(4px) !important; }
+            .meta-right-column { flex-direction: row !important; align-items: center !important; gap: 10px !important; }
+            .als-ribbon-step:not(:last-child)::after { display: none !important; }
+        }
+
+	
+	</style>
 </head>
 <body>
     <header>
