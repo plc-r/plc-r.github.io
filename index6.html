@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разработка ПО для ПЛК и SCADA | ИП Фролов Р.А.</title>
+    <style>
+        :root {
+            --bg-color: #060913;
+            --card-bg: #0d1527;
+            --accent-blue: #00d2ff;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #64748b;
+            --border-color: #1e293b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(rgba(0, 210, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 210, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+				 header {
+				background: linear-gradient(180deg, #090d16 0%, rgba(6, 9, 19, 0.8) 100%);
+				padding: 30px 20px 20px 20px;
+				text-align: center;
+				border-bottom: 1px solid var(--border-color);
+				backdrop-filter: blur(8px);
+			}
+
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 20px 20px;
+			}
+
+
+        .main-layout { display: block; }
+
+
+
+        .badge {
+            background-color: rgba(0, 210, 255, 0.08);
+            color: var(--accent-blue);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            box-shadow: inset 0 0 8px rgba(0, 210, 255, 0.1);
+        }
+
+			h1 {
+				font-size: 28px;
+				margin: 0 0 10px 0;
+				font-weight: 800;
+				letter-spacing: -0.5px;
+				background: linear-gradient(120deg, #ffffff 40%, var(--accent-blue));
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+
+			.subtitle {
+				color: var(--text-muted);
+				font-size: 15px;
+				max-width: 650px;
+				margin: 0 auto 10px auto;
+			}
+
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 25px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px -15px rgba(0,0,0,0.5);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.15);
+        }
+
+        .svg-container {
+            width: 100%;
+            height: 190px;
+            margin-bottom: 20px;
+            background-color: #060913;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        h3 { font-size: 22px; margin: 0 0 12px 0; color: #ffffff; font-weight: 600; }
+        .service-card p { color: var(--text-muted); font-size: 15px; margin: 0; }
+
+        .cta-section {
+            background: radial-gradient(circle at top, #111e36 0%, var(--bg-color) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            margin-top: 60px;
+            box-shadow: 0 15px 40px -20px rgba(0,0,0,0.8);
+        }
+
+        .btn-contact {
+            display: inline-block;
+            background-color: var(--accent-blue);
+            color: #000000;
+            padding: 15px 36px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 25px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-contact:hover {
+            background-color: #00b8e6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 210, 255, 0.5);
+        }
+
+        /* === БЛОК ЭТАПОВ СТУДИИ  === */
+        .als-compact-workflow {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px 20px 40px 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        .als-flow-ribbon {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .als-ribbon-step {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .als-ribbon-step:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 229, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 229, 255, 0.06);
+        }
+
+        .step-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .step-num {
+            font-family: monospace;
+            font-size: 32px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.12);
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .als-ribbon-step:hover .step-num {
+            color: var(--accent-cyan);
+        }
+
+        .meta-right-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+
+        .step-badge {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.06);
+            padding: 3px 8px;
+            border-radius: 4px;
+            line-height: 1;
+        }
+
+        .step-icon-right {
+            font-size: 22px;
+            line-height: 1;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .icon-orange { filter: drop-shadow(0 0 6px rgba(255, 183, 3, 0.2)); }
+        .icon-cyan   { filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.3)); }
+        .icon-mint   { filter: drop-shadow(0 0 6px rgba(0, 255, 170, 0.3)); }
+
+        .als-ribbon-step:hover .step-icon-right { transform: scale(1.1); }
+        .als-ribbon-step:hover .icon-orange { filter: drop-shadow(0 0 10px rgba(255, 183, 3, 0.6)); }
+        .als-ribbon-step:hover .icon-cyan   { filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.7)); }
+        .als-ribbon-step:hover .icon-mint   { filter: drop-shadow(0 0 10px rgba(0, 255, 170, 0.7)); }
+
+        .als-ribbon-step h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: var(--text-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+        }
+
+        .step-single-text {
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin: 0;
+			min-height: 60px;
+
+        }
+
+        .step-sub-note {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: auto;
+            padding-top: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+       
+			border-top: 1px dashed rgba(255, 255, 255, 0.03);
+            width: 100%;
+        }
+
+        @media (min-width: 992px) {
+            .als-ribbon-step:not(:last-child)::after {
+                content: '→';
+                position: absolute;
+                right: -14px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 20px;
+                font-weight: bold;
+                color: #27354a;
+                z-index: 10;
+            }
+        }
+
+
+		
+        footer { text-align: center; padding: 50px 20px; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border-color); margin-top: 80px; }
+
+        .flow-line {
+            stroke-dasharray: 8, 6;
+            animation: flow-anim 1.2s linear infinite;
+        }
+        @keyframes flow-anim { 100% { stroke-dashoffset: -14; } }
+    
+	        @media (max-width: 991px) {
+            .als-flow-ribbon { grid-template-columns: 1fr !important; gap: 16px !important; }
+            .als-ribbon-step { width: 100% !important; }
+            .als-ribbon-step:hover { transform: translateX(4px) !important; }
+            .meta-right-column { flex-direction: row !important; align-items: center !important; gap: 10px !important; }
+            .als-ribbon-step:not(:last-child)::after { display: none !important; }
+        }
+
+	
+	</style>
+</head>
+<body>
+    <header>
+        <div class="badge">Услуги для АСУ ТП</div>
+        <h1>Инженерные решения для автоматизации</h1>
+        <p class="subtitle">Профессиональная разработка и адаптация программного обеспечения для промышленного оборудования и диспетчеризации.</p>
+    </header>
+
+    <div class="container">
+        <div class="main-layout">
+            <main class="services-grid">
+
+
+
+                <!-- Карточка 1: Программирование ПЛК + 10-битный демультиплексор INT в BITS -->
+                <div class="service-card">
+                    <div class="svg-container">
+                         <svg xmlns="http://w3.org" viewBox="0 0 400 180" width="100%" height="100%">
+                          <rect width="400" height="180" fill="#060913" opacity="0.4"/>
+                          
+                          
+                          <!-- Входная линия и аналоговое значение INT -->
+                          <path d="M 15 90 L 75 90" stroke="var(--accent-blue)" stroke-width="2" fill="none"/>
+                          <circle cx="15" cy="90" r="3" fill="var(--accent-blue)"/>
+                          <rect x="18" y="65" width="53" height="20" rx="3" fill="#060913" stroke="#1e293b"/>
+                          <text id="js-fbd-input" x="44" y="79" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">0</text>
+                          <text x="18" y="100" fill="var(--accent-blue)" font-family="monospace" font-size="9">IN_WORD</text>
+
+                          <!-- Функциональный блок FBD -->
+                          <g transform="translate(75, 15)">
+                            <rect width="135" height="145" rx="4" fill="var(--card-bg)" stroke="#334155" stroke-width="2"/>
+                            <text x="67.5" y="16" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">INT_TO_10BITS</text>
+                            <text x="8" y="75" fill="var(--accent-blue)" font-family="monospace" font-size="10" font-weight="bold">IN</text>
+                            
+                            <!-- Внутренние метки выходов, выстроенные ровно под шаг линий -->
+                            <g font-family="monospace" font-size="8" fill="#9ca3af" text-anchor="end">
+                              <text x="128" y="32">Q0</text>
+                              <text x="128" y="43">Q1</text>
+                              <text x="128" y="54">Q2</text>
+                              <text x="128" y="65">Q3</text>
+                              <text x="128" y="76">Q4</text>
+                              <text x="128" y="87">Q5</text>
+                              <text x="128" y="98">Q6</text>
+                              <text x="128" y="109">Q7</text>
+                              <text x="128" y="120">Q8</text>
+                              <text x="128" y="131">Q9</text>
+                            </g>
+                          </g>
+
+                          <!-- 10 Выходных каналов встык к блоку (Шаг по Y = 11px) -->
+                          <!-- Q0 -->
+                          <path d="M 210 44 L 240 44" stroke="#334155" stroke-width="1.5" id="js-fbd-l0"/>
+                          <circle id="js-fbd-led0" cx="246" cy="44" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t0" x="256" y="47" fill="var(--text-muted)" font-family="monospace" font-size="9">B0:0</text>
+                          
+                          <!-- Q1 -->
+                          <path d="M 210 55 L 240 55" stroke="#334155" stroke-width="1.5" id="js-fbd-l1"/>
+                          <circle id="js-fbd-led1" cx="246" cy="55" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t1" x="256" y="58" fill="var(--text-muted)" font-family="monospace" font-size="9">B1:0</text>
+                          
+                          <!-- Q2 -->
+                          <path d="M 210 66 L 240 66" stroke="#334155" stroke-width="1.5" id="js-fbd-l2"/>
+                          <circle id="js-fbd-led2" cx="246" cy="66" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t2" x="256" y="69" fill="var(--text-muted)" font-family="monospace" font-size="9">B2:0</text>
+                          
+                          <!-- Q3 -->
+                          <path d="M 210 77 L 240 77" stroke="#334155" stroke-width="1.5" id="js-fbd-l3"/>
+                          <circle id="js-fbd-led3" cx="246" cy="77" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t3" x="256" y="80" fill="var(--text-muted)" font-family="monospace" font-size="9">B3:0</text>
+                          
+                          <!-- Q4 -->
+                          <path d="M 210 88 L 240 88" stroke="#334155" stroke-width="1.5" id="js-fbd-l4"/>
+                          <circle id="js-fbd-led4" cx="246" cy="88" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t4" x="256" y="91" fill="var(--text-muted)" font-family="monospace" font-size="9">B4:0</text>
+                          
+                          <!-- Q5 -->
+                          <path d="M 210 99 L 240 99" stroke="#334155" stroke-width="1.5" id="js-fbd-l5"/>
+                          <circle id="js-fbd-led5" cx="246" cy="99" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t5" x="256" y="102" fill="var(--text-muted)" font-family="monospace" font-size="9">B5:0</text>
+                          
+                          <!-- Q6 -->
+                          <path d="M 210 110 L 240 110" stroke="#334155" stroke-width="1.5" id="js-fbd-l6"/>
+                          <circle id="js-fbd-led6" cx="246" cy="110" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t6" x="256" y="113" fill="var(--text-muted)" font-family="monospace" font-size="9">B6:0</text>
+                          
+                          <!-- Q7 -->
+                          <path d="M 210 121 L 240 121" stroke="#334155" stroke-width="1.5" id="js-fbd-l7"/>
+                          <circle id="js-fbd-led7" cx="246" cy="121" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t7" x="256" y="124" fill="var(--text-muted)" font-family="monospace" font-size="9">B7:0</text>
+                          
+                          <!-- Q8 -->
+                          <path d="M 210 132 L 240 132" stroke="#334155" stroke-width="1.5" id="js-fbd-l8"/>
+                          <circle id="js-fbd-led8" cx="246" cy="132" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t8" x="256" y="135" fill="var(--text-muted)" font-family="monospace" font-size="9">B8:0</text>
+                          
+                          <!-- Q9 -->
+                          <path d="M 210 143 L 240 143" stroke="#334155" stroke-width="1.5" id="js-fbd-l9"/>
+                          <circle id="js-fbd-led9" cx="246" cy="143" r="3.5" fill="#223147"/>
+                          <text id="js-fbd-t9" x="256" y="146" fill="var(--text-muted)" font-family="monospace" font-size="9">B9:0</text>
+                        </svg>
+
+
+                    </div>
+                    <h3>Программирование ПЛК</h3>
+                    <p>Разработка надежного, отказоустойчивого программного обеспечения для промышленных контроллеров (Siemens, ОВЕН, Schneider Electric и др.) строго под ваши технологические процессы.</p>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ЧАСТЬ 1 ИЗ 5: Оболочка карточки, встроенные CSS-стили и шапка SCADA -->
+<div class="service-card">
+    <div class="svg-container">
+        <svg xmlns="http://w3.org" viewBox="0 0 400 195" width="100%" height="100%">
+          <style>
+            :root {
+              --hvac-bg: #060913;
+              --hvac-panel-bg: #020617;
+              --hvac-stroke: #334155;
+              --hvac-red: #ef4444;
+              --hvac-blue: #00d2ff;
+              --hvac-green: #10b981;
+              --hvac-purple: #a855f7;
+              --hvac-gray: #64748b;
+            }
+          </style>
+
+          <rect width="400" height="195" fill="var(--hvac-bg)" opacity="0.4"/>
+          <text x="15" y="16" fill="var(--hvac-gray)" font-family="monospace" font-size="10" font-weight="bold">HVAC_SCADA // LIVE_TREND_MONITOR</text>
+          
+          <title>Модернизированный SCADA-интерфейс: 4-ступенчатая приточная система</title>
+
+
+
+          <!-- ЧАСТЬ 2 ИЗ 5: ВЕРХНИЙ КАНАЛ: ВЫТЯЖКА (Справа налево ◄) -->
+          <rect x="15" y="25" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
+
+          <!-- 1. Фильтр вытяжки -->
+          <g transform="translate(345, 25)">
+            <title>ФВ: Карманный фильтр вытяжного воздуха. Авария -засорен </title>
+            <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.08)" stroke="var(--hvac-green)" stroke-width="1.8"/>
+            <polygon points="3,12 22,5 22,20" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+            <polygon points="3,33 22,26 22,41" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+          </g>
+
+          <!-- 2. Вытяжной вентилятор -->
+          <g transform="translate(285, 25)">
+            <title>Центробежный вытяжной вентилятор</title>
+            <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="var(--hvac-purple)" stroke-width="1.8"/>
+            <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="var(--hvac-purple)" stroke-width="1" stroke-dasharray="2,2"/>
+            <g transform="translate(22.5, 22.5)">
+              <g>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
+                <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="2s" repeatCount="indefinite"/>
+              </g>
+              <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
+            </g>
+          </g>
+
+          <!-- 3. Жалюзи вытяжки -->
+          <g transform="translate(30, 25)">
+            <title>ЖВ: Воздушный клапан вытяжки</title>
+            <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
+            <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+          </g>
+
+
+
+
+          <!-- ЧАСТЬ 3 ИЗ 5: НИЖНИЙ КАНАЛ: ПРИТОК (Начало: Клапан, Фильтр, Электронагрев, Охлаждение) -->
+          <rect x="15" y="75" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
+
+          <!-- 1. Жалюзи притока -->
+          <g transform="translate(30, 75)">
+            <title>ЖП: Воздушный клапан притока</title>
+            <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
+            <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+          </g>
+
+          <!-- 2. Фильтр притока -->
+          <g transform="translate(60, 75)">
+            <title>ФП: Карманный фильтр приточного воздуха</title>
+            <rect width="25" height="45" rx="6" fill="rgba(16, 185, 129, 0.08)" stroke="var(--hvac-green)" stroke-width="1.8"/>
+            <path d="M 2 3 L 23 11 L 2 21" fill="none" stroke="var(--hvac-green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 2 24 L 23 32 L 2 42" fill="none" stroke="var(--hvac-green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+
+          <!-- 3. Электрический калорифер преднагрева (Молния +) -->
+          <g transform="translate(130, 75)">
+            <title>HEATER (+): Электрический нагреватель первой ступени</title>
+            <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.05)" stroke="var(--hvac-red)" stroke-width="1.8"/>
+            <path d="M 14 6 L 8 16 L 13 16 L 10 26 L 18 14 L 13 14 Z" fill="none" stroke="var(--hvac-red)" stroke-width="1.2" stroke-linejoin="round"/>
+            <path d="M 10 26 L 12 24 M 10 26 L 8 24" fill="none" stroke="var(--hvac-red)" stroke-width="1.2"/>
+            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-red)" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="13" y1="31" x2="13" y2="39" stroke="var(--hvac-red)" stroke-width="1.8" stroke-linecap="round"/>
+          </g>
+
+          <!-- 4. Фреоновый охладитель прямого испарения (Молния -) -->
+          <g transform="translate(160, 75)">
+            <title>COOLER (-): Фреоновый испаритель (ККБ)</title>
+            <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
+            <path d="M 14 6 L 8 16 L 13 16 L 10 26 L 18 14 L 13 14 Z" fill="none" stroke="var(--hvac-blue)" stroke-width="1.2" stroke-linejoin="round"/>
+            <path d="M 10 26 L 12 24 M 10 26 L 8 24" fill="none" stroke="var(--hvac-blue)" stroke-width="1.2"/>
+            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-blue)" stroke-width="1.8" stroke-linecap="round"/>
+          </g>
+
+
+          <!-- ЧАСТЬ 4 ИЗ 5: НИЖНИЙ КАНАЛ (Продолжение: Увлажнение, Водяной догрев, Вентилятор притока) -->
+          <!-- 5. Секция увлажнения воздуха (Синяя капля -) -->
+          <g transform="translate(190, 75)">
+            <title>HUMIDIFIER (-): Модуль поверхностного/парового увлажнения</title>
+            <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
+            <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--hvac-blue)"/>
+            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-blue)" stroke-width="1.8" stroke-linecap="round"/>
+            
+            <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
+            <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-blue)" stroke-width="0.8"/>
+            <polygon points="15,62 23,58 23,66" fill="var(--hvac-blue)"/>
+            <polygon points="23,62 15,58 15,66" fill="var(--hvac-blue)"/>
+          </g>
+
+          <!-- 6. Водяной догрев / Секция точной регулировки (Красная капля/пар +) -->
+          <g transform="translate(220, 75)">
+            <title>HEATER (+): Водяной нагреватель второй ступени (Догрев)</title>
+            <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.05)" stroke="var(--hvac-red)" stroke-width="1.8"/>
+            <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--hvac-red)"/>
+            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-red)" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="13" y1="31" x2="13" y2="39" stroke="var(--hvac-red)" stroke-width="1.8" stroke-linecap="round"/>
+            
+            <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
+            <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-green)" stroke-width="0.8"/>
+            <polygon points="15,62 23,58 23,66" fill="var(--hvac-red)"/>
+            <polygon points="23,62 15,58 15,66" fill="var(--hvac-red)"/>
+          </g>
+
+          <!-- 7. Приточный вентилятор -->
+          <g transform="translate(285, 75)">
+            <title>Центробежный приточный вентилятор</title>
+            <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="var(--hvac-purple)" stroke-width="1.8"/>
+            <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="var(--hvac-purple)" stroke-width="1" stroke-dasharray="2,2"/>
+            <g transform="translate(22.5, 22.5)">
+              <g>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
+                <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="1.6s" repeatCount="indefinite"/>
+              </g>
+              <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
+            </g>
+          </g>
+
+
+
+          <!-- ЧАСТЬ 5 ИЗ 5: НИЖНИЙ СЛОЙ (Графики трендов, Телеметрия датчиков и закрытие структуры) -->
+          <!-- НИЖНИЙ СЛОЙ: ГРАФИКИ ИСТОРИЧЕСКИХ ТРЕНДОВ -->
+          <g transform="translate(15, 153)">
+            <title>Исторические тренды параметров климата в реальном времени</title>
+            <rect width="250" height="34" fill="#020617" stroke="#1e293b" stroke-width="1"/>
+            <line x1="0" y1="9" x2="250" y2="9" stroke="#0f172a" stroke-width="0.8"/>
+            <line x1="0" y1="17" x2="250" y2="17" stroke="#0f172a" stroke-width="0.8"/>
+            <line x1="0" y1="25" x2="250" y2="25" stroke="#0f172a" stroke-width="0.8"/>
+            <path id="js-trend-sup" d="M 0 17 L 50 15 L 100 22 L 150 12 L 200 18 L 250 14" fill="none" stroke="var(--hvac-green)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path id="js-trend-ext" d="M 0 25 L 60 28 L 120 23 L 180 27 L 250 24" fill="none" stroke="var(--hvac-blue)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path id="js-trend-room" d="M 0 9 L 70 11 L 140 8 L 210 10 L 250 9" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+
+          <!-- БЛОК ТЕЛЕМЕТРИЯ ДАТЧИКОВ ТЕМПЕРАТУР -->
+          <g transform="translate(275, 153)">
+            <rect width="110" height="34" rx="4" fill="#020617" stroke="#1e293b" stroke-width="1"/>
+            <text id="js-hvac-tout" x="6" y="11" fill="var(--hvac-green)" font-family="monospace" font-size="9" font-weight="bold">T_sup:21.4°C</text>
+            <text id="js-hvac-text" x="6" y="21" fill="var(--hvac-blue)" font-family="monospace" font-size="9" font-weight="bold">T_ext:-10.0C</text>
+            <text id="js-hvac-troom" x="6" y="30" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold">T_rm:22.0°C</text>
+          </g>
+        </svg>
+    </div>
+    <h3>Разработка SCADA</h3>
+    <p>Создание интуитивно понятных, информативных и эргономичных интерфейсов оператора (HMI/SCADA). Качественная настройка исторических трендов, архивации и интеллектуальных систем аварийных сообщений.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <!-- Карточка 3: Адаптация и модернизация + Tesla Optimus Bot и Чистая Инфографика -->
+                <div class="service-card">
+                    <div class="svg-container">
+                        <svg xmlns="http://w3.org" viewBox="0 0 400 180" width="100%" height="100%">
+                          <rect width="400" height="180" fill="#060913" opacity="0.4"/>
+                          
+                          <!-- ЦЕНТРАЛЬНЫЙ КОНВЕРТЕР / ШЛЮЗ -->
+								  <g transform="translate(135, 55)">
+								  <title>GW-100: Промышленный шлюз конвертации протоколов</title>
+
+									<rect width="80" height="55" rx="5" fill="var(--card-bg)" stroke="var(--accent-blue)" stroke-width="2"/>
+									<text x="40" y="24" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">GW-100</text>
+									
+									<!-- Выверенная надпись с ОДНОЙ индикаторной точкой статуса OK -->
+									<g transform="translate(12, 42)">
+									  <circle cx="0" cy="-3" r="2.5" fill="var(--accent-green)"/>
+									  <text x="8" y="0" fill="var(--accent-blue)" font-family="monospace" font-size="9" font-weight="bold">ETH / VNC</text>
+									</g>
+								  </g>
+
+
+                          <!-- ЛЕВЫЙ ПОТОК: Modbus RTU и Частотный преобразователь -->
+                          <g>
+                            <title>Преобразователь частоты: регулирование скорости двигателей (Modbus RTU)</title>
+
+                            <path d="M 135 65 L 85 65" stroke="var(--accent-orange)" stroke-width="1.5" fill="none"/>
+                            <path d="M 135 65 L 85 65" class="flow-line" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+                            <!-- Исправлено положение текста Modbus RTU: поднят выше и сдвинут в центр линии -->
+                            <text x="110" y="58" fill="var(--accent-orange)" font-family="monospace" font-size="8" text-anchor="middle">Modbus RTU</text>
+                            
+                            <rect x="20" y="45" width="65" height="40" rx="3" fill="#0b0f19" stroke="#334155" stroke-width="1.5"/>
+                            <text x="52.5" y="62" fill="#9ca3af" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">FC_DRIVE</text>
+                            <text id="js-modbus-hz" x="52.5" y="76" fill="var(--accent-orange)" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">50.0 Hz</text>
+                          </g>
+
+                          <!-- НИЖНИЙ ПОТОК: M-Bus и Теплосчетчик -->
+                          <g>
+                            <title>Теплосчетчик: коммерческий учет энергоресурсов (M-Bus)</title>
+
+                            <path d="M 175 110 L 175 135" stroke="var(--accent-green)" stroke-width="1.5" fill="none"/>
+                            <text x="182" y="125" fill="var(--accent-green)" font-family="monospace" font-size="8">M-Bus</text>
+                            
+                            <rect x="135" y="135" width="80" height="35" rx="3" fill="#0b0f19" stroke="#334155" stroke-width="1.5"/>
+                            <text x="175" y="149" fill="#9ca3af" font-family="monospace" font-size="9" text-anchor="middle">HEAT_METER</text>
+                            <text id="js-mbus-gcal" x="175" y="162" fill="var(--accent-green)" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">142.7 Gcal</text>
+                          </g>
+
+                          <!-- ВЕРХНИЙ ПОТОК: CAN Bus уходит строго в Шлюз GW-100 -->
+                          <g>
+                            <path d="M 175 55 L 175 30 L 20 30" stroke="#eab308" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+                            <text x="95" y="24" fill="#eab308" font-family="monospace" font-size="8">CAN Bus Link</text>
+                          </g>
+
+                          <!-- СВОБОДНО ПАРИЯЩИЙ ТЕЛЕФОН ПО WI-FI -->
+                          <g transform="translate(245, 55)">
+                            <title>VNC-клиент: удаленный беспроводной мониторинг и управление оборудованием со смартфона</title>
+
+                            <path d="M -30 22 L 5 22" stroke="var(--accent-blue)" stroke-width="1.5" fill="none"/>
+                            <path d="M -30 22 L 5 22" class="flow-line" stroke="#ffffff" stroke-width="1" opacity="0.6"/>
+                            <text x="-12" y="14" fill="var(--accent-blue)" font-family="monospace" font-size="8" text-anchor="middle">Wi-Fi</text>
+
+                            <!-- Корпус смартфона -->
+                            <rect x="5" y="-12" width="36" height="68" rx="4" fill="#060913" stroke="#2d3748" stroke-width="1.5"/>
+                            <rect x="8" y="-8" width="30" height="60" rx="2" fill="var(--card-bg)"/>
+                            
+                           
+                             <!-- Выверенный экран VNC с одной четкой точкой статуса по центру -->
+                            <g transform="translate(15, 4)">
+                              <circle cx="0" cy="-3" r="1.5" fill="var(--accent-green)"/>
+                              <text x="5" y="0" fill="var(--accent-blue)" font-family="monospace" font-size="6" font-weight="bold">VNC</text>
+                            </g>
+
+                            
+                            <text id="js-vnc-hz" x="23" y="22" fill="var(--accent-orange)" font-family="monospace" font-size="7" font-weight="bold" text-anchor="middle">50.0Hz</text>
+                            <text id="js-vnc-gcal" x="23" y="36" fill="var(--accent-green)" font-family="monospace" font-size="6" font-weight="bold" text-anchor="middle">142.7 Gc</text>
+                          </g>
+
+
+
+                          <!-- СУПЕРСОВРЕМЕННЫЙ РОБОТ OPTIMUS ТАНЦУЕТ  -->
+                          <g transform="translate(320, 25)">
+                            <title>Tesla Optimus: Робот танцует </title>
+                            <!-- Ноги андроида (немного пружинят за счет микро-анимации всего тела) -->
+                            <rect x="14" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
+                            <rect x="30" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
+                            <rect x="12" y="140" width="10" height="4" rx="1" fill="#1e293b"/>
+                            <rect x="28" y="140" width="10" height="4" rx="1" fill="#1e293b"/>
+
+                            <!-- Анатомическое белое туловище Optimus (качается влево-вправо) -->
+                            <g>
+                              <path d="M 2 45 L 48 45 L 38 115 L 12 115 Z" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
+                              <path d="M 16 45 L 34 45 L 30 85 L 20 85 Z" fill="#0f172a"/>
+                              <line x1="16" y1="95" x2="34" y2="95" stroke="#94a3b8" stroke-width="0.8"/>
+                              <rect x="19" y="37" width="12" height="8" fill="#334155"/>
+                              <ellipse cx="25" cy="24" rx="13" ry="14" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
+                              <ellipse cx="25" cy="23" rx="10" ry="11" fill="#020617"/>
+                              <circle cx="25" cy="20" r="1" fill="var(--accent-blue)" opacity="0.8"/>
+                              
+                              <!-- Качание корпуса влево-вправо под бит  -->
+                              <animateTransform attributeName="transform" type="rotate" values="-2 25 80; 2 25 80; -2 25 80" dur="0.6s" repeatCount="indefinite" additive="sum"/>
+                            </g>
+
+                            <!-- ЛЕВАЯ РУКА (Согнута перед грудью, качается вверх-вниз) -->
+                            <g transform="translate(2, 48)">
+                              <path d="M 0 0 L -8 20 L 15 20" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M 0 0 L -8 20 L 15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <circle cx="15" cy="20" r="1.5" fill="#1e293b"/>
+                              
+                              <!-- Ритмичные махи локтем  (Фаза 1) -->
+                              <animateTransform attributeName="transform" type="rotate" values="-15 0 0; 20 0 0; -15 0 0" dur="0.6s" repeatCount="indefinite" additive="sum"/>
+                            </g>
+
+                            <!-- ПРАВАЯ РУКА (Двигается в противофазе к левой) -->
+                            <g transform="translate(46, 48)">
+                              <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <circle cx="-15" cy="20" r="1.5" fill="#1e293b"/>
+                              
+                              <!-- Ритмичные махи локтем  в противофазе (Фаза 2) -->
+                              <animateTransform attributeName="transform" type="rotate" values="20 0 0; -15 0 0; 20 0 0" dur="0.6s" repeatCount="indefinite" additive="sum"/>
+                            </g>
+                          </g>
+
+
+                        </svg>
+                    </div>
+                    <h3>Адаптация и модернизация</h3>
+                    <p>Оперативная доработка кода для объединения разнородного оборудования в единую цифровую экосистему предприятия. Настройка сетевых шлюзов обеспечивает одновременный сбор данных с приводов, приборов учета и периферийных устройств. </p>
+
+					
+                </div>
+
+
+
+
+
+
+            
+
+
+
+</main>
+
+
+        <!-- Двухкарточный подвал: Раздельный терминал и Выделенная обратная связь -->
+        <div style="margin-top: 50px; display: flex; gap: 30px; flex-wrap: wrap;">
+            
+            <!-- ЛЕВАЯ КАРТОЧКА: Живой промышленный терминал логов -->
+            <section style="flex: 1; min-width: 320px; background: #020617; border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; font-family: sans-serif; box-shadow: 0 10px 30px -15px rgba(0,0,0,0.8); display: flex; flex-direction: column;">
+                <!-- Инженерная панель статуса логов -->
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 10px; margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="width: 7px; height: 7px; background: var(--accent-red); border-radius: 50%; display: inline-block;"></span>
+                        <span style="width: 7px; height: 7px; background: var(--accent-orange); border-radius: 50%; display: inline-block;"></span>
+                        <span style="width: 7px; height: 7px; background: var(--accent-green); border-radius: 50%; display: inline-block;"></span>
+                        <span style="color: var(--text-muted); font-family: monospace; font-size: 11px; font-weight: bold; margin-left: 4px;">SYS_LOGGER // TERM_O1</span>
+                    </div>
+                    <span style="color: var(--accent-green); font-family: monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">● LIVE</span>
+                </div>
+                <!-- Окно вывода логов -->
+                <div id="js-console-log" style="height: 135px; overflow-y: auto; font-family: monospace; font-size: 11px; line-height: 1.6; color: #94a3b8; padding-right: 5px;">
+                    <div style="color: var(--accent-blue);">[SYSTEM] Initializing industrial protocol gateway GW-100...</div>
+                    <div style="color: var(--accent-green);">[MODBUS] Port COM1 opened successfully. Baudrate 115200.</div>
+                </div>
+            </section>
+
+
+             <!-- ПРАВАЯ КАРТОЧКА: Выделенная обратная связь с прямой ссылкой на Max -->
+            <section style="flex: 1; min-width: 320px; background: linear-gradient(135deg, #111e35 0%, #1e293b 100%); border: 1px solid rgba(0, 210, 255, 0.25); border-radius: 14px; padding: 25px; text-align: center; box-shadow: 0 15px 35px -15px rgba(0, 210, 255, 0.1); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <h2 style="font-size: 22px; color: #ffffff; margin-bottom: 6px; font-weight: 700; letter-spacing: -0.5px;">Нужен надежный софт?</h2>
+                <p style="color: #94a3b8; font-size: 14px; max-width: 320px; margin: 0 auto 18px auto; line-height: 1.4;">Обсудим вашу производственную задачу или текущее ТЗ на автоматизацию.</p>
+                <a href="https://max.ru/u/f9LHodD0cOLeS2-JO2himf5QTSC2o-nzjBdjfhF7tbSGjMuS_N56za1CAN4" class="btn-contact" target="_blank" style="margin-top: 0; padding: 12px 32px; font-size: 15px; width: auto;">Написать мессенджер MAX</a>
+            </section>
+
+
+        </div>
+
+
+
+
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- НАЧАЛО БЛОКА: ЭТАПЫ РАБОТЫ (СТУДИЯ ) -->
+    <!-- ======================================================== -->
+    <div style="width: 100%; max-width: 1200px; padding: 60px 20px; box-sizing: border-box; margin: 0 auto;">
+        <div class="als-flow-ribbon">
+          
+          <!-- Шаг 1 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">01</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Старт</span>
+                <div class="step-icon-right icon-orange">📋</div>
+              </div>
+            </div>
+            <h3>Обсуждение и ТЗ</h3>
+            <p class="step-single-text">Рассказываете, что хотите получить, или присылаете ТЗ.</p>
+            <span class="step-sub-note">Сделаем как удобнее вам</span>
+          </div>
+      
+          <!-- Шаг 2 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">02</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Разработка</span>
+                <div class="step-icon-right icon-cyan">🖥️</div>
+              </div>
+            </div>
+            <h3>Разработка ПО</h3>
+            <p class="step-single-text">Корректирую ТЗ при необходимости и пишу код. Передаю ПО на тестирование.</p>
+            <span class="step-sub-note">Включаем таймер на 4 недели</span>
+          </div>
+      
+          <!-- Шаг 3 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">03</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Оплата</span>
+                <div class="step-icon-right icon-mint">🤝</div>
+              </div>
+            </div>
+            <h3>Проверка в деле</h3>
+            <p class="step-single-text">Проводите комплексные испытания. Рассчитываемся. <br><br></p>
+            <span class="step-sub-note">Инженерная поддержка при ПНР</span>
+          </div>
+      
+          <!-- Шаг 4 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">04</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Финиш</span>
+                <div class="step-icon-right icon-cyan">🚀</div>
+              </div>
+            </div>
+            <h3>Полный запуск</h3>
+            <p class="step-single-text">Передаю инструкции и документацию. Высылаем код снятия демо-режима.</p>
+            <span class="step-sub-note">Система готова к бесперебойной работе</span>
+          </div>
+      
+        </div>
+    </div>
+    <!-- ======================================================== -->
+
+
+
+
+
+
+
+    <footer>
+        <p>&copy; 2026 ИП Фролов Р.А. Все права защищены. Разработка систем АСУ ТП.</p>
+    </footer>
+
+
+
+
+    <!-- Скрипт опрашивания датчиков, 10-битной логики ПЛК, SCADA-трендов и терминала логов -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Элементы 10-битной логики ПЛК (Карточка 1)
+            const fbdIn = document.getElementById("js-fbd-input");
+
+            // Элементы двухканальной вентиляции SCADA (Карточка 2)
+            const hvacTout = document.getElementById("js-hvac-tout");
+            const hvacText = document.getElementById("js-hvac-text");
+            const hvacTrm = document.getElementById("js-hvac-troom");
+
+            // Элементы динамических SVG-линий трендов (Карточка 2)
+            const trendSupPath = document.getElementById("js-trend-sup");
+            const trendExtPath = document.getElementById("js-trend-ext");
+            const trendRoomPath = document.getElementById("js-trend-room");
+
+            // Элементы протоколов и дисплея Тесла-бота (Карточка 3)
+            const txtHz = document.getElementById("js-modbus-hz");
+            const txtGcal = document.getElementById("js-mbus-gcal");
+            const vncHz = document.getElementById("js-vnc-hz");
+            const vncGcal = document.getElementById("js-vnc-gcal");
+
+            // Консоль терминала отладки
+            const consoleLog = document.getElementById("js-console-log");
+
+            // Переменные техпроцесса
+            let intValue = 0;
+            let frequency = 50.0; let gcal = 142.7;
+            
+            // Температуры для ПВУ
+            let t_ext = -10.0;
+            let t_room = 22.0;
+
+            // Буферы для хранения истории точек графиков (максимум 25 точек)
+            const maxPoints = 25;
+            const historySup = [];
+            const historyExt = [];
+            const historyRoom = [];
+
+            // Функция отрисовки с ИНДИВИДУАЛЬНОЙ калибровкой масштаба по осям (FIFO)
+            function buildSvgPath(historyArray, minVal, maxVal, heightPx, widthPx) {
+                if (historyArray.length === 0) return "M 0 0";
+                const stepX = widthPx / (maxPoints - 1);
+                
+                return historyArray.map((val, index) => {
+                    const x = index * stepX;
+                    let pct = (val - minVal) / (maxVal - minVal);
+                    if (pct < 0) pct = 0; if (pct > 1) pct = 1;
+                    // Рассчитываем y строго в границах высоты холста (34px)
+                    const y = heightPx - (pct * (heightPx - 6)) - 3;
+                    return `${index === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
+                }).join(' ');
+            }
+
+            // Функция симуляции работы реального оборудования (Интервал ускорен до 1.1с для дикой динамики)
+            setInterval(() => {
+                // 1. Симуляция 10-битного ПЛК
+                intValue = Math.floor(Math.random() * 1024);
+                if (fbdIn) fbdIn.textContent = intValue;
+
+                for (let i = 0; i < 10; i++) {
+                    const line = document.getElementById(`js-fbd-l${i}`);
+                    const led = document.getElementById(`js-fbd-led${i}`);
+                    const text = document.getElementById(`js-fbd-t${i}`);
+                    let bitActive = (intValue & (1 << i)) ? 1 : 0;
+                    if (line && led && text) {
+                        line.setAttribute("stroke", bitActive ? "var(--accent-red)" : "#334155");
+                        led.setAttribute("fill", bitActive ? "var(--accent-red)" : "#223147");
+                        text.textContent = `B${i}:${bitActive}`;
+                        text.setAttribute("fill", bitActive ? "#ffffff" : "var(--text-muted)");
+                        text.style.fontWeight = bitActive ? "bold" : "normal";
+                    }
+                }
+
+                // 2. Симуляция ПВУ вентиляции с ЭКСТРЕМАЛЬНО ХАОТИЧНЫМ ШУМОМ
+                // Множитель увеличен с 0.5 до 3.5 для размашистых скачков по осям
+                t_ext += (Math.random() - 0.5) * 3.5;
+                t_room += (Math.random() - 0.5) * 1.5;
+                
+                // Жесткие технологические коридоры датчиков
+                if (t_ext < -16) t_ext = -16; if (t_ext > -4) t_ext = -4;
+                if (t_room < 18) t_room = 18; if (t_room > 26) t_room = 26;
+                
+                let t_supply = t_ext + 0.82 * (t_room - t_ext); // КПД рекуператора
+
+                // Вывод текстовых значений
+                if (hvacTout) hvacTout.textContent = `T_sup:${t_supply.toFixed(1)}°C`;
+                if (hvacText) hvacText.textContent = `T_ext:${t_ext.toFixed(1)}°C`;
+                if (hvacTrm) hvacTrm.textContent = `T_rm:${t_room.toFixed(1)}°C`;
+
+                // Запись значений в исторические буферы FIFO
+                historySup.push(t_supply);
+                historyExt.push(t_ext);
+                historyRoom.push(t_room);
+
+                if (historySup.length > maxPoints) historySup.shift();
+                if (historyExt.length > maxPoints) historyExt.shift();
+                if (historyRoom.length > maxPoints) historyRoom.shift();
+
+                // ТОЧНАЯ МАТЕМАТИЧЕСКАЯ КАЛИБРОВКА МАСШТАБОВ ОСЕЙ (ФИКС ПЕРЕСЕЧЕНИЙ)
+                // Синий минус (T_ext от -16 до -4) ложится строго на дно сетки
+                // Белая комнатная (T_rm от 18 до 26) уходит на самый верх
+                if (trendSupPath) trendSupPath.setAttribute("d", buildSvgPath(historySup, -5, 25, 34, 250));
+                if (trendExtPath) trendExtPath.setAttribute("d", buildSvgPath(historyExt, -17, 10, 34, 250)); // Сдвигает синий график вниз холста
+                if (trendRoomPath) trendRoomPath.setAttribute("d", buildSvgPath(historyRoom, 10, 27, 34, 250)); // Сдвигает белый график вверх холста
+
+                // 3. Изменения параметров частоты и тепла (Карточка 3)
+                frequency += (Math.random() - 0.5) * 0.4;
+                gcal += 0.01;
+                if (frequency < 45) frequency = 45; if (frequency > 52) frequency = 52;
+
+                const hzStr = `${frequency.toFixed(1)} Hz`;
+                if (txtHz) txtHz.textContent = hzStr;
+                if (txtGcal) txtGcal.textContent = `${gcal.toFixed(1)} Gcal`;
+                if (vncHz) vncHz.textContent = hzStr;
+                if (vncGcal) vncGcal.textContent = `${gcal.toFixed(1)} Gc`;
+
+            }, 1100); // Скорость обновления трендов увеличена для живой динамики логов
+
+            // Движок логов нижнего терминала
+            const logTemplates = [
+                { type: 'modbus', text: () => `[MODBUS RTU] Tx: [01 03 00 20 00 02 C5 41] // Rx: Ok, Freq=${frequency.toFixed(1)}Hz`, color: 'var(--accent-orange)' },
+                { type: 'mbus', text: () => `[M-Bus] Requesting Heat Meter SL01... Answer: ${gcal.toFixed(3)} Gcal`, color: 'var(--accent-green)' },
+                { type: 'plc', text: () => `[PLC_CPU] Unpacked INT=${intValue} to binary string: ${intValue.toString(2).padStart(10, '0')}`, color: 'var(--accent-blue)' },
+                { type: 'hvac', text: () => `[BMS_HVAC] Live trends updated. T_sup=${(t_ext + 0.82 * (t_room - t_ext)).toFixed(1)}°C. History buffer pool OK.`, color: '#a855f7' },
+                { type: 'can', text: () => `[CAN_BUS] Broadcast heartbeat ID=0x10A length=8 [00 FF 22 00 00 11 AA BB]`, color: '#eab308' }
+            ];
+
+            setInterval(() => {
+                if (!consoleLog) return;
+                const logItem = logTemplates[Math.floor(Math.random() * logTemplates.length)];
+                const timeStr = new Date().toLocaleTimeString();
+                const logLine = document.createElement("div");
+                logLine.style.color = logItem.color;
+                logLine.style.marginBottom = "4px";
+                logLine.textContent = `[${timeStr}] ${logItem.text()}`;
+                consoleLog.appendChild(logLine);
+                if (consoleLog.children.length > 30) consoleLog.removeChild(consoleLog.firstChild);
+                consoleLog.scrollTop = consoleLog.scrollHeight;
+            }, 1000);
+        });
+    </script>
+
+	
+	
+	
+	
+	
+	
+</body>
+</html>
+
+
+
+
+
+</body>
+</html>
