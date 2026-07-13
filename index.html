@@ -529,25 +529,28 @@
 
 
           
-			<!-- 3. Электрический калорифер преднагрева (Оранжевая молния +) -->
-			<g transform="translate(130, 75)">
-			 <title>Электрический нагреватель</title>
-			 <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
-			 <path d="M 14 6 L 8 16 L 13 16 L 10 26 L 18 14 L 13 14 Z" fill="var(--accent-orange)" stroke="var(--accent-orange)" stroke-width="1.2" stroke-linejoin="round"/>
-			 <path d="M 10 26 L 12 24 M 10 26 L 8 24" fill="none" stroke="var(--accent-orange)" stroke-width="1.2"/>
-			 <line x1="9" y1="35" x2="17" y2="35" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
-			 <line x1="13" y1="31" x2="13" y2="39" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
-			</g>
+					<!-- 3. Электрический калорифер преднагрева (Оранжевая КОНТУРНАЯ молния +) -->
+					<g transform="translate(130, 75)">
+					  <title>Электрический нагреватель</title>
+					  <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
+					  <!-- Геометрия полностью скопирована со второй молнии -->
+					  <path d="M 15 5 L 8.5 18 L 13.5 18 L 10 31 L 17.5 15 L 12.5 15 Z" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+					  <!-- Четкий знак Плюс под молнией -->
+					  <path d="M 10 37 L 16 37 M 13 34 L 13 40" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-linecap="round"/>
+					</g>
 
 
-          <!-- 4. Фреоновый охладитель прямого испарения (Молния -) -->
-          <g transform="translate(160, 75)">
-            <title>Фреоновый охладитель (ККБ)</title>
-            <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
-            <path d="M 14 6 L 8 16 L 13 16 L 10 26 L 18 14 L 13 14 Z" fill="none" stroke="var(--hvac-blue)" stroke-width="1.2" stroke-linejoin="round"/>
-            <path d="M 10 26 L 12 24 M 10 26 L 8 24" fill="none" stroke="var(--hvac-blue)" stroke-width="1.2"/>
-            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-blue)" stroke-width="1.8" stroke-linecap="round"/>
-          </g>
+						<!-- 4. Фреоновый охладитель прямого испарения (Голубая КОНТУРНАЯ молния -) -->
+						<g transform="translate(160, 75)">
+						  <title>Фреоновый охладитель (ККБ)</title>
+						  <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
+						  <!-- Эталонная геометрия, которая вам понравилась -->
+						  <path d="M 15 5 L 8.5 18 L 13.5 18 L 10 31 L 17.5 15 L 12.5 15 Z" fill="none" stroke="var(--hvac-blue)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+						  <!-- Четкий знак Минус под молнией -->
+						  <line x1="10" y1="37" x2="16" y2="37" stroke="var(--hvac-blue)" stroke-width="1.5" stroke-linecap="round"/>
+						</g>
+
+
 
 
           <!-- ЧАСТЬ 4 ИЗ 5: НИЖНИЙ КАНАЛ (Продолжение: Увлажнение, Водяной догрев, Вентилятор притока) -->
