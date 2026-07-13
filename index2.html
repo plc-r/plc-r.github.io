@@ -149,6 +149,144 @@
             box-shadow: 0 6px 30px rgba(0, 210, 255, 0.5);
         }
 
+        /* === БЛОК ЭТАПОВ СТУДИИ  === */
+        .als-compact-workflow {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px 20px 40px 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        .als-flow-ribbon {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .als-ribbon-step {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .als-ribbon-step:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 229, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 229, 255, 0.06);
+        }
+
+        .step-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .step-num {
+            font-family: monospace;
+            font-size: 32px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.12);
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .als-ribbon-step:hover .step-num {
+            color: var(--accent-cyan);
+        }
+
+        .meta-right-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+
+        .step-badge {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.06);
+            padding: 3px 8px;
+            border-radius: 4px;
+            line-height: 1;
+        }
+
+        .step-icon-right {
+            font-size: 22px;
+            line-height: 1;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .icon-orange { filter: drop-shadow(0 0 6px rgba(255, 183, 3, 0.2)); }
+        .icon-cyan   { filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.3)); }
+        .icon-mint   { filter: drop-shadow(0 0 6px rgba(0, 255, 170, 0.3)); }
+
+        .als-ribbon-step:hover .step-icon-right { transform: scale(1.1); }
+        .als-ribbon-step:hover .icon-orange { filter: drop-shadow(0 0 10px rgba(255, 183, 3, 0.6)); }
+        .als-ribbon-step:hover .icon-cyan   { filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.7)); }
+        .als-ribbon-step:hover .icon-mint   { filter: drop-shadow(0 0 10px rgba(0, 255, 170, 0.7)); }
+
+        .als-ribbon-step h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: var(--text-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+        }
+
+        .step-single-text {
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin: 0;
+			min-height: 60px;
+
+        }
+
+        .step-sub-note {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: auto;
+            padding-top: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+       
+			border-top: 1px dashed rgba(255, 255, 255, 0.03);
+            width: 100%;
+        }
+
+        @media (min-width: 992px) {
+            .als-ribbon-step:not(:last-child)::after {
+                content: '→';
+                position: absolute;
+                right: -14px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 20px;
+                font-weight: bold;
+                color: #27354a;
+                z-index: 10;
+            }
+        }
+
+
+		
         footer { text-align: center; padding: 50px 20px; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border-color); margin-top: 80px; }
 
         .flow-line {
@@ -156,7 +294,17 @@
             animation: flow-anim 1.2s linear infinite;
         }
         @keyframes flow-anim { 100% { stroke-dashoffset: -14; } }
-    </style>
+    
+	        @media (max-width: 991px) {
+            .als-flow-ribbon { grid-template-columns: 1fr !important; gap: 16px !important; }
+            .als-ribbon-step { width: 100% !important; }
+            .als-ribbon-step:hover { transform: translateX(4px) !important; }
+            .meta-right-column { flex-direction: row !important; align-items: center !important; gap: 10px !important; }
+            .als-ribbon-step:not(:last-child)::after { display: none !important; }
+        }
+
+	
+	</style>
 </head>
 <body>
     <header>
@@ -303,13 +451,16 @@
           <!-- ЧАСТЬ 2 ИЗ 5: ВЕРХНИЙ КАНАЛ: ВЫТЯЖКА (Справа налево ◄) -->
           <rect x="15" y="25" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
 
-          <!-- 1. Аварийный блок / Секция дожига вытяжки (Красные треугольники) -->
-          <g transform="translate(345, 25)">
-            <title>Аварийный триггер / Секция дожига вытяжного воздуха</title>
-            <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.08)" stroke="var(--hvac-green)" stroke-width="1.8"/>
-            <polygon points="3,12 22,5 22,20" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
-            <polygon points="3,33 22,26 22,41" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
-          </g>
+          <!-- 1. Фильтр вытяжки -->
+			<g transform="translate(345, 25)">
+			 <title>Фильтр вытяжного воздуха. Авария - засор</title>
+			 <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.08)" stroke="var(--hvac-red)" stroke-width="1.8"/>
+			 <!-- Три горизонтальных кармана фильтра -->
+			 <polygon points="3,11 22,5 22,17" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+			 <polygon points="3,22.5 22,16.5 22,28.5" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+			 <polygon points="3,34 22,28 22,40" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+			</g>
+
 
           <!-- 2. Вытяжной вентилятор -->
           <g transform="translate(285, 25)">
@@ -331,14 +482,19 @@
           </g>
 
           <!-- 3. Жалюзи вытяжки -->
-          <g transform="translate(30, 25)">
-            <title>ЖВ: Воздушный клапан вытяжки</title>
-            <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
-            <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-            <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-            <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-            <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-          </g>
+				<g transform="translate(30, 25)">
+				 <title>Жалюзи вытяжки</title>
+				 <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
+				 <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+				 <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+				 <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+				 <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+				 <circle cx="9" cy="9" r="1.5" fill="#ffffff"/>
+				 <circle cx="9" cy="18" r="1.5" fill="#ffffff"/>
+				 <circle cx="9" cy="27" r="1.5" fill="#ffffff"/>
+				 <circle cx="9" cy="36" r="1.5" fill="#ffffff"/>
+				</g>
+
 
 
 
@@ -347,36 +503,46 @@
           <rect x="15" y="75" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
 
           <!-- 1. Жалюзи притока -->
-          <g transform="translate(30, 75)">
-            <title>ЖП: Воздушный клапан притока</title>
-            <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
-            <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-            <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-            <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-            <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-          </g>
+				<g transform="translate(30, 75)">
+				 <title>Жалюзи притока</title>
+				 <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
+				 <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+				 <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+				 <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+				 <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+				 <circle cx="9" cy="9" r="1.5" fill="#ffffff"/>
+				 <circle cx="9" cy="18" r="1.5" fill="#ffffff"/>
+				 <circle cx="9" cy="27" r="1.5" fill="#ffffff"/>
+				 <circle cx="9" cy="36" r="1.5" fill="#ffffff"/>
+				</g>
+
 
           <!-- 2. Фильтр притока -->
-          <g transform="translate(60, 75)">
-            <title>ФП: Карманный фильтр приточного воздуха</title>
-            <rect width="25" height="45" rx="6" fill="rgba(16, 185, 129, 0.08)" stroke="var(--hvac-green)" stroke-width="1.8"/>
-            <path d="M 2 3 L 23 11 L 2 21" fill="none" stroke="var(--hvac-green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M 2 24 L 23 32 L 2 42" fill="none" stroke="var(--hvac-green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
+				<g transform="translate(60, 75)">
+				 <title>фильтр приточного воздуха</title>
+				 <rect width="25" height="45" rx="6" fill="rgba(16, 185, 129, 0.08)" stroke="var(--hvac-green)" stroke-width="1.8"/>
+				 <!-- Три горизонтальных кармана фильтра (зеркально) -->
+				 <polygon points="22,11 3,5 3,17" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
+				 <polygon points="22,22.5 3,16.5 3,28.5" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
+				 <polygon points="22,34 3,28 3,40" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
+				</g>
 
-          <!-- 3. Электрический калорифер преднагрева (Молния +) -->
-          <g transform="translate(130, 75)">
-            <title>HEATER (+): Электрический нагреватель первой ступени</title>
-            <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.05)" stroke="var(--hvac-red)" stroke-width="1.8"/>
-            <path d="M 14 6 L 8 16 L 13 16 L 10 26 L 18 14 L 13 14 Z" fill="none" stroke="var(--hvac-red)" stroke-width="1.2" stroke-linejoin="round"/>
-            <path d="M 10 26 L 12 24 M 10 26 L 8 24" fill="none" stroke="var(--hvac-red)" stroke-width="1.2"/>
-            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-red)" stroke-width="1.8" stroke-linecap="round"/>
-            <line x1="13" y1="31" x2="13" y2="39" stroke="var(--hvac-red)" stroke-width="1.8" stroke-linecap="round"/>
-          </g>
+
+          
+			<!-- 3. Электрический калорифер преднагрева (Оранжевая молния +) -->
+			<g transform="translate(130, 75)">
+			 <title>Электрический нагреватель</title>
+			 <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
+			 <path d="M 14 6 L 8 16 L 13 16 L 10 26 L 18 14 L 13 14 Z" fill="var(--accent-orange)" stroke="var(--accent-orange)" stroke-width="1.2" stroke-linejoin="round"/>
+			 <path d="M 10 26 L 12 24 M 10 26 L 8 24" fill="none" stroke="var(--accent-orange)" stroke-width="1.2"/>
+			 <line x1="9" y1="35" x2="17" y2="35" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
+			 <line x1="13" y1="31" x2="13" y2="39" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
+			</g>
+
 
           <!-- 4. Фреоновый охладитель прямого испарения (Молния -) -->
           <g transform="translate(160, 75)">
-            <title>COOLER (-): Фреоновый испаритель (ККБ)</title>
+            <title>Фреоновый охладитель (ККБ)</title>
             <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
             <path d="M 14 6 L 8 16 L 13 16 L 10 26 L 18 14 L 13 14 Z" fill="none" stroke="var(--hvac-blue)" stroke-width="1.2" stroke-linejoin="round"/>
             <path d="M 10 26 L 12 24 M 10 26 L 8 24" fill="none" stroke="var(--hvac-blue)" stroke-width="1.2"/>
@@ -387,7 +553,7 @@
           <!-- ЧАСТЬ 4 ИЗ 5: НИЖНИЙ КАНАЛ (Продолжение: Увлажнение, Водяной догрев, Вентилятор притока) -->
           <!-- 5. Секция увлажнения воздуха (Синяя капля -) -->
           <g transform="translate(190, 75)">
-            <title>HUMIDIFIER (-): Модуль поверхностного/парового увлажнения</title>
+            <title>Водяной охладитель</title>
             <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
             <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--hvac-blue)"/>
             <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-blue)" stroke-width="1.8" stroke-linecap="round"/>
@@ -398,19 +564,20 @@
             <polygon points="23,62 15,58 15,66" fill="var(--hvac-blue)"/>
           </g>
 
-          <!-- 6. Водяной догрев / Секция точной регулировки (Красная капля/пар +) -->
-          <g transform="translate(220, 75)">
-            <title>HEATER (+): Водяной нагреватель второй ступени (Догрев)</title>
-            <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.05)" stroke="var(--hvac-red)" stroke-width="1.8"/>
-            <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--hvac-red)"/>
-            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-red)" stroke-width="1.8" stroke-linecap="round"/>
-            <line x1="13" y1="31" x2="13" y2="39" stroke="var(--hvac-red)" stroke-width="1.8" stroke-linecap="round"/>
-            
-            <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
-            <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-green)" stroke-width="0.8"/>
-            <polygon points="15,62 23,58 23,66" fill="var(--hvac-red)"/>
-            <polygon points="23,62 15,58 15,66" fill="var(--hvac-red)"/>
-          </g>
+			<!-- 6. Водяной догрев / Секция точной регулировки (Оранжевая капля + и оранжевый клапан) -->
+			<g transform="translate(220, 75)">
+			 <title>Водяной нагреватель</title>
+			 <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
+			 <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--accent-orange)"/>
+			 <line x1="9" y1="35" x2="17" y2="35" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
+			 <line x1="13" y1="31" x2="13" y2="39" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
+			 
+			 <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
+			 <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-green)" stroke-width="0.8"/>
+			 <polygon points="15,62 23,58 23,66" fill="var(--accent-orange)"/>
+			 <polygon points="23,62 15,58 15,66" fill="var(--accent-orange)"/>
+			</g>
+
 
           <!-- 7. Приточный вентилятор -->
           <g transform="translate(285, 75)">
@@ -552,7 +719,7 @@
                             <rect x="5" y="-12" width="36" height="68" rx="4" fill="#060913" stroke="#2d3748" stroke-width="1.5"/>
                             <rect x="8" y="-8" width="30" height="60" rx="2" fill="var(--card-bg)"/>
                             
-                            <!-- Выверенный экран VNC Client с одной четкой точкой статуса -->
+                           
                              <!-- Выверенный экран VNC с одной четкой точкой статуса по центру -->
                             <g transform="translate(15, 4)">
                               <circle cx="0" cy="-3" r="1.5" fill="var(--accent-green)"/>
@@ -568,7 +735,7 @@
 
                           <!-- СУПЕРСОВРЕМЕННЫЙ РОБОТ OPTIMUS ТАНЦУЕТ  -->
                           <g transform="translate(320, 25)">
-                            <title>Tesla Optimus: Робот танцует Skibidi от Little Big! SKIBIDI-WA-PA-PA!</title>
+                            <title>Tesla Optimus: Робот танцует </title>
                             <!-- Ноги андроида (немного пружинят за счет микро-анимации всего тела) -->
                             <rect x="14" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
                             <rect x="30" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
@@ -585,7 +752,7 @@
                               <ellipse cx="25" cy="23" rx="10" ry="11" fill="#020617"/>
                               <circle cx="25" cy="20" r="1" fill="var(--accent-blue)" opacity="0.8"/>
                               
-                              <!-- Качание корпуса влево-вправо под бит Skibidi -->
+                              <!-- Качание корпуса влево-вправо под бит  -->
                               <animateTransform attributeName="transform" type="rotate" values="-2 25 80; 2 25 80; -2 25 80" dur="0.6s" repeatCount="indefinite" additive="sum"/>
                             </g>
 
@@ -595,7 +762,7 @@
                               <path d="M 0 0 L -8 20 L 15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                               <circle cx="15" cy="20" r="1.5" fill="#1e293b"/>
                               
-                              <!-- Ритмичные махи локтем Skibidi (Фаза 1) -->
+                              <!-- Ритмичные махи локтем  (Фаза 1) -->
                               <animateTransform attributeName="transform" type="rotate" values="-15 0 0; 20 0 0; -15 0 0" dur="0.6s" repeatCount="indefinite" additive="sum"/>
                             </g>
 
@@ -605,7 +772,7 @@
                               <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                               <circle cx="-15" cy="20" r="1.5" fill="#1e293b"/>
                               
-                              <!-- Ритмичные махи локтем Skibidi в противофазе (Фаза 2) -->
+                              <!-- Ритмичные махи локтем  в противофазе (Фаза 2) -->
                               <animateTransform attributeName="transform" type="rotate" values="20 0 0; -15 0 0; 20 0 0" dur="0.6s" repeatCount="indefinite" additive="sum"/>
                             </g>
                           </g>
@@ -614,7 +781,7 @@
                         </svg>
                     </div>
                     <h3>Адаптация и модернизация</h3>
-                    <p>Оперативная доработка кода под новые задачи и интеграция передовой робототехники. Внедрение коллаборативных роботов (коботов) для безопасной совместной работы с персоналом без защитных ограждений, а также бесшовная привязка полевых шин в общую сеть предприятия.</p>
+                    <p>Оперативная доработка кода для объединения разнородного оборудования в единую цифровую экосистему предприятия. Настройка сетевых шлюзов обеспечивает одновременный сбор данных с приводов, приборов учета и периферийных устройств. </p>
 
 					
                 </div>
@@ -670,6 +837,71 @@
         </div>
     </div>
 
+    <!-- ======================================================== -->
+    <!-- НАЧАЛО БЛОКА: ЭТАПЫ РАБОТЫ (СТУДИЯ ) -->
+    <!-- ======================================================== -->
+    <div style="width: 100%; max-width: 1200px; padding: 60px 20px; box-sizing: border-box; margin: 0 auto;">
+        <div class="als-flow-ribbon">
+          
+          <!-- Шаг 1 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">01</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Старт</span>
+                <div class="step-icon-right icon-orange">📋</div>
+              </div>
+            </div>
+            <h3>Обсуждение и ТЗ</h3>
+            <p class="step-single-text">Рассказываете, что хотите получить, или присылаете ТЗ.</p>
+            <span class="step-sub-note">Сделаем как удобнее вам</span>
+          </div>
+      
+          <!-- Шаг 2 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">02</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Разработка</span>
+                <div class="step-icon-right icon-cyan">🖥️</div>
+              </div>
+            </div>
+            <h3>Разработка ПО</h3>
+            <p class="step-single-text">Корректирую ТЗ при необходимости и пишу код. Передаю ПО на тестирование.</p>
+            <span class="step-sub-note">Включаем таймер на 4 недели</span>
+          </div>
+      
+          <!-- Шаг 3 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">03</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Оплата</span>
+                <div class="step-icon-right icon-mint">🤝</div>
+              </div>
+            </div>
+            <h3>Проверка в деле</h3>
+            <p class="step-single-text">Проводите комплексные испытания. Рассчитываемся. <br><br></p>
+            <span class="step-sub-note">Инженерная поддержка при ПНР</span>
+          </div>
+      
+          <!-- Шаг 4 -->
+          <div class="als-ribbon-step">
+            <div class="step-meta">
+              <span class="step-num">04</span>
+              <div class="meta-right-column">
+                <span class="step-badge">Финиш</span>
+                <div class="step-icon-right icon-cyan">🚀</div>
+              </div>
+            </div>
+            <h3>Полный запуск</h3>
+            <p class="step-single-text">Передаю инструкции и документацию. Высылаем код снятия демо-режима.</p>
+            <span class="step-sub-note">Система готова к бесперебойной работе</span>
+          </div>
+      
+        </div>
+    </div>
+    <!-- ======================================================== -->
 
 
 
