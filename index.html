@@ -753,23 +753,36 @@
                               <path d="M 0 0 L -8 20 L 15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                               <circle cx="15" cy="20" r="1.5" fill="#1e293b"/>
                               
-                              <!-- Ритмичные махи локтем  (Фаза 1) -->
-                              <animateTransform attributeName="transform" type="rotate" values="-15 0 0; 20 0 0; -15 0 0" dur="0.6s" repeatCount="indefinite" additive="sum"/>
-                            </g>
+ <!-- Ритмичные махи локтем (Фаза 1) -->
+ <animateTransform id="js-robot-arm-l" attributeName="transform" type="rotate" values="-15 0 0; 20 0 0; -15 0 0" dur="0s" repeatCount="indefinite" additive="sum"/>
+ </g>
+ 
+ <!-- ПРАВАЯ РУКА (Двигается в противофазе к левой) -->
+ <g transform="translate(46, 48)">
+ <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+ <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+ <circle cx="-15" cy="20" r="1.5" fill="#1e293b"/>
+ <!-- Ритмичные махи локтем в противофазе (Фаза 2) -->
+ <animateTransform id="js-robot-arm-r" attributeName="transform" type="rotate" values="20 0 0; -15 0 0; 20 0 0" dur="0s" repeatCount="indefinite" additive="sum"/>
+ </g>
+ </g>
 
-                            <!-- ПРАВАЯ РУКА (Двигается в противофазе к левой) -->
-                            <g transform="translate(46, 48)">
-                              <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                              <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                              <circle cx="-15" cy="20" r="1.5" fill="#1e293b"/>
-                              
-                              <!-- Ритмичные махи локтем  в противофазе (Фаза 2) -->
-                              <animateTransform attributeName="transform" type="rotate" values="20 0 0; -15 0 0; 20 0 0" dur="0.6s" repeatCount="indefinite" additive="sum"/>
-                            </g>
-                          </g>
+ <!-- ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ РЕЖИМА ТАНЦА -->
+ <foreignObject x="270" y="150" width="40" height="24">
+ <div xmlns="http://w3.org" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+ <label style="position: relative; display: inline-block; width: 30px; height: 16px; margin: 0;">
+ <input type="checkbox" id="js-dance-toggle" style="opacity: 0; width: 0; height: 0;">
+ <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #020617; border: 1px solid #1e293b; border-radius: 16px; transition: .3s;"></span>
+ <style>
+ #js-dance-toggle:checked + span { background-color: rgba(16, 185, 129, 0.15); border-color: var(--accent-green); }
+ #js-dance-toggle:checked + span:before { transform: translateX(14px); background-color: var(--accent-green); }
+ #js-dance-toggle + span:before { position: absolute; content: ""; height: 10px; width: 10px; left: 2px; bottom: 2px; background-color: #64748b; border-radius: 50%; transition: .3s; }
+ </style>
+ </label>
+ </div>
+ </foreignObject>
+ </svg>
 
-
-                        </svg>
                     </div>
                     <h3>Адаптация и модернизация</h3>
                     <p>Оперативная доработка кода для объединения разнородного оборудования в единую цифровую экосистему предприятия. Настройка сетевых шлюзов обеспечивает одновременный сбор данных с приводов, приборов учета и периферийных устройств. </p>
@@ -1085,6 +1098,20 @@
             const currentVal = parseFloat(e.target.value).toFixed(1);
             spVal.textContent = `${currentVal}°C`;
             txtSup.textContent = `T_sup:${currentVal}°C`;
+        });
+    }
+    // Управление протоколом танца робота через тумблер
+    const danceToggle = document.getElementById("js-dance-toggle");
+    const rBody = document.getElementById("js-robot-body");
+    const rArmL = document.getElementById("js-robot-arm-l");
+    const rArmR = document.getElementById("js-robot-arm-r");
+
+    if (danceToggle) {
+        danceToggle.addEventListener("change", (e) => {
+            const speed = e.target.checked ? "0.6s" : "0s";
+            if (rBody) rBody.setAttribute("dur", speed);
+            if (rArmL) rArmL.setAttribute("dur", speed);
+            if (rArmR) rArmR.setAttribute("dur", speed);
         });
     }
 
