@@ -307,28 +307,34 @@
 	</style>
 </head>
 <body>
-    <header>
-  <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap;">
-    <svg xmlns="http://w3.org" viewBox="50 30 300 420" width="55" height="65" style="flex-shrink: 0; margin-top: 4px;">
-      <defs>
-        <linearGradient id="n-b" x1="0%" x2="100%"><stop offset="0%" stop-color="#00f2fe"/><stop offset="100%" stop-color="#4facfe"/></linearGradient>
-        <linearGradient id="n-g" x1="0%" x2="100%"><stop offset="0%" stop-color="#00ff87"/><stop offset="100%" stop-color="#60efff"/></linearGradient>
-        <filter id="n-gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="10" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
-      </defs>
-      <g filter="url(#n-gl)">
-        <path d="M 200,40 L 60,180 L 200,320 Z" fill="url(#n-b)" opacity="0.95"/>
-        <path d="M 200,40 L 340,180 L 200,320 Z" fill="url(#n-g)" opacity="0.95"/>
-        <path d="M 200,320 L 200,440" stroke="#00ff87" stroke-width="10" stroke-linecap="round"/>
-      </g>
-    </svg>
-    <div style="flex: 1; min-width: 280px;">
-      <div class="badge" style="margin-bottom: 10px;">Услуги для АСУ ТП</div>
-      <h1 style="margin: 0 0 10px 0;">Инженерные решения для автоматизации</h1>
-      <p class="subtitle" style="margin: 0;">Профессиональная разработка и адаптация программного обеспечения для промышленного оборудования и диспетчеризации.</p>
-    </div>
-  </div>
+ <header style="padding: 40px 0 20px 0;">
+   <div class="container" style="display: flex; align-items: center; position: relative; margin: 0 auto; padding: 0 20px; box-sizing: border-box;">
+     
+     <!-- Левая колонка: Голубой логотип + надпись строго под ним -->
+     <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; flex-shrink: 0; position: absolute; left: 20px;">
+       <svg xmlns="http://w3.org" viewBox="50 30 300 420" width="55" height="65">
+         <defs>
+           <linearGradient id="n-b" x1="0%" x2="100%"><stop offset="0%" stop-color="#00f2fe"/><stop offset="100%" stop-color="#4facfe"/></linearGradient>
+           <filter id="n-gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="10" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+         </defs>
+         <g filter="url(#n-gl)">
+           <path d="M 200,40 L 60,180 L 200,320 Z" fill="url(#n-b)" opacity="0.95"/>
+           <path d="M 200,40 L 340,180 L 200,320 Z" fill="url(#n-b)" opacity="0.6"/>
+           <path d="M 200,320 L 200,440" stroke="#4facfe" stroke-width="10" stroke-linecap="round"/>
+         </g>
+       </svg>
+       <div class="badge" style="margin: 0; white-space: nowrap;">АСУ ТП</div>
+     </div>
 
-  </header>
+     <!-- Центральная колонка: Текст идеально по центру -->
+     <div style="width: 100%; text-align: center; padding: 0 80px;">
+       <h1 style="margin: 0 0 10px 0;">Инженерные решения для автоматизации</h1>
+       <p class="subtitle" style="margin: 0 auto;">Профессиональная разработка и адаптация программного обеспечения для промышленного оборудования и диспетчеризации.</p>
+     </div>
+
+   </div>
+ </header>
+
 
     <div class="container">
         <div class="main-layout">
