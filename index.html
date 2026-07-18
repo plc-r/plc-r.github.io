@@ -584,7 +584,7 @@
  <path id="js-trend-room" d="M 0 9 L 70 11 L 140 8 L 210 10 L 250 9" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
  </g>
 
- <!-- БЛОК ТЕЛЕМЕТРИЯ ДАТЧИКОВ ТЕМПЕРАТУР -->
+<!-- БЛОК ТЕЛЕМЕТРИЯ ДАТЧИКОВ ТЕМПЕРАТУР (КОМПАКТНЫЙ) -->
  <g transform="translate(275, 153)">
  <rect width="110" height="34" rx="4" fill="#020617" stroke="#1e293b" stroke-width="1"/>
  <text id="js-hvac-tout" x="6" y="11" fill="var(--hvac-green)" font-family="monospace" font-size="9" font-weight="bold">T_sup:21.4°C</text>
@@ -601,7 +601,17 @@
  <rect x="80" y="195" width="55" height="18" rx="4" fill="rgba(239, 64, 64, 0.1)" stroke="var(--hvac-red)" stroke-width="1"/>
  <text x="107.5" y="207" fill="var(--hvac-red)" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">STOP</text>
  </g>
+
+ <!-- ВСТРОЕННЫЙ ПОЛЗУНОК УСТАВКИ (НА ОДНОЙ ЛИНИИ С КНОПКАМИ) -->
+ <foreignObject x="150" y="195" width="235" height="18">
+ <div xmlns="http://w3.org" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: monospace; font-size: 8px; color: var(--hvac-gray); font-weight: bold; height: 18px; line-height: 18px;">
+ <span style="white-space: nowrap;">SP:</span>
+ <input type="range" id="js-hvac-slider" min="15" max="30" step="0.1" value="21.4" style="flex-grow: 1; accent-color: var(--hvac-green); cursor: pointer; margin: 0; padding: 0; background: #020617; border: 1px solid #1e293b; border-radius: 4px; height: 5px; outline: none;">
+ <span id="js-sp-val" style="color: var(--hvac-green); white-space: nowrap; min-width: 30px; text-align: right;">21.4°C</span>
+ </div>
+ </foreignObject>
  </svg>
+
  </div>
  <h3>Разработка SCADA</h3>
  <p>Создание интуитивно понятных, информативных и эргономичных интерфейсов оператора (HMI/SCADA). Качественная настройка исторических трендов, архивации и интеллектуальных систем аварийных сообщений.</p>
@@ -1064,6 +1074,20 @@
             dampers.forEach(d => d.style.transform = "rotate(0deg)");
         });
     }
+
+    // Связка ползунка уставки с цифровым табло SCADA
+    const hvacSlider = document.getElementById("js-hvac-slider");
+    const spVal = document.getElementById("js-sp-val");
+    const txtSup = document.getElementById("js-hvac-tout");
+
+    if (hvacSlider && spVal && txtSup) {
+        hvacSlider.addEventListener("input", (e) => {
+            const currentVal = parseFloat(e.target.value).toFixed(1);
+            spVal.textContent = `${currentVal}°C`;
+            txtSup.textContent = `T_sup:${currentVal}°C`;
+        });
+    }
+
 
 });
 </script>
