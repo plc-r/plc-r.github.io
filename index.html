@@ -427,207 +427,181 @@
 
 <!-- ЧАСТЬ 1 ИЗ 5: Оболочка карточки, встроенные CSS-стили и шапка SCADA -->
 <div class="service-card">
-    <div class="svg-container">
-        <svg xmlns="http://w3.org" viewBox="0 0 400 195" width="100%" height="100%">
-          <style>
-            :root {
-              --hvac-bg: #060913;
-              --hvac-panel-bg: #020617;
-              --hvac-stroke: #334155;
-              --hvac-red: #ef4444;
-              --hvac-blue: #00d2ff;
-              --hvac-green: #10b981;
-              --hvac-purple: #a855f7;
-              --hvac-gray: #64748b;
-            }
-          </style>
+ <div class="svg-container" style="height: 220px;">
+ <svg xmlns="http://w3.org" viewBox="0 0 400 220" width="100%" height="100%">
+<style>
+:root {
+ --hvac-bg: #060913; --hvac-panel-bg: #020617; --hvac-stroke: #334155;
+ --hvac-red: #ef4444; --hvac-blue: #00d2ff; --hvac-green: #10b981;
+ --hvac-purple: #a855f7; --hvac-gray: #64748b;
+ }
+  .js-filter-in { transition: transform 0.5s ease; transform-origin: left; transform-box: fill-box; }
+  .js-filter-out { transition: transform 0.5s ease; transform-origin: right; transform-box: fill-box; }
 
-          <rect width="400" height="195" fill="var(--hvac-bg)" opacity="0.4"/>
-          <text x="15" y="16" fill="var(--hvac-gray)" font-family="monospace" font-size="10" font-weight="bold">HVAC_SCADA // LIVE_TREND_MONITOR</text>
-          
-          <title>Модернизированный SCADA-интерфейс: 4-ступенчатая приточная система</title>
+</style>
 
+ <rect width="400" height="220" fill="var(--hvac-bg)" opacity="0.4"/>
+ <text x="15" y="16" fill="var(--hvac-gray)" font-family="monospace" font-size="10" font-weight="bold">HVAC_SCADA // LIVE_TREND_MONITOR</text>
+ 
+ <title>Модернизированный SCADA-интерфейс: 4-ступенчатая приточная система</title>
+ <rect x="15" y="25" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
 
-
-          <!-- ЧАСТЬ 2 ИЗ 5: ВЕРХНИЙ КАНАЛ: ВЫТЯЖКА (Справа налево ◄) -->
-          <rect x="15" y="25" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
-
-          <!-- 1. Фильтр вытяжки -->
-			<g transform="translate(345, 25)">
-			 <title>Фильтр вытяжного воздуха. Авария - засор</title>
-			 <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.08)" stroke="var(--hvac-red)" stroke-width="1.8"/>
-			 <!-- Три горизонтальных кармана фильтра -->
-			 <polygon points="3,11 22,5 22,17" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
-			 <polygon points="3,22.5 22,16.5 22,28.5" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
-			 <polygon points="3,34 22,28 22,40" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
-			</g>
+<!-- 1. Фильтр вытяжки (строка 447) -->
+<g transform="translate(345, 25)">
+  <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.08)" stroke="var(--hvac-red)"/>
+  <!-- Обернули полигоны в группу с классом out -->
+  <g class="js-filter-out">
+    <polygon points="3,11 22,5 22,17" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+    <polygon points="3,22.5 22,16.5 22,28.5" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+    <polygon points="3,34 22,28 22,40" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+  </g>
+</g>
 
 
-          <!-- 2. Вытяжной вентилятор -->
-          <g transform="translate(285, 25)">
-            <title>Центробежный вытяжной вентилятор</title>
-            <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="var(--hvac-purple)" stroke-width="1.8"/>
-            <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="var(--hvac-purple)" stroke-width="1" stroke-dasharray="2,2"/>
-            <g transform="translate(22.5, 22.5)">
-              <g>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
-                <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="2s" repeatCount="indefinite"/>
-              </g>
-              <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
-            </g>
-          </g>
+ <!-- 2. Вытяжной вентилятор -->
+ <g transform="translate(285, 25)">
+ <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="var(--hvac-purple)" stroke-width="1.8"/>
+ <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="var(--hvac-purple)" stroke-width="1" stroke-dasharray="2,2"/>
+ <g transform="translate(22.5, 22.5)">
+ <g>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
+ <animateTransform id="js-fan-anim1" attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="2s" repeatCount="indefinite"/>
+ </g>
+ <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
+ </g>
+ </g>
 
-          <!-- 3. Жалюзи вытяжки -->
-				<g transform="translate(30, 25)">
-				 <title>Жалюзи вытяжки</title>
-				 <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
-				 <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-				 <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-				 <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-				 <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-				 <circle cx="9" cy="9" r="1.5" fill="#ffffff"/>
-				 <circle cx="9" cy="18" r="1.5" fill="#ffffff"/>
-				 <circle cx="9" cy="27" r="1.5" fill="#ffffff"/>
-				 <circle cx="9" cy="36" r="1.5" fill="#ffffff"/>
-				</g>
+ <!-- 3. Жалюзи вытяжки -->
+ <g transform="translate(30, 25)">
+ <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
+ <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+ <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+ <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+ <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+ </g>
 
 
 
 
+   <!-- ЧАСТЬ 3: НИЖНИЙ КАНАЛ: ПРИТОК -->
+ <rect x="15" y="75" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
+ 
+ <!-- 1. Жалюзи притока -->
+ <g transform="translate(30, 75)">
+ <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
+ <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+ <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+ <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+ <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
+ </g>
 
-          <!-- ЧАСТЬ 3 ИЗ 5: НИЖНИЙ КАНАЛ: ПРИТОК (Начало: Клапан, Фильтр, Электронагрев, Охлаждение) -->
-          <rect x="15" y="75" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
-
-          <!-- 1. Жалюзи притока -->
-				<g transform="translate(30, 75)">
-				 <title>Жалюзи притока</title>
-				 <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
-				 <line x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-				 <line x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-				 <line x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-				 <line x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)" stroke-width="2" stroke-linecap="round"/>
-				 <circle cx="9" cy="9" r="1.5" fill="#ffffff"/>
-				 <circle cx="9" cy="18" r="1.5" fill="#ffffff"/>
-				 <circle cx="9" cy="27" r="1.5" fill="#ffffff"/>
-				 <circle cx="9" cy="36" r="1.5" fill="#ffffff"/>
-				</g>
-
-
-          <!-- 2. Фильтр притока -->
-				<g transform="translate(60, 75)">
-				 <title>фильтр приточного воздуха</title>
-				 <rect width="25" height="45" rx="6" fill="rgba(16, 185, 129, 0.08)" stroke="var(--hvac-green)" stroke-width="1.8"/>
-				 <!-- Три горизонтальных кармана фильтра (зеркально) -->
-				 <polygon points="22,11 3,5 3,17" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
-				 <polygon points="22,22.5 3,16.5 3,28.5" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
-				 <polygon points="22,34 3,28 3,40" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
-				</g>
+<!-- 2. Фильтр притока -->
+<!-- 2. Фильтр притока (примерно строка 495) -->
+<g transform="translate(60, 75)">
+  <rect width="25" height="45" rx="6" fill="rgba(16, 185, 129, 0.08)" stroke="var(--hvac-green)"/>
+  <!-- Обернули полигоны в группу с классом in -->
+  <g class="js-filter-in">
+    <polygon points="22,11 3,5 3,17" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
+    <polygon points="22,22.5 3,16.5 3,28.5" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
+    <polygon points="22,34 3,28 3,40" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
+  </g>
+</g>
 
 
-          
-					<!-- 3. Электрический калорифер преднагрева (Оранжевая КОНТУРНАЯ молния +) -->
-					<g transform="translate(130, 75)">
-					  <title>Электрический нагреватель</title>
-					  <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
-					  <!-- Геометрия полностью скопирована со второй молнии -->
-					  <path d="M 15 5 L 8.5 18 L 13.5 18 L 10 31 L 17.5 15 L 12.5 15 Z" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-					  <!-- Четкий знак Плюс под молнией -->
-					  <path d="M 10 37 L 16 37 M 13 34 L 13 40" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-linecap="round"/>
-					</g>
+ <!-- 3. Электрический калорифер преднагрева -->
+ <g transform="translate(130, 75)">
+ <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
+ <path d="M 15 5 L 8.5 18 L 13.5 18 L 10 31 L 17.5 15 L 12.5 15 Z" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+ <path d="M 10 37 L 16 37 M 13 34 L 13 40" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-linecap="round"/>
+ </g>
 
+ <!-- 4. Фреоновый охладитель -->
+ <g transform="translate(160, 75)">
+ <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
+ <path d="M 15 5 L 8.5 18 L 13.5 18 L 10 31 L 17.5 15 L 12.5 15 Z" fill="none" stroke="var(--hvac-blue)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+ <line x1="10" y1="37" x2="16" y2="37" stroke="var(--hvac-blue)" stroke-width="1.5" stroke-linecap="round"/>
+ </g>
 
-						<!-- 4. Фреоновый охладитель прямого испарения (Голубая КОНТУРНАЯ молния -) -->
-						<g transform="translate(160, 75)">
-						  <title>Фреоновый охладитель (ККБ)</title>
-						  <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
-						  <!-- Эталонная геометрия, которая вам понравилась -->
-						  <path d="M 15 5 L 8.5 18 L 13.5 18 L 10 31 L 17.5 15 L 12.5 15 Z" fill="none" stroke="var(--hvac-blue)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-						  <!-- Четкий знак Минус под молнией -->
-						  <line x1="10" y1="37" x2="16" y2="37" stroke="var(--hvac-blue)" stroke-width="1.5" stroke-linecap="round"/>
-						</g>
+ <!-- 5. Секция увлажнения воздуха -->
+ <g transform="translate(190, 75)">
+ <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
+ <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--hvac-blue)"/>
+ <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-blue)" stroke-width="1.8" stroke-linecap="round"/>
+ <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
+ <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-blue)" stroke-width="0.8"/>
+ <polygon points="15,62 23,58 23,66" fill="var(--hvac-blue)"/>
+ <polygon points="23,62 15,58 15,66" fill="var(--hvac-blue)"/>
+ </g>
 
+ <!-- 6. Водяной догрев -->
+ <g transform="translate(220, 75)">
+ <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
+ <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--accent-orange)"/>
+ <line x1="9" y1="35" x2="17" y2="35" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
+ <line x1="13" y1="31" x2="13" y2="39" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
+ <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
+ <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-green)" stroke-width="0.8"/>
+ <polygon points="15,62 23,58 23,66" fill="var(--accent-orange)"/>
+ <polygon points="23,62 15,58 15,66" fill="var(--accent-orange)"/>
+ </g>
 
-
-
-          <!-- ЧАСТЬ 4 ИЗ 5: НИЖНИЙ КАНАЛ (Продолжение: Увлажнение, Водяной догрев, Вентилятор притока) -->
-          <!-- 5. Секция увлажнения воздуха (Синяя капля -) -->
-          <g transform="translate(190, 75)">
-            <title>Водяной охладитель</title>
-            <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
-            <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--hvac-blue)"/>
-            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-blue)" stroke-width="1.8" stroke-linecap="round"/>
-            
-            <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
-            <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-blue)" stroke-width="0.8"/>
-            <polygon points="15,62 23,58 23,66" fill="var(--hvac-blue)"/>
-            <polygon points="23,62 15,58 15,66" fill="var(--hvac-blue)"/>
-          </g>
-
-			<!-- 6. Водяной догрев / Секция точной регулировки (Оранжевая капля + и оранжевый клапан) -->
-			<g transform="translate(220, 75)">
-			 <title>Водяной нагреватель</title>
-			 <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
-			 <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--accent-orange)"/>
-			 <line x1="9" y1="35" x2="17" y2="35" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
-			 <line x1="13" y1="31" x2="13" y2="39" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
-			 
-			 <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
-			 <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-green)" stroke-width="0.8"/>
-			 <polygon points="15,62 23,58 23,66" fill="var(--accent-orange)"/>
-			 <polygon points="23,62 15,58 15,66" fill="var(--accent-orange)"/>
-			</g>
-
-
-          <!-- 7. Приточный вентилятор -->
-          <g transform="translate(285, 75)">
-            <title>Центробежный приточный вентилятор</title>
-            <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="var(--hvac-purple)" stroke-width="1.8"/>
-            <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="var(--hvac-purple)" stroke-width="1" stroke-dasharray="2,2"/>
-            <g transform="translate(22.5, 22.5)">
-              <g>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
-                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
-                <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="1.6s" repeatCount="indefinite"/>
-              </g>
-              <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
-            </g>
-          </g>
+ <!-- 7. Приточный вентилятор -->
+ <g transform="translate(285, 75)">
+ <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="var(--hvac-purple)" stroke-width="1.8"/>
+ <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="var(--hvac-purple)" stroke-width="1" stroke-dasharray="2,2"/>
+ <g transform="translate(22.5, 22.5)">
+ <g>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
+ <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
+ <animateTransform id="js-fan-anim2" attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="1.6s" repeatCount="indefinite"/>
+ </g>
+ <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
+ </g>
+ </g>
 
 
 
-          <!-- ЧАСТЬ 5 ИЗ 5: НИЖНИЙ СЛОЙ (Графики трендов, Телеметрия датчиков и закрытие структуры) -->
-          <!-- НИЖНИЙ СЛОЙ: ГРАФИКИ ИСТОРИЧЕСКИХ ТРЕНДОВ -->
-          <g transform="translate(15, 153)">
-            <title>Исторические тренды параметров климата в реальном времени</title>
-            <rect width="250" height="34" fill="#020617" stroke="#1e293b" stroke-width="1"/>
-            <line x1="0" y1="9" x2="250" y2="9" stroke="#0f172a" stroke-width="0.8"/>
-            <line x1="0" y1="17" x2="250" y2="17" stroke="#0f172a" stroke-width="0.8"/>
-            <line x1="0" y1="25" x2="250" y2="25" stroke="#0f172a" stroke-width="0.8"/>
-            <path id="js-trend-sup" d="M 0 17 L 50 15 L 100 22 L 150 12 L 200 18 L 250 14" fill="none" stroke="var(--hvac-green)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            <path id="js-trend-ext" d="M 0 25 L 60 28 L 120 23 L 180 27 L 250 24" fill="none" stroke="var(--hvac-blue)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            <path id="js-trend-room" d="M 0 9 L 70 11 L 140 8 L 210 10 L 250 9" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
+  <!-- НИЖНИЙ СЛОЙ: ГРАФИКИ ИСТОРИЧЕСКИХ ТРЕНДОВ -->
+ <g transform="translate(15, 153)">
+ <rect width="250" height="34" fill="#020617" stroke="#1e293b" stroke-width="1"/>
+ <line x1="0" y1="9" x2="250" y2="9" stroke="#0f172a" stroke-width="0.8"/>
+ <line x1="0" y1="17" x2="250" y2="17" stroke="#0f172a" stroke-width="0.8"/>
+ <line x1="0" y1="25" x2="250" y2="25" stroke="#0f172a" stroke-width="0.8"/>
+ <path id="js-trend-sup" d="M 0 17 L 50 15 L 100 22 L 150 12 L 200 18 L 250 14" fill="none" stroke="var(--hvac-green)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+ <path id="js-trend-ext" d="M 0 25 L 60 28 L 120 23 L 180 27 L 250 24" fill="none" stroke="var(--hvac-blue)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+ <path id="js-trend-room" d="M 0 9 L 70 11 L 140 8 L 210 10 L 250 9" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+ </g>
 
-          <!-- БЛОК ТЕЛЕМЕТРИЯ ДАТЧИКОВ ТЕМПЕРАТУР -->
-          <g transform="translate(275, 153)">
-            <rect width="110" height="34" rx="4" fill="#020617" stroke="#1e293b" stroke-width="1"/>
-            <text id="js-hvac-tout" x="6" y="11" fill="var(--hvac-green)" font-family="monospace" font-size="9" font-weight="bold">T_sup:21.4°C</text>
-            <text id="js-hvac-text" x="6" y="21" fill="var(--hvac-blue)" font-family="monospace" font-size="9" font-weight="bold">T_ext:-10.0C</text>
-            <text id="js-hvac-troom" x="6" y="30" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold">T_rm:22.0°C</text>
-          </g>
-        </svg>
-    </div>
-    <h3>Разработка SCADA</h3>
-    <p>Создание интуитивно понятных, информативных и эргономичных интерфейсов оператора (HMI/SCADA). Качественная настройка исторических трендов, архивации и интеллектуальных систем аварийных сообщений.</p>
+ <!-- БЛОК ТЕЛЕМЕТРИЯ ДАТЧИКОВ ТЕМПЕРАТУР -->
+ <g transform="translate(275, 153)">
+ <rect width="110" height="34" rx="4" fill="#020617" stroke="#1e293b" stroke-width="1"/>
+ <text id="js-hvac-tout" x="6" y="11" fill="var(--hvac-green)" font-family="monospace" font-size="9" font-weight="bold">T_sup:21.4°C</text>
+ <text id="js-hvac-text" x="6" y="21" fill="var(--hvac-blue)" font-family="monospace" font-size="9" font-weight="bold">T_ext:-10.0C</text>
+ <text id="js-hvac-troom" x="6" y="30" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold">T_rm:22.0°C</text>
+ </g>
+
+ <!-- КНОПКИ УПРАВЛЕНИЯ ВЕНТИЛЯТОРАМИ -->
+ <g id="js-btn-start" style="cursor: pointer;">
+ <rect x="15" y="195" width="55" height="18" rx="4" fill="rgba(16, 185, 129, 0.1)" stroke="var(--hvac-green)" stroke-width="1"/>
+ <text x="42.5" y="207" fill="var(--hvac-green)" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">START</text>
+ </g>
+ <g id="js-btn-stop" style="cursor: pointer;">
+ <rect x="80" y="195" width="55" height="18" rx="4" fill="rgba(239, 64, 64, 0.1)" stroke="var(--hvac-red)" stroke-width="1"/>
+ <text x="107.5" y="207" fill="var(--hvac-red)" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">STOP</text>
+ </g>
+ </svg>
+ </div>
+ <h3>Разработка SCADA</h3>
+ <p>Создание интуитивно понятных, информативных и эргономичных интерфейсов оператора (HMI/SCADA). Качественная настройка исторических трендов, архивации и интеллектуальных систем аварийных сообщений.</p>
 </div>
 
 
@@ -1060,8 +1034,32 @@
                 if (consoleLog.children.length > 30) consoleLog.removeChild(consoleLog.firstChild);
                 consoleLog.scrollTop = consoleLog.scrollHeight;
             }, 1000);
+    // Логика физического сдувания фильтров в разные стороны
+    const anim1 = document.getElementById("js-fan-anim1");
+    const anim2 = document.getElementById("js-fan-anim2");
+    const filters = document.querySelectorAll(".js-filter-in, .js-filter-out");
+
+    const btnStop = document.getElementById("js-btn-stop");
+    const btnStart = document.getElementById("js-btn-start");
+
+    if (btnStop) {
+        btnStop.addEventListener("click", () => {
+            if (anim1) anim1.setAttribute("dur", "0s");
+            if (anim2) anim2.setAttribute("dur", "0s");
+            filters.forEach(f => f.style.transform = "scaleX(0.15)");
         });
-    </script>
+    }
+
+    if (btnStart) {
+        btnStart.addEventListener("click", () => {
+            if (anim1) anim1.setAttribute("dur", "2s");
+            if (anim2) anim2.setAttribute("dur", "1.6s");
+            filters.forEach(f => f.style.transform = "scaleX(1)");
+        });
+    }
+
+});
+</script>
 
 	
 	
