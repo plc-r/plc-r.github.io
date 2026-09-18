@@ -1,547 +1,966 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ИП Кирпань | Инженерные Сети и Автоматизация</title>
-    <meta property="og:title" content="ИП Кирпань — Инженерия высшего уровня" />
-    <meta property="og:description" content="Монтаж оборудования, программирование щитов и ремонт автоматики по всей России." />
-    
-    <!-- Подключаем шрифт Inter для эффекта дорогого интерфейса -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИП Кирпань — промышленная автоматика, монтаж и наладка</title>
 
-    <style>
-        :root {
-            --bg-pure: #000000;           /* Радикальный черный, как на сайте Apple */
-            --bg-dark: #0a0a0c;           /* Глубокий серый для премиальных карточек */
-            --accent-glow: #2f80ed;       /* Неоновый синий импульс */
-            --accent-green: #00ffa3;      /* Кибер-зеленый для индикаторов */
-            --text-white: #ffffff;
-            --text-gray: #86868b;         /* Фирменный эппловский приглушенный цвет текста */
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+<!-- ════════════════════════════════════════════════════════════════
+     БЛОК 01/10 · ГОЛОВА ДОКУМЕНТА: шрифты, палитра, бумага-миллиметровка
+     ════════════════════════════════════════════════════════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EFEBE1; --paper2:#E7E2D5; --ink:#1C1D1F; --muted:#6E6A5E;
+  --accent:#D8491F; --steel:#1B1D1E; --phos:#46E08B;
+  --grid:rgba(28,29,31,.075);
+  --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif; --disp:'Unbounded',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); color:var(--ink); background:var(--paper); padding:10px;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+    linear-gradient(rgba(28,29,31,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(28,29,31,.045) 1px,transparent 1px);
+  background-size:24px 24px,24px 24px,120px 120px,120px 120px;
+}
+::selection{background:var(--accent);color:#fff}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+/* ── Рамка чертежа по краю окна ── */
+.frame{position:fixed;inset:0;border:1.5px solid var(--ink);pointer-events:none;z-index:80}
+.frame::after{content:"";position:absolute;inset:5px;border:1px solid rgba(28,29,31,.3)}
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-pure);
-            color: var(--text-white);
-            line-height: 1.5;
-            letter-spacing: -0.022em;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+/* ── Появление секций ── */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.vis{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
 
-        /* Элемент свечения на фоне */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -25%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80vw;
-            height: 60vh;
-            background: radial-gradient(circle, rgba(47, 128, 237, 0.08) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-        }
+/* ════════════════════════════════════════════════════════════════
+   БЛОК 02/10 · CSS: шапка, hero, штамп-печать, курсор-перекрестие, тикер
+   ════════════════════════════════════════════════════════════════ */
+.topbar{position:sticky;top:12px;z-index:50;display:flex;align-items:center;gap:28px;
+  padding:13px 34px;border-bottom:1.5px solid var(--ink);
+  background:rgba(239,235,225,.92);backdrop-filter:blur(5px)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand-box{width:36px;height:36px;border:1.5px solid var(--ink);display:grid;place-items:center;
+  font:700 13px var(--mono)}
+.brand-tt{font:700 15px var(--disp);letter-spacing:.06em}
+.brand-st{font:400 9px var(--mono);letter-spacing:.22em;color:var(--muted);margin-top:2px}
+.topnav{display:flex;gap:26px;margin-left:auto}
+.topnav a{font:500 12px var(--mono);letter-spacing:.14em;color:var(--ink);text-decoration:none}
+.topnav a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:4px}
+.tel{margin-left:auto;font:500 13px var(--mono);color:var(--ink);text-decoration:none;white-space:nowrap}
+.topnav + .tel{margin-left:0}
+.tel:hover{color:var(--accent)}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
+.hero{max-width:1280px;margin:0 auto;padding:64px 34px 70px;
+  display:grid;grid-template-columns:1.15fr .95fr;gap:48px;align-items:center}
+.hero-label{font:500 11px var(--mono);letter-spacing:.22em;color:var(--muted);
+  display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.hero-label::before{content:"";width:38px;height:1.5px;background:var(--accent)}
+.hero h1{font:700 clamp(2.3rem,6.6vw,5.6rem)/1.02 var(--disp);letter-spacing:-.015em;text-transform:uppercase}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-lead{max-width:47ch;font-size:17px;line-height:1.65;margin:26px 0 30px}
+.hero-lead b{font-weight:500}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.fact-line{margin-top:44px;padding-top:18px;border-top:1px dashed rgba(28,29,31,.4);
+  display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.fact-tag{font:500 10px var(--mono);letter-spacing:.2em;color:var(--accent)}
+#factTxt{font:400 13px var(--mono);line-height:1.5;flex:1;min-width:240px;transition:opacity .25s}
+.fact-btn{font:500 11px var(--mono);letter-spacing:.14em;background:none;border:none;
+  color:var(--ink);cursor:pointer;border-bottom:1px solid var(--ink);padding:0 0 2px}
+.fact-btn:hover{color:var(--accent);border-color:var(--accent)}
 
-        /* Навигационная панель в стиле iOS */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: rgba(0, 0, 0, 0.7);
-            border-bottom: 1px solid var(--border-subtle);
-            z-index: 100;
-            padding: 16px 0;
-        }
+.hero-art{position:relative}
+.hero-art svg.draw{width:100%;height:auto;display:block}
+.seal{position:absolute;right:-14px;bottom:-26px;width:172px;height:172px;cursor:pointer;
+  transform:rotate(-9deg);mix-blend-mode:multiply;transition:transform .3s}
+.seal:hover{transform:rotate(-3deg) scale(1.04)}
+.seal-rotor{animation:spin 26s linear infinite;transform-origin:50% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.seal-txt{font:500 13px var(--mono);fill:var(--accent);letter-spacing:2px}
 
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+/* ── Курсор-перекрестие как в САПР ── */
+#cx,#cy{position:fixed;background:rgba(28,29,31,.3);z-index:75;pointer-events:none}
+#cx{width:1px;top:0;bottom:0;left:0}
+#cy{height:1px;left:0;right:0;top:0}
+#cpos{position:fixed;z-index:75;pointer-events:none;font:400 10px var(--mono);
+  color:var(--muted);white-space:nowrap}
+@media (pointer:coarse){#cx,#cy,#cpos{display:none}}
 
-        .logo {
-            font-weight: 800;
-            font-size: 18px;
-            letter-spacing: -0.05em;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #fff, var(--text-gray));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* ── Бегущая строка городов ── */
+.ticker{border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+  overflow:hidden;background:var(--paper2)}
+.ticker-in{display:flex;width:max-content;animation:tick 34s linear infinite}
+.ticker-in span{font:500 13px var(--mono);letter-spacing:.18em;padding:13px 0;white-space:nowrap}
+@keyframes tick{to{transform:translateX(-50%)}}
 
-        .geo-badge {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--accent-glow);
-            border: 1px solid rgba(47, 128, 237, 0.3);
-            padding: 4px 12px;
-            border-radius: 30px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            background: rgba(47, 128, 237, 0.05);
-        }
+/* ════════════════════════════════════════════════════════════════
+   БЛОК 03/10 · CSS: услуги-аккордеон, тёмная секция щита, кнопки
+   ════════════════════════════════════════════════════════════════ */
+.sec{max-width:1280px;margin:0 auto;padding:88px 34px}
+.sec-head{display:flex;align-items:baseline;gap:18px;border-bottom:1.5px solid var(--ink);
+  padding-bottom:16px;margin-bottom:14px;flex-wrap:wrap}
+.sec-num{font:500 13px var(--mono);color:var(--accent)}
+.sec-title{font:700 clamp(1.35rem,3vw,2.1rem) var(--disp);text-transform:uppercase;letter-spacing:-.01em}
+.sec-note{margin-left:auto;font:400 11px var(--mono);letter-spacing:.14em;color:var(--muted)}
 
+.svc{border-bottom:1.5px solid var(--ink)}
+.svc:first-of-type{border-top:none}
+.svc-head{display:grid;grid-template-columns:110px 1fr 44px;align-items:center;gap:20px;
+  width:100%;padding:28px 8px;background:none;border:none;cursor:pointer;text-align:left;
+  font-family:var(--sans);color:var(--ink);transition:background .25s}
+.svc-head:hover{background:rgba(28,29,31,.045)}
+.svc-num{font:500 15px var(--mono);color:var(--muted);transition:color .25s}
+.svc.open .svc-num,.svc-head:hover .svc-num{color:var(--accent)}
+.svc-name{font:500 clamp(1.05rem,2.3vw,1.55rem) var(--disp);text-transform:uppercase;letter-spacing:-.01em}
+.svc-ico{width:22px;height:22px;justify-self:end;transition:transform .4s}
+.svc.open .svc-ico{transform:rotate(45deg)}
+.svc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.65,0,.35,1)}
+.svc.open .svc-body{grid-template-rows:1fr}
+.svc-body-in{overflow:hidden;min-height:0}
+.svc-cols{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;padding:6px 8px 40px 138px}
+.svc-text{font-size:15.5px;line-height:1.7;max-width:52ch}
+.checklist{list-style:none;margin-top:18px}
+.checklist li{font:400 13px var(--mono);line-height:1.5;padding:7px 0 7px 20px;position:relative;
+  border-bottom:1px dashed rgba(28,29,31,.25)}
+.checklist li::before{content:"";position:absolute;left:2px;top:13px;width:7px;height:7px;background:var(--accent)}
+.svc-fig{border:1.5px solid var(--ink);background:#F7F4EC;padding:14px}
+.svc-fig svg{width:100%;height:auto;display:block}
+.fig-cap{font:500 10px var(--mono);letter-spacing:.18em;color:var(--muted);
+  padding:10px 4px 2px;border-top:1px dashed rgba(28,29,31,.35);margin-top:10px}
+.fig-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.segnet{transition:opacity .3s}
+.svc-fig:hover .segnet{opacity:.92}
 
+.flow{stroke-dasharray:7 6;animation:dashmove 1.4s linear infinite}
+@keyframes dashmove{to{stroke-dashoffset:-13}}
+.psu-led{animation:blink2 2.2s infinite}
+@keyframes blink2{50%{opacity:.25}}
+.run-led{animation:blink2 1s steps(2) infinite}
+.anim-wire{stroke-dasharray:5 5;animation:dashmove 1.1s linear infinite}
 
+/* ── Тёмная секция «виртуальный щит» ── */
+.dark{background:var(--steel);color:#E8E5DC;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:26px 26px}
+.dark .sec-head{border-color:#8A8D8F}
+.dark .sec-title{color:#E8E5DC}
+.dark .sec-note{color:#9A9C97}
+.dark .sec-num{color:var(--accent)}
+.shield-wrap{max-width:1280px;margin:0 auto;padding:88px 34px}
+.shield-ctrl{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:30px 0 22px}
+.status{display:flex;align-items:center;gap:10px;font:500 12px var(--mono);letter-spacing:.16em}
+.dot{width:9px;height:9px;border-radius:50%;background:#4A4D50;transition:.3s}
+.dot.on{background:var(--phos)}
+.dark-note{font-size:15px;line-height:1.65;color:#B9B7AE;max-width:64ch;margin-top:24px}
+.dark-note b{color:#E8E5DC;font-weight:500}
+.shield-fig{border:1.5px solid #43464B;background:#202226;padding:18px;margin-top:8px}
+.shield-fig svg{width:100%;height:auto;display:block}
+.hot{cursor:help}
+.shield-fig text{pointer-events:none}
 
+.wire{fill:none;stroke-width:2.2;transition:stroke .3s}
+.powered .wire-live{stroke-dasharray:7 7;animation:dashmove .85s linear infinite}
+.lever{transition:transform .16s ease-in}
+.powered .lever{transform:translateY(-26px)}
+.powered .lever-s{transform:translateY(-20px);transition-delay:.35s}
+.powered .led-dc{fill:var(--phos);filter:drop-shadow(0 0 3px rgba(70,224,139,.7))}
+.led-run{fill:#2E4A3B;transition:fill .3s}
+.powered .led-run{fill:var(--phos);animation:blink2 1s steps(2) infinite}
+.flag{transition:opacity .2s}
+.powered .flag{animation:relay 3s infinite}
+@keyframes relay{0%,55%{opacity:1}60%,80%{opacity:.3}85%,100%{opacity:1}}
+#plcDisp{transition:opacity .4s}
 
+/* ── Кнопки ── */
+.btn{display:inline-flex;align-items:center;gap:10px;font:500 12px var(--mono);letter-spacing:.16em;
+  text-transform:uppercase;padding:15px 24px;border:1.5px solid var(--ink);background:transparent;
+  color:var(--ink);cursor:pointer;transition:.2s;text-decoration:none}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn:active{transform:translate(1px,1px)}
+.btn-solid{background:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn svg{width:16px;height:16px}
+.dark .btn{border-color:#8A8D8F;color:#E8E5DC}
+.dark .btn:hover{border-color:#E8E5DC;background:rgba(232,229,220,.08);color:#E8E5DC}
+.btn-pwr{background:var(--accent);border-color:var(--accent);color:#FFF6F1}
+.btn-pwr:hover{background:#B93A15;border-color:#B93A15;color:#FFF6F1}
+.btn-pwr.on{background:transparent;color:var(--accent)}
 
+/* ════════════════════════════════════════════════════════════════
+   БЛОК 04/10 · CSS: цифры, этапы, география, контакты, штамп-футер
+   ════════════════════════════════════════════════════════════════ */
+.stats{max-width:1280px;margin:0 auto;padding:0 34px;display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.stat{padding:36px 28px;border-left:1px solid rgba(28,29,31,.25)}
+.stat:first-child{border-left:none;padding-left:34px}
+.stat-num{font:700 clamp(2.1rem,4.4vw,3.4rem) var(--disp);letter-spacing:-.02em}
+.stat-suf{color:var(--accent)}
+.stat-cap{font:500 11px var(--mono);letter-spacing:.18em;color:var(--muted);margin-top:10px;text-transform:uppercase}
 
+.step{display:grid;grid-template-columns:64px 1fr;gap:26px;padding:30px 8px;
+  border-top:1px dashed rgba(28,29,31,.45)}
+.step:nth-child(2){margin-left:6%}
+.step:nth-child(3){margin-left:12%}
+.step:nth-child(4){margin-left:18%}
+.step-num{width:52px;height:52px;border:1.5px solid var(--ink);display:grid;place-items:center;
+  font:500 16px var(--mono);transition:.3s}
+.step:hover .step-num{background:var(--accent);border-color:var(--accent);color:#fff}
+.step-tt{font:500 1.15rem var(--disp);text-transform:uppercase;margin-bottom:10px}
+.step-tx{font-size:15.5px;line-height:1.65;color:#3B3C36;max-width:58ch}
 
+.geo-grid{display:grid;grid-template-columns:1fr 460px;gap:56px;align-items:center}
+.geo-big{font:500 clamp(1.2rem,2.4vw,1.7rem)/1.35 var(--disp);text-transform:uppercase;max-width:24ch}
+.geo-big em{font-style:normal;color:var(--accent)}
+.geo-fig{border:1.5px solid var(--ink);background:#F7F4EC;padding:18px 14px}
+.geo-fig svg{width:100%;height:auto;display:block}
 
-        /* Главный презентационный экран (Hero) */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding-top: 100px;
-            padding-bottom: 60px;
-        }
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+.c-row{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:17px 2px;border-bottom:1px dashed rgba(28,29,31,.4)}
+.c-lb{font:500 10px var(--mono);letter-spacing:.2em;color:var(--muted)}
+.c-vl{font-size:19px;font-weight:500;margin-top:4px}
+.copy-btn{background:none;border:1.5px solid var(--ink);width:36px;height:36px;flex:none;
+  display:grid;place-items:center;cursor:pointer;transition:.2s;color:var(--ink)}
+.copy-btn:hover{background:var(--ink);color:var(--paper)}
+.copy-btn svg{width:15px;height:15px}
+.c-note{font:400 12px var(--mono);color:var(--muted);line-height:1.6;margin-top:20px}
+.fld{margin-bottom:24px}
+.fld label{display:block;font:500 10px var(--mono);letter-spacing:.2em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:6px}
+.fld input,.fld textarea{width:100%;background:transparent;border:none;border-bottom:1.5px solid var(--ink);
+  padding:10px 2px;font:400 16px var(--sans);color:var(--ink);border-radius:0}
+.fld textarea{resize:vertical;min-height:84px}
+.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--accent)}
+.form-note{font:400 11px var(--mono);color:var(--muted);margin-top:14px;line-height:1.6}
 
-        .hero h1 {
-            font-size: calc(32px + 3.5vw);
-            font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -0.05em;
-            margin-bottom: 24px;
-            background: linear-gradient(180deg, #ffffff 50%, #86868b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+.footer{max-width:1280px;margin:0 auto;padding:70px 34px 46px}
+.formstamp{border:1.5px solid var(--ink);display:grid;grid-template-columns:2.4fr 1fr 1fr .8fr .6fr .8fr;
+  background:#F7F4EC}
+.sc{padding:12px 14px;border-left:1.5px solid var(--ink);display:flex;flex-direction:column;
+  justify-content:space-between;gap:8px;min-height:86px}
+.sc:first-child{border-left:none}
+.sc-lb{font:500 9px var(--mono);letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+.sc-vl{font:500 14px var(--mono)}
+.sc-big{font:500 15px/1.5 var(--sans)}
+.footer-line{font:400 11px var(--mono);letter-spacing:.1em;color:var(--muted);
+  text-align:center;margin-top:22px;line-height:1.8}
 
-        .hero p {
-            font-size: calc(16px + 0.4vw);
-            color: var(--text-gray);
-            max-width: 700px;
-            margin-bottom: 40px;
-            font-weight: 400;
-        }
+#tip{position:fixed;z-index:90;pointer-events:none;background:var(--ink);color:var(--paper);
+  font:400 12px/1.5 var(--mono);padding:8px 11px;opacity:0;transform:translateY(4px);
+  transition:opacity .15s;max-width:270px;border-left:3px solid var(--accent)}
+#toast{position:fixed;left:50%;bottom:36px;transform:translateX(-50%) translateY(16px);
+  background:var(--ink);color:var(--paper);font:400 13px var(--mono);padding:13px 20px;
+  opacity:0;transition:.3s;z-index:95;border-left:3px solid var(--accent);pointer-events:none;max-width:80vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-        /* Премиальная сетка Apple Bento Grid */
-        .grid-section {
-            padding: 100px 0;
-        }
-
-        .section-title {
-            font-size: calc(24px + 1.5vw);
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 30px;
-        }
-
-        .bento-card {
-            background-color: var(--bg-dark);
-            border: 1px solid var(--border-subtle);
-            border-radius: 28px; /* Округлые яблочные углы */
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: var(--transition-smooth);
-            min-height: 440px;
-        }
-
-        /* Эффект глубокого парения при наведении */
-        .bento-card:hover {
-            transform: scale(1.02);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 50px rgba(47, 128, 237, 0.1);
-        }
-
-        /* Размеры карточек в сетке */
-        .col-6 { grid-column: span 6; }
-        .col-12 { grid-column: span 12; }
-
-        .bento-card h3 {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
-
-        .bento-card p {
-            color: var(--text-gray);
-            font-size: 15px;
-            max-width: 420px;
-            line-height: 1.6;
-        }
-
-        /* Интерактивная область внутри карточек */
-        .visual-area {
-            width: 100%;
-            height: 180px;
-            margin-top: 30px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.03) 100%);
-            border: 1px solid var(--border-subtle);
-            border-radius: 18px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Ссылки-кнопки */
-        .apple-btn {
-            display: inline-block;
-            background-color: var(--text-white);
-            color: var(--bg-pure);
-            padding: 16px 32px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 16px;
-            text-decoration: none;
-            transition: var(--transition-smooth);
-        }
-
-        .apple-btn:hover {
-            transform: scale(1.05);
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .footer {
-            padding: 80px 0;
-            border-top: 1px solid var(--border-subtle);
-            text-align: center;
-            color: var(--text-gray);
-            font-size: 13px;
-        }
-
-        /* Адаптивность для мобильных девайсов */
-        @media (max-width: 992px) {
-            .col-6, .col-12 { grid-column: span 12; }
-            .bento-card { min-height: 380px; padding: 30px; }
-            .hero { padding-top: 140px; }
-        }
-    </style>
+@media (max-width:900px){
+  body{padding:6px}
+  .topnav{display:none}
+  .hero{grid-template-columns:1fr;padding:48px 22px 56px}
+  .sec{padding:60px 22px}
+  .shield-wrap{padding:60px 22px}
+  .stats{padding:0 22px;grid-template-columns:1fr 1fr}
+  .stat{padding:24px 18px}
+  .stat:nth-child(odd){border-left:none;padding-left:22px}
+  .stat:nth-child(n+3){border-top:1px solid rgba(28,29,31,.25)}
+  .svc-head{grid-template-columns:52px 1fr 34px;padding:22px 4px}
+  .svc-cols{grid-template-columns:1fr;padding:0 4px 30px 4px;gap:26px}
+  .step:nth-child(n){margin-left:0}
+  .geo-grid{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr;gap:44px}
+  .formstamp{grid-template-columns:1fr 1fr}
+  .sc{border-top:1px solid rgba(28,29,31,.2)}
+  .sc:first-child{grid-column:1/-1;border-top:none}
+  .seal{width:120px;height:120px;right:-6px;bottom:-16px}
+  .footer{padding:50px 22px 36px}
+}
+</style>
 </head>
 
+<!-- ════════════════════════════════════════════════════════════════
+     БЛОК 05/10 · HTML: курсор, рамка, шапка, hero + штамп + чертёж, тикер
+     ════════════════════════════════════════════════════════════════ -->
+<div id="cx"></div><div id="cy"></div><div id="cpos">X 0 · Y 0 мм</div>
+<div class="frame"></div>
 
+<header class="topbar" id="top">
+  <a class="brand" href="#top">
+    <span class="brand-box">ИП</span>
+    <span><span class="brand-tt">КИРПАНЬ</span><br><span class="brand-st">ПРОМЫШЛЕННАЯ АВТОМАТИКА</span></span>
+  </a>
+  <nav class="topnav">
+    <a href="#svc">УСЛУГИ</a><a href="#shield">ЩИТ</a><a href="#steps">ЭТАПЫ</a><a href="#contact">КОНТАКТЫ</a>
+  </nav>
+  <!-- ЗАМЕНИ на свой номер -->
+  <a class="tel" href="tel:+79000000000">+7 900 000-00-00</a>
+</header>
 
+<section class="hero">
+  <div>
+    <p class="hero-label">ПАСПОРТ ОБЪЕКТА · ИП КИРПАНЬ · ВЫЕЗД ПО РФ</p>
+    <h1>МОНТАЖ<br>АВТОМАТИКИ<br><em>И НАЛАДКИ.</em></h1>
+    <p class="hero-lead">Промышленное оборудование, инженерные сети, щиты и контроллеры:
+      собираю, программирую, нахожу неисправности и сдаю в работу.
+      Коротко — делаю так, чтобы <b>всё заработало и продолжало работать</b>.</p>
+    <div class="hero-btns">
+      <a class="btn btn-solid" href="#svc">Смотреть услуги
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 10h14M11 4l6 6-6 6"/></svg></a>
+      <a class="btn" href="#contact">Форма заявки</a>
+    </div>
+    <div class="fact-line">
+      <span class="fact-tag">ПРИМЕЧАНИЕ</span>
+      <span id="factTxt"></span>
+      <button class="fact-btn" id="factBtn">ЕЩЁ →</button>
+    </div>
+  </div>
 
+  <div class="hero-art">
+    <!-- Чертёж щита: размеры, рейки, штампик -->
+    <svg class="draw" viewBox="0 0 560 640" fill="none">
+      <defs><pattern id="hatch" width="7" height="7" patternTransform="rotate(45)">
+        <line x1="0" y1="0" x2="0" y2="7" stroke="#1C1D1F" stroke-width="1" opacity=".45"/></pattern></defs>
+      <line x1="120" y1="36" x2="470" y2="36" stroke="#1C1D1F"/>
+      <line x1="114" y1="42" x2="126" y2="30" stroke="#1C1D1F"/><line x1="464" y1="42" x2="476" y2="30" stroke="#1C1D1F"/>
+      <text x="295" y="27" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#1C1D1F">800</text>
+      <line x1="508" y1="60" x2="508" y2="560" stroke="#1C1D1F"/>
+      <line x1="502" y1="66" x2="514" y2="54" stroke="#1C1D1F"/><line x1="502" y1="566" x2="514" y2="554" stroke="#1C1D1F"/>
+      <text x="524" y="310" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#1C1D1F" transform="rotate(90 524 310)">600</text>
+      <rect x="120" y="60" width="350" height="500" fill="#F7F4EC" stroke="#1C1D1F" stroke-width="1.8"/>
+      <polygon points="470,60 486,74 486,546 470,560" fill="url(#hatch)" stroke="#1C1D1F"/>
+      <rect x="140" y="80" width="310" height="420" fill="#EFECE2" stroke="#1C1D1F"/>
+      <rect x="150" y="130" width="290" height="7" fill="#CFC9B8" stroke="#1C1D1F" stroke-width=".8"/>
+      <rect x="150" y="240" width="290" height="7" fill="#CFC9B8" stroke="#1C1D1F" stroke-width=".8"/>
+      <rect x="150" y="350" width="290" height="7" fill="#CFC9B8" stroke="#1C1D1F" stroke-width=".8"/>
+      <rect x="160" y="76" width="24" height="58" rx="2" fill="#F2F0E9" stroke="#1C1D1F"/><rect x="167" y="98" width="10" height="16" rx="1" fill="#1C1D1F"/>
+      <rect x="190" y="76" width="24" height="58" rx="2" fill="#F2F0E9" stroke="#1C1D1F"/><rect x="197" y="98" width="10" height="16" rx="1" fill="#1C1D1F"/>
+      <rect x="220" y="76" width="24" height="58" rx="2" fill="#F2F0E9" stroke="#1C1D1F"/><rect x="227" y="98" width="10" height="16" rx="1" fill="#1C1D1F"/>
+      <rect x="254" y="76" width="52" height="58" rx="2" fill="#F2F0E9" stroke="#1C1D1F"/><circle cx="280" cy="88" r="5" stroke="#1C1D1F"/><text x="280" y="91.5" text-anchor="middle" font-family="IBM Plex Mono" font-size="7" fill="#1C1D1F">T</text>
+      <text x="172" y="150" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E">QF1</text>
+      <text x="202" y="150" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E">QF2</text>
+      <text x="232" y="150" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E">QF3</text>
+      <text x="280" y="150" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E">УЗО</text>
+      <rect x="160" y="186" width="52" height="58" rx="2" fill="#E9E7E0" stroke="#1C1D1F"/>
+      <circle class="psu-led" cx="186" cy="197" r="3.5" fill="#46E08B"/>
+      <text x="186" y="236" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6E6A5E">24V</text>
+      <rect x="226" y="186" width="120" height="58" rx="2" fill="#232527" stroke="#1C1D1F"/>
+      <rect x="234" y="196" width="70" height="26" fill="#0A120D"/>
+      <text x="269" y="214" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#46E08B">25.4</text>
+      <circle class="run-led" cx="312" cy="200" r="3" fill="#46E08B"/>
+      <rect x="304" y="210" width="12" height="8" fill="#3F4244"/><rect x="322" y="210" width="12" height="8" fill="#3F4244"/>
+      <rect x="352" y="186" width="24" height="58" rx="2" fill="#E9E7E0" stroke="#1C1D1F"/>
+      <rect x="380" y="186" width="24" height="58" rx="2" fill="#E9E7E0" stroke="#1C1D1F"/>
+      <text x="286" y="260" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E">PLC SMH2G</text>
+      <text x="186" y="260" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E">A1·БП</text>
+      <rect x="160" y="296" width="40" height="58" rx="2" fill="#F2F0E9" stroke="#1C1D1F"/><rect x="168" y="306" width="18" height="14" fill="#E0A63C"/>
+      <rect x="210" y="296" width="40" height="58" rx="2" fill="#F2F0E9" stroke="#1C1D1F"/><rect x="218" y="306" width="18" height="14" fill="#E0A63C"/>
+      <text x="180" y="372" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E">KM1</text>
+      <text x="230" y="372" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E">KM2</text>
+      <path class="anim-wire" d="M250,244 V420" stroke="#D8491F" stroke-width="1.2"/>
+      <path class="anim-wire" d="M300,244 V420" stroke="#4A6C8C" stroke-width="1.2"/>
+      <path class="anim-wire" d="M332,244 V420" stroke="#1C1D1F" stroke-width="1.2"/>
+      <path d="M180,354 V420" stroke="#D8491F" stroke-width="1.2"/><path d="M230,354 V420" stroke="#4A6C8C" stroke-width="1.2"/>
+      <g></g>
+      <rect x="150" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="157" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="172" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="179" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="194" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="201" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="216" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="223" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="238" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="245" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="260" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="267" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="282" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="289" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="304" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="311" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="326" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="333" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="348" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="355" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="370" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="377" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="392" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="399" cy="430" r="2" fill="#1C1D1F"/>
+      <rect x="414" y="424" width="14" height="20" fill="#E4B23F" stroke="#1C1D1F" stroke-width=".6"/><circle cx="421" cy="430" r="2" fill="#1C1D1F"/>
+      <text x="286" y="462" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E">X1 — КЛЕММНИК</text>
+      <path d="M160,100 H80" stroke="#1C1D1F"/><text x="76" y="97" text-anchor="end" font-family="IBM Plex Mono" font-size="9" fill="#1C1D1F">QF1 · ВВОД</text>
+      <rect x="320" y="498" width="224" height="40" fill="#F7F4EC" stroke="#1C1D1F" stroke-width="1.2"/>
+      <line x1="320" y1="518" x2="544" y2="518" stroke="#1C1D1F"/>
+      <text x="328" y="512" font-family="IBM Plex Mono" font-size="9" fill="#1C1D1F">ЩИТ АВТОМАТИКИ · ЩАУ-1</text>
+      <text x="328" y="532" font-family="IBM Plex Mono" font-size="8" fill="#6E6A5E">ФОРМАТ А3 · МАСШТАБ 1:5 · ЛИСТ 1/1</text>
+    </svg>
 
+    <!-- Печать-штамп (крутится, по клику шутит) -->
+    <svg class="seal" id="seal" viewBox="0 0 200 200">
+      <g class="seal-rotor">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#D8491F" stroke-width="2"/>
+        <circle cx="100" cy="100" r="56" fill="none" stroke="#D8491F" stroke-width="1.5"/>
+        <defs><path id="sealcirc" d="M100,100 m-68,0 a68,68 0 1,1 136,0 a68,68 0 1,1 -136,0"/></defs>
+        <text class="seal-txt"><textPath href="#sealcirc" textLength="427" lengthAdjust="spacingAndGlyphs">ИП КИРПАНЬ · ПРОМЫШЛЕННАЯ АВТОМАТИКА · МОНТАЖ · НАЛАДКА ·</textPath></text>
+      </g>
+      <g stroke="#D8491F" stroke-width="2.5"><line x1="100" y1="78" x2="100" y2="96"/><line x1="84" y1="96" x2="116" y2="96"/><line x1="90" y1="104" x2="110" y2="104"/><line x1="95" y1="112" x2="105" y2="112"/></g>
+    </svg>
+  </div>
+</section>
 
+<div class="ticker" aria-hidden="true"><div class="ticker-in">
+  <span>МОСКВА — САНКТ-ПЕТЕРБУРГ — ЕКАТЕРИНБУРГ — НОВОСИБИРСК — КАЗАНЬ — КРАСНОДАР — САМАРА — РОСТОВ-НА-ДОНУ — УФА — ПЕРМЬ — ВОРОНЕЖ — ТЮМЕНЬ — СОЧИ — ХАБАРОВСК — ВЛАДИВОСТОК — КАЛИНИНГРАД — …И ЛЮБОЙ ДРУГОЙ ГОРОД —&nbsp;</span>
+  <span>МОСКВА — САНКТ-ПЕТЕРБУРГ — ЕКАТЕРИНБУРГ — НОВОСИБИРСК — КАЗАНЬ — КРАСНОДАР — САМАРА — РОСТОВ-НА-ДОНУ — УФА — ПЕРМЬ — ВОРОНЕЖ — ТЮМЕНЬ — СОЧИ — ХАБАРОВСК — ВЛАДИВОСТОК — КАЛИНИНГРАД — …И ЛЮБОЙ ДРУГОЙ ГОРОД —&nbsp;</span>
+</div></div>
 
+<!-- ════════════════════════════════════════════════════════════════
+     БЛОК 06/10 · HTML: услуги (аккордеон) + SVG-схемы и контроллеры Segnetics
+     ════════════════════════════════════════════════════════════════ -->
+<section class="sec" id="svc">
+  <div class="sec-head rv"><span class="sec-num">( 01 )</span><h2 class="sec-title">Услуги</h2><span class="sec-note">НАЖМИТЕ НА СТРОКУ — РАСКРОЕТСЯ</span></div>
 
-<body>
+  <div class="svc open rv">
+    <button class="svc-head" aria-expanded="true"><span class="svc-num">УСЛ. 01</span>
+      <span class="svc-name">Монтаж промышленного оборудования и инженерных сетей</span>
+      <svg class="svc-ico" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.8" fill="none"><path d="M10 3v14M3 10h14"/></svg>
+    </button>
+    <div class="svc-body"><div class="svc-body-in"><div class="svc-cols">
+      <div><p class="svc-text">Монтирую технологическое оборудование, силовые и слаботочные линии,
+        трубопроводы КИПиА. От закладных и кабельных трасс — до опрессовки, маркировки
+        и исполнительной документации. Работаю по проекту и ППР, а если проекта нет —
+        помогаю его сначала придумать.</p>
+        <ul class="checklist">
+          <li>Кабельные трассы, лотки, гермовводы</li>
+          <li>Обвязка датчиков, расходомеров, приводов</li>
+          <li>Маркировка по проекту и исполнительные схемы</li>
+        </ul></div>
+      <div class="svc-fig">
+        <svg viewBox="0 0 360 200" fill="none" stroke="#1C1D1F" stroke-width="2">
+          <line x1="10" y1="88" x2="350" y2="88"/><line x1="10" y1="112" x2="350" y2="112"/>
+          <line class="flow" x1="10" y1="100" x2="350" y2="100" stroke="#D8491F" stroke-width="1.4"/>
+          <rect x="78" y="80" width="8" height="40" fill="#EFEBE1"/><rect x="272" y="80" width="8" height="40" fill="#EFEBE1"/>
+          <polygon points="180,70 210,100 180,130 150,100" fill="#EFEBE1"/>
+          <line x1="180" y1="70" x2="180" y2="42"/><ellipse cx="180" cy="38" rx="17" ry="5.5"/>
+          <polyline points="238,100 262,100 254,94" stroke-width="1.6"/>
+          <text x="238" y="90" font-family="IBM Plex Mono" font-size="10" fill="#6E6A5E" stroke="none">G 12 м³/ч</text>
+          <line x1="60" y1="112" x2="60" y2="134" stroke-width="1.6"/><line x1="300" y1="112" x2="300" y2="134" stroke-width="1.6"/>
+          <line x1="30" y1="156" x2="330" y2="156" stroke-width="1"/><line x1="30" y1="150" x2="30" y2="162" stroke-width="1"/><line x1="330" y1="150" x2="330" y2="162" stroke-width="1"/>
+          <text x="180" y="148" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#6E6A5E" stroke="none">L = 6,0 м</text>
+        </svg>
+        <div class="fig-cap">СХЕМА 01-А · ТРУБОПРОВОД С АРМАТУРОЙ</div>
+      </div>
+    </div></div></div>
+  </div>
 
-    <!-- Навигационная панель iOS/Apple style -->
-    <nav>
-        <div class="container nav-container">
-            <div class="logo">ИП КИРПАНЬ</div>
-            <div class="geo-badge">📍 РАБОТА ПО ВСЕЙ РОССИИ</div>
+  <div class="svc rv">
+    <button class="svc-head" aria-expanded="false"><span class="svc-num">УСЛ. 02</span>
+      <span class="svc-name">Программирование и пусконаладка щитов автоматики</span>
+      <svg class="svc-ico" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.8" fill="none"><path d="M10 3v14M3 10h14"/></svg>
+    </button>
+    <div class="svc-body"><div class="svc-body-in"><div class="svc-cols">
+      <div><p class="svc-text">Пишу программы для ПЛК (Segnetics, ОВЕН, Siemens), настраиваю панели
+        оператора, регулирую ПИД-контуры. Пусконаладка: проверка всех связей, тест алгоритмов
+        в ручном и автоматическом режиме, обучение персонала и сдача объекта.</p>
+        <ul class="checklist">
+          <li>Логика процесса: LD / ST / FBD</li>
+          <li>HMI-экраны, тренды, аварийные сигнализации</li>
+          <li>Удалённый доступ и поддержка после сдачи</li>
+        </ul></div>
+      <div class="svc-fig">
+        <svg viewBox="0 0 360 200" fill="none" stroke="#1C1D1F" stroke-width="1.8">
+          <line x1="22" y1="16" x2="22" y2="184" stroke-width="2.4"/><line x1="338" y1="16" x2="338" y2="184" stroke-width="2.4"/>
+          <text x="22" y="10" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E" stroke="none" text-anchor="middle">+24V</text>
+          <text x="338" y="10" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E" stroke="none" text-anchor="middle">0V</text>
+          <line class="flow" x1="22" y1="60" x2="338" y2="60" stroke="#D8491F" stroke-width="1.3"/>
+          <line x1="80" y1="50" x2="80" y2="70"/><line x1="94" y1="50" x2="94" y2="70"/>
+          <text x="87" y="42" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E" stroke="none" text-anchor="middle">SB1 Пуск</text>
+          <path d="M262,50 a12,12 0 0,0 0,20 M276,50 a12,12 0 0,1 0,20"/>
+          <text x="270" y="42" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E" stroke="none" text-anchor="middle">KM1</text>
+          <path d="M50,60 V90 H80 M94,90 H150 V60"/>
+          <line x1="80" y1="82" x2="80" y2="98"/><line x1="94" y1="82" x2="94" y2="98"/>
+          <text x="87" y="112" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E" stroke="none" text-anchor="middle">KM1.1</text>
+          <line x1="80" y1="130" x2="80" y2="146"/><line x1="94" y1="130" x2="94" y2="146"/><line x1="94" y1="130" x2="80" y2="146"/>
+          <text x="87" y="162" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E" stroke="none" text-anchor="middle">FS1 (вкл.)</text>
+          <path d="M262,130 a12,12 0 0,0 0,20 M276,130 a12,12 0 0,1 0,20"/>
+          <text x="270" y="162" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E" stroke="none" text-anchor="middle">K1 Сирена</text>
+          <line x1="22" y1="60" x2="80" y2="60"/><line x1="94" y1="60" x2="262" y2="60"/><line x1="276" y1="60" x2="338" y2="60"/>
+          <line x1="22" y1="140" x2="80" y2="140"/><line x1="94" y1="140" x2="262" y2="140"/><line x1="276" y1="140" x2="338" y2="140"/>
+          <text x="180" y="196" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#6E6A5E" stroke="none">LD · лестничная логика — это не код, это схема, по которой живёт щит</text>
+        </svg>
+        <div class="fig-cap">СХЕМА 02-А · ФРАГМЕНТ ПРОГРАММЫ ПЛК</div>
+      </div>
+    </div></div></div>
+  </div>
+
+  <div class="svc rv">
+    <button class="svc-head" aria-expanded="false"><span class="svc-num">УСЛ. 03</span>
+      <span class="svc-name">Диагностика и ремонт средств автоматики</span>
+      <svg class="svc-ico" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.8" fill="none"><path d="M10 3v14M3 10h14"/></svg>
+    </button>
+    <div class="svc-body"><div class="svc-body-in"><div class="svc-cols">
+      <div><p class="svc-text">Локализую неисправность — от датчика до выхода контроллера: прозвонка
+        линий, замеры, замена и перепрограммирование компонентов. Восстанавливаю щиты
+        после ситуации «кто-то заходил, и всё пропало». Основная платформа —
+        контроллеры <b>Segnetics</b>:</p>
+        <ul class="checklist">
+          <li>SMH2G, Matrix, Pulse, Trim5</li>
+          <li>Поиск «плавающих» неисправностей</li>
+          <li>Модернизация без замены всего щита</li>
+        </ul>
+        <!-- Хотите реальные фото своих щитов/контроллеров? Замените эти два SVG на:
+             <img src="foto-smh2g.jpg" alt="Segnetics SMH2G" style="width:100%"> -->
+      </div>
+      <div class="fig-row">
+        <div class="svc-fig">
+          <svg class="segnet" viewBox="0 0 300 164" fill="none">
+            <rect x="40" y="10" width="60" height="14" fill="#3A3D3F"/>
+            <rect x="10" y="20" width="280" height="110" rx="8" fill="#2A2C2E" stroke="#17181A" stroke-width="1.5"/>
+            <rect x="30" y="44" width="120" height="48" rx="3" fill="#0A120D" stroke="#000"/>
+            <text x="90" y="77" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="26" fill="#46E08B" letter-spacing="2">25.4</text>
+            <circle cx="166" cy="52" r="3.2" fill="#46E08B" class="run-led"/>
+            <circle cx="166" cy="66" r="3.2" fill="#3A3D3F"/><circle cx="166" cy="80" r="3.2" fill="#3A3D3F"/>
+            <rect x="180" y="46" width="20" height="14" rx="2" fill="#3F4244"/>
+            <rect x="180" y="66" width="20" height="14" rx="2" fill="#3F4244"/>
+            <rect x="180" y="86" width="20" height="14" rx="2" fill="#3F4244"/>
+            <text x="30" y="118" font-family="IBM Plex Mono" font-size="9" fill="#9AA0A0" letter-spacing="2">SEGNETICS · SMH2G</text>
+            <g fill="#E0B44C" stroke="#8A6A1E" stroke-width=".5">
+              <rect x="20" y="132" width="12" height="16"/><rect x="40" y="132" width="12" height="16"/><rect x="60" y="132" width="12" height="16"/>
+              <rect x="80" y="132" width="12" height="16"/><rect x="100" y="132" width="12" height="16"/><rect x="120" y="132" width="12" height="16"/>
+              <rect x="140" y="132" width="12" height="16"/><rect x="160" y="132" width="12" height="16"/><rect x="180" y="132" width="12" height="16"/>
+              <rect x="200" y="132" width="12" height="16"/><rect x="220" y="132" width="12" height="16"/><rect x="240" y="132" width="12" height="16"/>
+              <rect x="260" y="132" width="12" height="16"/><rect x="280" y="132" width="12" height="16"/>
+            </g>
+          </svg>
+          <div class="fig-cap">SMH2G — МОДУЛЬНЫЙ ПЛК</div>
         </div>
-    </nav>
-
-    <!-- Главный экран презентации продукта -->
-    <section class="hero">
-        <div class="container">
-            <h1>Инженерия.<br>Возведенная в абсолют.</h1>
-            <p>Безупречный монтаж, интеллектуальное программирование автоматики и прецизионный ремонт технологических систем. Промышленные решения нового поколения.</p>
-            <a href="#contact" class="apple-btn">Связаться с инженером</a>
+        <div class="svc-fig">
+          <svg class="segnet" viewBox="0 0 300 164" fill="none">
+            <rect x="20" y="15" width="260" height="120" rx="10" fill="#232527" stroke="#17181A" stroke-width="1.5"/>
+            <rect x="40" y="32" width="160" height="86" fill="#0A120D" stroke="#111"/>
+            <path d="M50,100 L70,88 90,95 110,70 130,80 150,55 170,66 190,48" stroke="#46E08B" stroke-width="2"/>
+            <text x="48" y="50" font-family="IBM Plex Mono" font-size="12" fill="#46E08B">t 25.4°C</text>
+            <circle cx="225" cy="45" r="8" fill="#3F4244"/><circle cx="253" cy="45" r="8" fill="#3F4244"/>
+            <circle cx="225" cy="72" r="8" fill="#3F4244"/><circle cx="253" cy="72" r="8" fill="#3F4244"/>
+            <circle cx="225" cy="99" r="8" fill="#3F4244"/><circle cx="253" cy="99" r="8" fill="#3F4244"/>
+            <text x="40" y="126" font-family="IBM Plex Mono" font-size="9" fill="#9AA0A0" letter-spacing="2">SEGNETICS · MATRIX</text>
+          </svg>
+          <div class="fig-cap">MATRIX — ПАНЕЛЬНЫЙ HMI+PLC</div>
         </div>
-    </section>
+      </div>
+    </div></div></div>
+  </div>
+</section>
 
-    <!-- Раздел услуг: Bento Grid Премьера -->
-    <section class="grid-section">
-        <div class="container">
-            <h2 class="section-title">Три направления. Одна экосистема.</h2>
-            
-            <div class="bento-grid">
-                
-                <!-- Категория 1: Монтаж промышленного оборудования (Широкая карточка) -->
-                <div class="bento-card col-12">
-                    <div>
-                        <span style="color: var(--accent-glow); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 12px;">Масштаб и надежность</span>
-                        <h3>Монтаж промышленного оборудования<br>и инженерных сетей</h3>
-                        <p>Интеграция тяжелых технологических узлов, создание магистралей и разводка трубопроводных комплексов с идеальной точностью сварных соединений.</p>
-                    </div>
-                    
-                    <!-- Живой векторный интерактив циркуляции потоков сетей -->
-                    <div class="visual-area">
-                        <svg xmlns="http://w3.org" viewBox="0 0 1000 180" width="100%" height="100%" style="position: absolute; top: 0; left: 0;">
-                            <!-- Основа промышленных труб -->
-                            <path d="M -50 90 L 450 90 A 40 40 0 0 1 490 130 L 490 140 A 40 40 0 0 1 450 180 L -50 180" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="24"/>
-                            <path d="M 1050 90 L 550 90 A 40 40 0 0 0 510 130 L 510 140 A 40 40 0 0 0 550 180 L 1050 180" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="24"/>
-                            
-                            <!-- Тонкие неоновые линии движения энергии (Анимируются через CSS) -->
-                            <path d="M -50 90 L 450 90 A 40 40 0 0 1 490 130 L 490 140 A 40 40 0 0 1 450 180 L -50 180" class="flow-line" fill="none" stroke="var(--accent-glow)" stroke-width="2" opacity="0.6"/>
-                            <path d="M 1050 90 L 550 90 A 40 40 0 0 0 510 130 L 510 140 A 40 40 0 0 0 550 180 L 1050 180" class="flow-line" fill="none" stroke="var(--accent-glow)" stroke-width="2" opacity="0.6"/>
-                            
-                            <!-- Центральный массивный гидроузел -->
-                            <circle cx="500" cy="90" r="45" fill="#0c0c0e" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
-                            <circle cx="500" cy="90" r="35" fill="none" stroke="var(--accent-glow)" stroke-width="1" stroke-dasharray="6,4"/>
-                            
-                            <!-- Динамический датчик давления (манометр) -->
-                            <g transform="translate(220, 35)">
-                                <circle cx="0" cy="0" r="20" fill="#050507" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
-                                <line x1="0" y1="0" x2="10" y2="-10" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round" id="js-gauge-arrow"/>
-                                <text x="0" y="28" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="9" text-anchor="middle">P_SYS</text>
-                            </g>
-                        </svg>
-                    </div>
-                </div>
+<!-- ════════════════════════════════════════════════════════════════
+     БЛОК 07/10 · HTML: виртуальный щит — интерактивная SVG-схема
+     ════════════════════════════════════════════════════════════════ -->
+<section class="dark" id="shield"><div class="shield-wrap">
+  <div class="sec-head rv"><span class="sec-num">( 02 )</span><h2 class="sec-title">Виртуальный щит</h2>
+    <span class="sec-note">НАВЕДИТЕ · НАЖМИТЕ · ПОСЛУШАЙТЕ</span></div>
 
+  <div class="shield-ctrl rv">
+    <button class="btn btn-pwr" id="pwrBtn">Подать питание</button>
+    <span class="status"><span class="dot" id="statDot"></span><span id="statTxt">ОБЕСТОЧЕНО · МОЖНО РАБОТАТЬ</span></span>
+    <button class="btn" id="sndBtn" style="margin-left:auto">ЗВУК: ВКЛ</button>
+  </div>
 
+  <div class="shield-fig rv" id="shieldRoot">
+    <svg viewBox="0 0 920 560" fill="none">
+      <defs><pattern id="pe" width="8" height="8" patternTransform="rotate(45)">
+        <rect width="8" height="8" fill="#D8B93C"/><rect width="4" height="8" fill="#4FA05C"/></pattern></defs>
+      <rect x="30" y="30" width="860" height="470" rx="10" fill="#24262A" stroke="#43464B" stroke-width="2"/>
+      <rect x="60" y="60" width="800" height="410" fill="#2C2F33" stroke="#3B3E42"/>
 
+      <g class="hot" data-tip="Шина N — рабочий нулевой проводник. Синий, как и положено по ПУЭ.">
+        <rect x="106" y="90" width="10" height="360" fill="#3E6C94" stroke="#24405A"/>
+        <text x="111" y="84" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#9DB6CC">N</text></g>
+      <g class="hot" data-tip="Шина PE — защитное заземление. Жёлто-зелёная, жизнь без неё не та.">
+        <rect x="124" y="90" width="10" height="360" fill="url(#pe)" stroke="#3B5A3E"/>
+        <text x="129" y="84" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#9DB6CC">PE</text></g>
 
+      <!-- Провода -->
+      <path class="wire wire-live" d="M147,190 V240" stroke="#C25A2A"/>
+      <path class="wire" d="M120,280 H116" stroke="#4A6C8C"/>
+      <path class="wire wire-live" d="M174,265 H210" stroke="#C25A2A"/>
+      <path class="wire wire-live" d="M240,320 V430" stroke="#C25A2A"/>
+      <path class="wire wire-live" d="M280,320 V430" stroke="#4A6C8C"/>
+      <path class="wire wire-live" d="M320,320 V430" stroke="#C9CCCE"/>
+      <path class="wire wire-live" d="M550,315 V430" stroke="#C25A2A"/>
+      <path class="wire wire-live" d="M600,315 V430" stroke="#4A6C8C"/>
+      <rect x="180" y="96" width="104" height="7" fill="#C25A2A" stroke="#7A3316" stroke-width=".8"/>
 
+      <!-- Вводной автомат QF1 -->
+      <g class="hot" data-tip="QF1 — вводной автомат, 3P 63 А. Первый щелчок каждого пуска.">
+        <rect x="120" y="110" width="54" height="80" rx="3" fill="#E9E7E0" stroke="#17181A"/>
+        <rect class="lever" x="138" y="150" width="18" height="22" rx="2" fill="#17181A"/>
+        <text x="147" y="207" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#98989B">QF1</text></g>
+      <!-- Групповые автоматы -->
+      <g class="hot" data-tip="QF2 — групповой автомат отходящей линии.">
+        <rect x="190" y="110" width="26" height="80" rx="3" fill="#E9E7E0" stroke="#17181A"/>
+        <rect class="lever lever-s" x="196" y="152" width="14" height="18" rx="2" fill="#17181A"/>
+        <text x="203" y="207" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#98989B">QF2</text></g>
+      <g class="hot" data-tip="QF3 — групповой автомат.">
+        <rect x="220" y="110" width="26" height="80" rx="3" fill="#E9E7E0" stroke="#17181A"/>
+        <rect class="lever lever-s" x="226" y="152" width="14" height="18" rx="2" fill="#17181A"/>
+        <text x="233" y="207" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#98989B">QF3</text></g>
+      <g class="hot" data-tip="QF4 — групповой автомат.">
+        <rect x="250" y="110" width="26" height="80" rx="3" fill="#E9E7E0" stroke="#17181A"/>
+        <rect class="lever lever-s" x="256" y="152" width="14" height="18" rx="2" fill="#17181A"/>
+        <text x="263" y="207" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#98989B">QF4</text></g>
 
+      <!-- Блок питания -->
+      <g class="hot" data-tip="A1 — импульсный блок питания 230 В AC → 24 В DC. Мозг щита питается отсюда.">
+        <rect x="120" y="240" width="54" height="80" rx="3" fill="#B9BEC2" stroke="#17181A"/>
+        <circle class="led-dc" cx="147" cy="252" r="3.5" fill="#2C2F31"/>
+        <text x="147" y="306" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#3A3D3F">PSU 24V</text>
+        <text x="147" y="334" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#98989B">A1</text></g>
 
+      <!-- Контроллер -->
+      <g class="hot" data-tip="Контроллер Segnetics SMH2G — сердце щита. Сейчас показывает текущую температуру процесса.">
+        <rect x="210" y="240" width="210" height="80" rx="4" fill="#141618" stroke="#34373B"/>
+        <rect x="226" y="256" width="100" height="34" fill="#07120C" stroke="#1F3A2B"/>
+        <text id="plcDisp" x="276" y="281" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="20" fill="#46E08B" opacity=".22">— — —</text>
+        <circle class="led-run" cx="350" cy="262" r="3"/>
+        <circle cx="350" cy="274" r="3" fill="#5A2B22"/>
+        <rect x="340" y="286" width="16" height="10" fill="#3F4244"/><rect x="360" y="286" width="16" height="10" fill="#3F4244"/>
+        <text x="315" y="312" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#77797C">PLC · SMH2G</text></g>
 
+      <!-- Модули расширения -->
+      <g class="hot" data-tip="Модули расширения вводов/выходов — RM1 и RM2.">
+        <rect x="436" y="240" width="30" height="80" rx="3" fill="#232527" stroke="#34373B"/>
+        <rect x="470" y="240" width="30" height="80" rx="3" fill="#232527" stroke="#34373B"/>
+        <text x="468" y="334" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#98989B">RM1 · RM2</text></g>
 
-                <!-- Категория 2: Программирование и пусконаладочные работы щитов автоматики -->
-                <div class="bento-card col-6">
-                    <div>
-                        <span style="color: var(--accent-green); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 12px;">Интеллект систем</span>
-                        <h3>Программирование щитов автоматики</h3>
-                        <p>Написание отказоустойчивого софта для контроллеров (ОВЕН, Schneider Electric, Siemens и др.). Превращаем разрозненное железо в слаженно работающий автоматизированный комплекс.</p>
-                    </div>
-                    
-                    <div class="visual-area" style="display: flex; align-items: center; justify-content: center; background: #050507;">
-                        <!-- Элемент симуляции триггеров кода -->
-                        <div style="font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.4); text-align: left; width: 80%; padding: 15px;">
-                            <div><span style="color: #6c5ce7;">#define</span> FILTER_COEFF <span style="color: var(--accent-green);">0.85</span></div>
-                            <div style="margin-bottom: 8px;"><span style="color: #e84393;">if</span> (system_init == <span style="color: var(--accent-glow);">TRUE</span>) {</div>
-                            <div style="padding-left: 15px;">PWM_Signal = <span id="js-apple-code-val" style="color: #fdcb6e; font-weight: bold;">0</span>;</div>
-                            <div style="padding-left: 15px; color: var(--accent-green);">// ПНР щитов запущена</div>
-                            <div>}</div>
-                        </div>
-                        
-                        <!-- Переключатель режима симулятора -->
-                        <div style="position: absolute; right: 20px; top: 20px;">
-                            <label style="position: relative; display: inline-block; width: 34px; height: 20px;">
-                                <input type="checkbox" id="js-apple-toggle" checked style="opacity: 0; width: 0; height: 0;">
-                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #222; border-radius: 20px; transition: 0.4s;" id="js-apple-switch"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+      <!-- Реле -->
+      <g class="hot" data-tip="K1 — промежуточное реле. Щёлкает — значит, логика живая.">
+        <rect x="530" y="245" width="40" height="70" rx="3" fill="#D9DCE0" stroke="#17181A"/>
+        <rect class="flag" x="540" y="255" width="20" height="22" fill="#E0A63C"/>
+        <text x="550" y="334" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#98989B">K1</text></g>
+      <g class="hot" data-tip="K2 — промежуточное реле.">
+        <rect x="580" y="245" width="40" height="70" rx="3" fill="#D9DCE0" stroke="#17181A"/>
+        <rect class="flag" x="590" y="255" width="20" height="22" fill="#E0A63C"/>
+        <text x="600" y="334" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#98989B">K2</text></g>
 
-                <!-- Категория 3: Диагностика и ремонт (Премиум-инфографика Segnetics) -->
-                <div class="bento-card col-6">
-                    <div>
-                        <span style="color: #ff9f43; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 12px;">Аппаратная точность</span>
-                        <h3>Диагностика и ремонт автоматики</h3>
-                        <p>Восстановление и компонентная реанимация электроники промышленного класса: контроллеров Segnetics, модулей сбора данных и датчиков.</p>
-                    </div>
-                    
-                    <!-- Высокотехнологичная SVG модель контроллера Segnetics в стиле Apple -->
-                    <div class="visual-area">
-                        <svg xmlns="http://w3.org" viewBox="0 0 400 180" width="100%" height="100%">
-                            <!-- Корпус Segnetics -->
-                            <rect x="110" y="20" width="180" height="130" rx="16" fill="#0d0d11" stroke="rgba(255,255,255,0.06)" stroke-width="2"/>
-                            
-                            <!-- Глянцевая OLED панель экрана -->
-                            <rect x="125" y="35" width="150" height="70" rx="8" fill="#020203" stroke="rgba(47, 128, 237, 0.15)" stroke-width="1"/>
-                            
-                            <!-- Строки данных на дисплее -->
-                            <text id="js-seg-oled-1" x="140" y="55" fill="var(--accent-green)" font-family="monospace" font-size="9" font-weight="bold" letter-spacing="0.05em">● SEGNETICS OK</text>
-                            <text id="js-seg-oled-2" x="140" y="73" fill="#ffffff" font-family="monospace" font-size="9" letter-spacing="0.02em">Hz: 50.00</text>
-                            <text id="js-seg-oled-3" x="140" y="90" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="8">DIAG_STABLE_NODE</text>
-                            
-                            <!-- Светодиодные индикаторы состояния снизу -->
-                            <g transform="translate(135, 125)">
-                                <circle cx="0" cy="0" r="3" fill="var(--accent-green)" id="js-seg-led-pwr" style="filter: drop-shadow(0 0 4px var(--accent-green));"/>
-                                <text x="8" y="3" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="7">PWR</text>
-                                
-                                <circle cx="45" cy="0" r="3" fill="var(--accent-glow)" id="js-seg-led-com"/>
-                                <text x="53" y="3" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="7">COM</text>
-                                
-                                <circle cx="95" cy="0" r="3" fill="#222" id="js-seg-led-alarm"/>
-                                <text x="103" y="3" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="7">ALARM</text>
-                            </g>
-                        </svg>
-                    </div>
-                </div>
+      <!-- Резерв -->
+      <g class="hot" data-tip="Резерв под расширение — свободное место оставляю в каждом щите. Понадобится раньше, чем кажется.">
+        <rect x="650" y="240" width="130" height="80" stroke="#55585C" stroke-dasharray="5 5"/>
+        <text x="715" y="284" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#66696D" letter-spacing="3">РЕЗЕРВ</text></g>
 
-            </div>
-        </div>
-    </section>
+      <!-- Клеммники -->
+      <g class="hot" data-tip="X1 — клеммники для подключения полевых устройств. Маркируются, а не угадываются.">
+        <text x="100" y="452" text-anchor="end" font-family="IBM Plex Mono" font-size="9" fill="#98989B">X1</text>
+        <g fill="#E4B23F" stroke="#8A6A1E" stroke-width=".7">
+          <rect x="120" y="430" width="26" height="36" rx="2"/><rect x="158" y="430" width="26" height="36" rx="2"/>
+          <rect x="196" y="430" width="26" height="36" rx="2"/><rect x="234" y="430" width="26" height="36" rx="2"/>
+          <rect x="272" y="430" width="26" height="36" rx="2"/><rect x="310" y="430" width="26" height="36" rx="2"/>
+          <rect x="348" y="430" width="26" height="36" rx="2"/><rect x="386" y="430" width="26" height="36" rx="2"/>
+          <rect x="424" y="430" width="26" height="36" rx="2"/><rect x="462" y="430" width="26" height="36" rx="2"/>
+          <rect x="500" y="430" width="26" height="36" rx="2"/><rect x="538" y="430" width="26" height="36" rx="2"/>
+          <rect x="576" y="430" width="26" height="36" rx="2"/><rect x="614" y="430" width="26" height="36" rx="2"/>
+          <rect x="652" y="430" width="26" height="36" rx="2"/><rect x="690" y="430" width="26" height="36" rx="2"/>
+        </g>
+        <g fill="#17181A">
+          <circle cx="133" cy="441" r="2.5"/><circle cx="171" cy="441" r="2.5"/><circle cx="209" cy="441" r="2.5"/>
+          <circle cx="247" cy="441" r="2.5"/><circle cx="285" cy="441" r="2.5"/><circle cx="323" cy="441" r="2.5"/>
+          <circle cx="361" cy="441" r="2.5"/><circle cx="399" cy="441" r="2.5"/><circle cx="437" cy="441" r="2.5"/>
+          <circle cx="475" cy="441" r="2.5"/><circle cx="513" cy="441" r="2.5"/><circle cx="551" cy="441" r="2.5"/>
+          <circle cx="589" cy="441" r="2.5"/><circle cx="627" cy="441" r="2.5"/><circle cx="665" cy="441" r="2.5"/>
+          <circle cx="703" cy="441" r="2.5"/>
+        </g></g>
 
-    <!-- Секция обратной связи в стиле Apple Card -->
-    <section id="contact" style="padding: 120px 0 160px 0; background: linear-gradient(180deg, var(--bg-pure) 0%, #050507 100%);">
-        <div class="container" style="text-align: center;">
-            <div style="max-width: 600px; margin: 0 auto; background: var(--bg-dark); border: 1px solid var(--border-subtle); padding: 60px 40px; border-radius: 36px; box-shadow: 0 40px 100px rgba(0,0,0,0.6);">
-                <span style="color: var(--accent-glow); font-size: 14px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;">ИП Кирпань</span>
-                <h2 style="font-size: 32px; font-weight: 800; letter-spacing: -0.04em; margin: 16px 0 24px 0;">Начнем ваш проект?</h2>
-                <p style="color: var(--text-gray); font-size: 16px; margin-bottom: 40px; line-height: 1.5;">Оставьте заявку на монтаж инженерных сетей, сборку и пусконаладку щитов автоматики или ремонт оборудования в любой точке Российской Федерации.</p>
-                <a href="https://max.ru" class="apple-btn" target="_blank" style="background: var(--accent-glow); color: #fff; box-shadow: 0 10px 30px rgba(47, 128, 237, 0.3);">Обсудить ТЗ в мессенджере</a>
-            </div>
-        </div>
-    </section>
+      <text x="490" y="524" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#77797C" letter-spacing="2">ЩАУ-1 · ВИРТУАЛЬНАЯ КОПИЯ · НАСТОЯЩИЙ СОБИРАЕТСЯ ТОЧНО ТАК ЖЕ</text>
+    </svg>
+  </div>
+  <p class="dark-note rv">Так выглядит начинка шкафа автоматики. <b>Подайте питание</b> и посмотрите,
+    что происходит при пусконаладке: автоматы щёлкают, контроллер оживает, ток бежит по проводам.
+    Наведите курсор на любой элемент — расскажу, что это и зачем оно там.</p>
+</div></section>
 
+<!-- ════════════════════════════════════════════════════════════════
+     БЛОК 08/10 · HTML: цифры, этапы, география, контакты, штамп-футер
+     ════════════════════════════════════════════════════════════════ -->
+<div class="stats rv">
+  <div class="stat"><div class="stat-num"><span data-n="12">0</span></div><div class="stat-cap">лет в инженерии</div></div>
+  <div class="stat"><div class="stat-num"><span data-n="140" data-suf="+">0</span></div><div class="stat-cap">объектов и щитов</div></div>
+  <div class="stat"><div class="stat-num"><span data-n="40" data-suf="+">0</span></div><div class="stat-cap">городов выездов</div></div>
+  <div class="stat"><div class="stat-num">24<span class="stat-suf">/</span>7</div><div class="stat-cap">связь после сдачи</div></div>
+</div>
 
+<section class="sec" id="steps">
+  <div class="sec-head rv"><span class="sec-num">( 03 )</span><h2 class="sec-title">Этапы работы</h2><span class="sec-note">ОТ ЗАЯВКИ ДО СДАЧИ</span></div>
+  <div class="step rv"><div class="step-num">01</div><div>
+    <h3 class="step-tt">Заявка и ТЗ</h3>
+    <p class="step-tx">Созваниваемся, вы присылаете фото щита, проект или просто описание проблемы голосом.
+      Формулируем задачу и объём — до выезда и без «приеду, посмотрю» за ваш счёт.</p></div></div>
+  <div class="step rv"><div class="step-num">02</div><div>
+    <h3 class="step-tt">Обследование и смета</h3>
+    <p class="step-tx">Выезжаю на объект или разбираюсь удалённо. Фиксирую состав работ и цену.
+      Смета — до начала работ, без сюрпризов в конце.</p></div></div>
+  <div class="step rv"><div class="step-num">03</div><div>
+    <h3 class="step-tt">Монтаж и программирование</h3>
+    <p class="step-tx">Собираю щит, тяну сети, пишу логику под ваш процесс. Фотоотчёт на каждом этапе —
+      вы видите ход работ, не вставая с места.</p></div></div>
+  <div class="step rv"><div class="step-num">04</div><div>
+    <h3 class="step-tt">Пусконаладка и сдача</h3>
+    <p class="step-tx">Проверяем в ручном и автоматическом режиме, обучаю персонал, передаю схемы
+      и пароли. После сдачи остаюсь на связи — см. пункт «24/7».</p></div></div>
+</section>
 
+<section class="sec" id="geo">
+  <div class="sec-head rv"><span class="sec-num">( 04 )</span><h2 class="sec-title">География</h2><span class="sec-note">РАБОТАЮ ПО ВСЕЙ РОССИИ</span></div>
+  <div class="geo-grid">
+    <div class="rv">
+      <p class="geo-big">От Калининграда <em>до Владивостока</em> — щит не выбирает адрес.</p>
+      <ul class="checklist" style="margin-top:26px">
+        <li>Командировки от одного дня, удалённо — в тот же день</li>
+        <li>Договор, КС-2/КС-3, исполнительная документация</li>
+        <li>Гарантия на работы — 24 месяца</li>
+        <li>Удалённая диагностика по защищённому каналу</li>
+      </ul>
+    </div>
+    <div class="geo-fig rv d1">
+      <svg viewBox="0 0 440 150" fill="none">
+        <path d="M20,90 Q220,14 420,90" stroke="#D8491F" stroke-width="1.5" stroke-dasharray="5 6"/>
+        <circle r="4.5" fill="#D8491F"><animateMotion dur="6s" repeatCount="indefinite" path="M20,90 Q220,14 420,90"/></circle>
+        <line x1="20" y1="90" x2="420" y2="90" stroke="#1C1D1F" stroke-width="1.5"/>
+        <g fill="#EFEBE1" stroke="#1C1D1F" stroke-width="1.5">
+          <circle cx="20" cy="90" r="4"/><circle cx="90" cy="90" r="4"/><circle cx="160" cy="90" r="4"/>
+          <circle cx="230" cy="90" r="4"/><circle cx="300" cy="90" r="4"/><circle cx="370" cy="90" r="4"/><circle cx="420" cy="90" r="4"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#1C1D1F">
+          <text x="20" y="72" text-anchor="middle">Калининград</text><text x="90" y="114" text-anchor="middle">Москва</text>
+          <text x="160" y="72" text-anchor="middle">Казань</text><text x="230" y="114" text-anchor="middle">Екатеринбург</text>
+          <text x="300" y="72" text-anchor="middle">Новосибирск</text><text x="370" y="114" text-anchor="middle">Иркутск</text>
+          <text x="420" y="72" text-anchor="end">Владивосток</text>
+        </g>
+        <text x="220" y="142" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#6E6A5E" letter-spacing="2">≈ 10 000 КМ — И ОБРАТНО</text>
+      </svg>
+    </div>
+  </div>
+</section>
 
+<section class="sec" id="contact">
+  <div class="sec-head rv"><span class="sec-num">( 05 )</span><h2 class="sec-title">Контакты</h2><span class="sec-note">ФОРМА ЗАЯВКИ</span></div>
+  <div class="contact">
+    <div class="rv">
+      <!-- ЗАМЕНИТЕ телефон, telegram и почту на свои -->
+      <div class="c-row"><div><div class="c-lb">ТЕЛЕФОН</div><div class="c-vl">+7 900 000-00-00</div></div>
+        <button class="copy-btn" data-copy="+7 900 000-00-00" aria-label="Скопировать телефон"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1"/><path d="M11 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2"/></svg></button></div>
+      <div class="c-row"><div><div class="c-lb">TELEGRAM</div><div class="c-vl">@kirpan_engineer</div></div>
+        <button class="copy-btn" data-copy="@kirpan_engineer" aria-label="Скопировать Telegram"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1"/><path d="M11 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2"/></svg></button></div>
+      <div class="c-row"><div><div class="c-lb">ПОЧТА</div><div class="c-vl">info@kirpan.ru</div></div>
+        <button class="copy-btn" data-copy="info@kirpan.ru" aria-label="Скопировать почту"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1"/><path d="M11 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2"/></svg></button></div>
+      <p class="c-note">Отвечаю в течение часа в рабочее время.<br>В экстренной ситуации — сразу, потому что простой стоит дороже.</p>
+    </div>
+    <form class="rv d1" id="mailForm">
+      <div class="fld"><label for="fName">Ваше имя / организация</label>
+        <input id="fName" required placeholder="Как к вам обращаться"></div>
+      <div class="fld"><label for="fContact">Телефон или Telegram</label>
+        <input id="fContact" required placeholder="+7 … или @nickname"></div>
+      <div class="fld"><label for="fMsg">Что за задача</label>
+        <textarea id="fMsg" placeholder="Например: щит на 30 автоматов, контроллер Segnetics, нужен монтаж и программа"></textarea></div>
+      <button class="btn btn-solid" type="submit">Отправить заявку
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 10h14M11 4l6 6-6 6"/></svg></button>
+      <p class="form-note">* Письмо откроется в вашем почтовом клиенте — ничего никуда не улетает само.
+        Заявка ни к чему не обязывает, кроме взаимного интереса.</p>
+    </form>
+  </div>
+</section>
 
+<footer class="footer">
+  <div class="formstamp rv">
+    <div class="sc"><span class="sc-lb">Наименование</span>
+      <span class="sc-big">Сайт-визитка «ИП Кирпань — промышленная автоматика». Монтаж, программирование, пусконаладка, ремонт.</span></div>
+    <div class="sc"><span class="sc-lb">Разраб.</span><span class="sc-vl">Кирпань И.</span></div>
+    <div class="sc"><span class="sc-lb">Пров.</span><span class="sc-vl">———</span></div>
+    <div class="sc"><span class="sc-lb">Стадия</span><span class="sc-vl">ИП</span></div>
+    <div class="sc"><span class="sc-lb">Лист</span><span class="sc-vl">1</span></div>
+    <div class="sc"><span class="sc-lb">Листов</span><span class="sc-vl">1</span></div>
+  </div>
+  <p class="footer-line">© 2025 ИП Кирпань · Сайт собран руками — как и все мои щиты.<br>
+    Вы долистали до штампа: проверка на внимательность — пройдена.</p>
+</footer>
 
-    <!-- Минималистичный футер Apple Style -->
-    <footer class="footer">
-        <div class="container">
-            <p style="margin-bottom: 12px; font-weight: 600; color: #fff;">&copy; 2026 ИП Кирпань. Все права защищены.</p>
-            <p>Проектирование, монтаж, пусконаладочные работы и компонентный ремонт средств автоматизации инженерных сетей.</p>
-            <p style="margin-top: 8px; font-size: 11px; opacity: 0.5;">Выезд инженерных групп по всей территории Российской Федерации.</p>
-        </div>
-    </footer>
+<div id="tip"></div><div id="toast"></div>
 
-    <!-- Движок интерактивной презентации сайта -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Элементы интерактивного кода ПЛК (Карточка 2)
-            const appleCodeVal = document.getElementById("js-apple-code-val");
-            const appleToggle = document.getElementById("js-apple-toggle");
-            const appleSwitch = document.getElementById("js-apple-switch");
+<!-- ════════════════════════════════════════════════════════════════
+     БЛОК 09/10 · JS: тосты, курсор, аккордеон, счётчики, копирование,
+                   факты, форма, появление секций
+     ════════════════════════════════════════════════════════════════ -->
+<script>
+// — Тосты —
+let toastT;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('show'), 2800);
+}
 
-            // Элементы дисплея контроллера Segnetics (Карточка 3)
-            const segOled1 = document.getElementById("js-seg-oled-1");
-            const segOled2 = document.getElementById("js-seg-oled-2");
-            const segOled3 = document.getElementById("js-seg-oled-3");
-            const ledCom = document.getElementById("js-seg-led-com");
-            const ledAlarm = document.getElementById("js-seg-led-alarm");
+// — Курсор-перекрестие как в САПР —
+(function(){
+  if (!matchMedia('(pointer:fine)').matches) return;
+  const cx = document.getElementById('cx'), cy = document.getElementById('cy'),
+        cp = document.getElementById('cpos');
+  let mx=-100, my=-100, x=-100, y=-100;
+  document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+  document.addEventListener('mouseleave', ()=>{ mx=-100; my=-100; });
+  (function loop(){
+    x += (mx-x)*.4; y += (my-y)*.4;
+    cx.style.transform = `translateX(${x}px)`;
+    cy.style.transform = `translateY(${y}px)`;
+    cp.style.transform = `translate(${x+12}px, ${y+12}px)`;
+    cp.textContent = `X ${Math.round(x/3.78)} · Y ${Math.round(y/3.78)} мм`;
+    requestAnimationFrame(loop);
+  })();
+})();
 
-            // Стрелка манометра (Карточка 1)
-            const gaugeArrow = document.getElementById("js-gauge-arrow");
+// — Аккордеон услуг —
+document.querySelectorAll('.svc-head').forEach(h=>{
+  h.addEventListener('click', ()=>{
+    const item = h.parentElement, wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.svc.open').forEach(o=>{
+      o.classList.remove('open'); o.querySelector('.svc-head').setAttribute('aria-expanded','false');
+    });
+    if (!wasOpen){ item.classList.add('open'); h.setAttribute('aria-expanded','true'); }
+  });
+});
 
-            // Внутренние переменные симуляции техпроцессов
-            let pwmSignalValue = 0;
-            let currentFrequency = 50.00;
-            let toggleState = true;
+// — Счётчики и появление —
+function animNum(el){
+  const n = +el.dataset.n, suf = el.dataset.suf || '', t0 = performance.now();
+  (function f(t){
+    const p = Math.min(1,(t-t0)/1400), e = 1-Math.pow(1-p,3);
+    el.textContent = Math.round(n*e) + suf;
+    if (p<1) requestAnimationFrame(f);
+  })(t0);
+}
+const io = new IntersectionObserver(es=>es.forEach(e=>{
+  if (!e.isIntersecting) return;
+  e.target.classList.add('vis');
+  e.target.querySelectorAll('[data-n]').forEach(animNum);
+  io.unobserve(e.target);
+}),{threshold:.25});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-            // Стилизация премиального переключателя iOS при инициализации
-            if (appleSwitch) {
-                appleSwitch.style.boxShadow = "inset 0 0 0 10px var(--accent-green)";
-                appleSwitch.innerHTML = "<div style='position:absolute; width:16px; height:16px; border-radius:50%; background:#fff; top:2px; left:16px; transition:0.4s;'></div>";
-            }
+// — Копирование контактов —
+document.querySelectorAll('.copy-btn').forEach(b=>b.addEventListener('click',()=>{
+  const v = b.dataset.copy;
+  if (navigator.clipboard){ navigator.clipboard.writeText(v).then(()=>showToast('Скопировано: '+v)); }
+  else {
+    const ta = document.createElement('textarea'); ta.value=v; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); ta.remove(); showToast('Скопировано: '+v);
+  }
+}));
 
-            // Обработка клика по переключателю
-            if (appleToggle && appleSwitch) {
-                appleToggle.addEventListener("change", (e) => {
-                    toggleState = e.target.checked;
-                    if (toggleState) {
-                        appleSwitch.style.boxShadow = "inset 0 0 0 10px var(--accent-green)";
-                        appleSwitch.querySelector("div").style.left = "16px";
-                    } else {
-                        appleSwitch.style.boxShadow = "inset 0 0 0 0px #222";
-                        appleSwitch.querySelector("div").style.left = "2px";
-                    }
-                });
-            }
+// — Ротатор инженерных примечаний —
+const FACTS = [
+  '90% «сломанных» контроллеров оказываются передавленными проводами в клемме.',
+  'Щит, собранный без маркировки, через год читается только телепатически.',
+  'Segnetics SMH2G живёт в щите по 10–15 лет — переживёт и ремонты, и тренды.',
+  'Правильный ПИД-регулятор не дёргается. Как и правильный монтажник.',
+  'Обесточенный щит проверяют как находящийся под напряжением. Всегда.',
+  'Если после наладки всё заработало с первого раза — перепроверьте, тот ли щит вы включили.',
+  '24 вольта не бьёт током, но экономит нервы, простои и репутацию.',
+  'Лучший инструмент наладчика — прозрачная маркировка и прямые руки.'
+];
+let factI = 0;
+const factEl = document.getElementById('factTxt');
+function nextFact(){
+  factEl.style.opacity = 0;
+  setTimeout(()=>{ factI = (factI + 1 + Math.floor(Math.random()*(FACTS.length-1))) % FACTS.length;
+    factEl.textContent = FACTS[factI]; factEl.style.opacity = 1; }, 250);
+}
+factEl.textContent = FACTS[0];
+document.getElementById('factBtn').addEventListener('click', nextFact);
 
-            // Высокоскоростной математический цикл (Обновление каждые 900мс для живой презентации)
-            setInterval(() => {
-                // 1. Анимация стрелки манометра монтажного узла
-                if (gaugeArrow) {
-                    let randomAngle = (Math.random() - 0.5) * 35 - 45; // Колебания вокруг рабочей точки
-                    gaugeArrow.setAttribute("transform", `rotate(${randomAngle} 0 0)`);
-                }
+// — Печать-штамп —
+document.getElementById('seal').addEventListener('click', ()=>
+  showToast('Штамп поставить легко. А вот щит — приходите, соберём.'));
 
-                // 2. Симуляция логики кода ПЛК
-                if (toggleState) {
-                    pwmSignalValue = Math.floor(Math.random() * 255);
-                    if (appleCodeVal) {
-                        appleCodeVal.textContent = pwmSignalValue;
-                        appleCodeVal.style.color = "var(--accent-green)";
-                    }
-                } else {
-                    if (appleCodeVal) {
-                        appleCodeVal.textContent = "0 (HALT)";
-                        appleCodeVal.style.color = "var(--accent-red)";
-                    }
-                }
+// — Форма заявки (mailto, ЗАМЕНИТЕ адрес на свой) —
+const MAIL = 'info@kirpan.ru';
+document.getElementById('mailForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const n = document.getElementById('fName').value,
+        c = document.getElementById('fContact').value,
+        m = document.getElementById('fMsg').value;
+  const body = `Имя: ${n}\nКонтакт: ${c}\nЗадача: ${m}`;
+  location.href = `mailto:${MAIL}?subject=${encodeURIComponent('Заявка с сайта — ИП Кирпань')}&body=${encodeURIComponent(body)}`;
+  showToast('Открываю вашу почту… Если не сработало — пишите на ' + MAIL);
+});
+</script>
 
-                // 3. Симуляция OLED дисплея и индикации Segnetics
-                if (toggleState) {
-                    // Генерация плавного дрейфа промышленной частоты сети
-                    currentFrequency += (Math.random() - 0.5) * 0.15;
-                    if (currentFrequency < 48.5) currentFrequency = 48.5;
-                    if (currentFrequency > 51.5) currentFrequency = 51.5;
+<!-- ════════════════════════════════════════════════════════════════
+     БЛОК 10/10 · JS: виртуальный щит — питание, звук, дисплей, тултипы
+     ════════════════════════════════════════════════════════════════ -->
+<script>
+let AC = null, soundOn = true;
 
-                    if (segOled1) {
-                        segOled1.textContent = "● SEGNETICS RUN";
-                        segOled1.setAttribute("fill", "var(--accent-green)");
-                    }
-                    if (segOled2) segOled2.textContent = `Hz: ${currentFrequency.toFixed(2)}`;
-                    
-                    // Мигание светодиода связи COM-порта
-                    if (ledCom) {
-                        let flash = Math.random() > 0.4;
-                        ledCom.setAttribute("fill", flash ? "var(--accent-glow)" : "#111");
-                        ledCom.style.filter = flash ? "drop-shadow(0 0 4px var(--accent-glow))" : "none";
-                    }
+// Синтезированный «щелчок» автомата и гул трансформатора
+function ensureAC(){ AC = AC || new (window.AudioContext || window.webkitAudioContext)(); }
+function click(vol=0.5){
+  if (!soundOn) return; ensureAC();
+  const dur = .06, buf = AC.createBuffer(1, AC.sampleRate*dur, AC.sampleRate),
+        d = buf.getChannelData(0);
+  for (let i=0;i<d.length;i++) d[i] = (Math.random()*2-1)*Math.pow(1-i/d.length, 2.6);
+  const src = AC.createBufferSource(), f = AC.createBiquadFilter(), g = AC.createGain();
+  src.buffer = buf; f.type='lowpass'; f.frequency.value = 3200; g.gain.value = vol;
+  src.connect(f); f.connect(g); g.connect(AC.destination); src.start();
+}
+function hum(){
+  if (!soundOn) return; ensureAC();
+  [[100,.028],[50,.02]].forEach(([fr,v])=>{
+    const o = AC.createOscillator(), g = AC.createGain();
+    o.type='sine'; o.frequency.value = fr; g.gain.value = v;
+    g.gain.exponentialRampToValueAtTime(.0001, AC.currentTime + 1.4);
+    o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime + 1.5);
+  });
+}
 
-                    // Симуляция редких логов диагностики / аварийных кодов
-                    if (Math.random() > 0.88) {
-                        if (segOled3) {
-                            segOled3.textContent = "WARN: MIS_VAL_NET";
-                            segOled3.setAttribute("fill", "var(--accent-red)");
-                        }
-                        if (ledAlarm) {
-                            ledAlarm.setAttribute("fill", "var(--accent-red)");
-                            ledAlarm.style.filter = "drop-shadow(0 0 4px var(--accent-red))";
-                        }
-                    } else {
-                        if (segOled3) {
-                            segOled3.textContent = "DIAG_STABLE_NODE";
-                            segOled3.setAttribute("fill", "rgba(255,255,255,0.4)");
-                        }
-                        if (ledAlarm) {
-                            ledAlarm.setAttribute("fill", "#222");
-                            ledAlarm.style.filter = "none";
-                        }
-                    }
-                } else {
-                    // Состояние контроллера при выключении ПНР щитов
-                    if (segOled1) {
-                        segOled1.textContent = "○ SEGNETICS STOP";
-                        segOled1.setAttribute("fill", "rgba(255,255,255,0.2)");
-                    }
-                    if (segOled2) segOled2.textContent = "Hz: 0.00";
-                    if (segOled3) {
-                        segOled3.textContent = "NODE_DISCONNECTED";
-                        segOled3.setAttribute("fill", "var(--text-gray)");
-                    }
-                    if (ledCom) { ledCom.setAttribute("fill", "#111"); ledCom.style.filter = "none"; }
-                    if (ledAlarm) { ledAlarm.setAttribute("fill", "#222"); ledAlarm.style.filter = "none"; }
-                }
+// Питание: последовательность включения, как при реальной наладке
+let powered = false, dispTimer = null;
+const root = document.getElementById('shieldRoot'),
+      pwrBtn = document.getElementById('pwrBtn'),
+      statDot = document.getElementById('statDot'),
+      statTxt = document.getElementById('statTxt'),
+      disp = document.getElementById('plcDisp');
 
-            }, 900);
-        });
-    </script>
+function updateDisp(){
+  const v = 21.6 + 2.9*Math.sin(Date.now()/5200) + (Math.random()-.5)*.3;
+  disp.textContent = v.toFixed(1);
+}
+function powerOn(){
+  powered = true; root.classList.add('powered');
+  pwrBtn.textContent = 'Снять напряжение'; pwrBtn.classList.add('on');
+  statTxt.textContent = 'ПОД НАПРЯЖЕНИЕМ · 230 В'; statDot.classList.add('on');
+  click(.55);
+  setTimeout(()=>click(.5), 380);
+  setTimeout(()=>{ click(.35); hum(); }, 750);
+  setTimeout(()=>{ updateDisp(); dispTimer = setInterval(updateDisp, 900); }, 1100);
+}
+function powerOff(){
+  powered = false; clearInterval(dispTimer);
+  root.classList.remove('powered');
+  pwrBtn.textContent = 'Подать питание'; pwrBtn.classList.remove('on');
+  statTxt.textContent = 'ОБЕСТОЧЕНО · МОЖНО РАБОТАТЬ'; statDot.classList.remove('on');
+  disp.textContent = '— — —';
+  click(.5);
+  showToast('Напряжение снято. Правило наладчика: смотрите под ноги и не трогайте руками.');
+}
+pwrBtn.addEventListener('click', ()=> powered ? powerOff() : powerOn());
+
+// Тумблер звука
+const sndBtn = document.getElementById('sndBtn');
+sndBtn.addEventListener('click', ()=>{
+  soundOn = !soundOn;
+  sndBtn.textContent = 'ЗВУК: ' + (soundOn ? 'ВКЛ' : 'ВЫКЛ');
+});
+
+// Тултипы по элементам схемы
+const tip = document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+  el.addEventListener('pointermove', e=>{
+    tip.textContent = el.dataset.tip; tip.style.opacity = 1;
+    const w = 280;
+    tip.style.left = (e.clientX + w > innerWidth ? e.clientX - w - 6 : e.clientX + 14) + 'px';
+    tip.style.top = (e.clientY + 18) + 'px';
+  });
+  el.addEventListener('pointerleave', ()=> tip.style.opacity = 0);
+});
+</script>
 </body>
 </html>
-
-
