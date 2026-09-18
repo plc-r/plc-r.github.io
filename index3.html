@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИП Кирпань | Инженерные Сети и Автоматизация</title>
+    <meta property="og:title" content="ИП Кирпань — Инженерия высшего уровня" />
+    <meta property="og:description" content="Монтаж оборудования, программирование щитов и ремонт автоматики по всей России." />
+    
+    <!-- Подключаем шрифт Inter для эффекта дорогого интерфейса -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-pure: #000000;           /* Радикальный черный, как на сайте Apple */
+            --bg-dark: #0a0a0c;           /* Глубокий серый для премиальных карточек */
+            --accent-glow: #2f80ed;       /* Неоновый синий импульс */
+            --accent-green: #00ffa3;      /* Кибер-зеленый для индикаторов */
+            --text-white: #ffffff;
+            --text-gray: #86868b;         /* Фирменный эппловский приглушенный цвет текста */
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-pure);
+            color: var(--text-white);
+            line-height: 1.5;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Элемент свечения на фоне */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -25%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80vw;
+            height: 60vh;
+            background: radial-gradient(circle, rgba(47, 128, 237, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Навигационная панель в стиле iOS */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 100;
+            padding: 16px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, var(--text-gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .geo-badge {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-glow);
+            border: 1px solid rgba(47, 128, 237, 0.3);
+            padding: 4px 12px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(47, 128, 237, 0.05);
+        }
+
+
+
+
+
+
+
+
+
+        /* Главный презентационный экран (Hero) */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: calc(32px + 3.5vw);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.05em;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #ffffff 50%, #86868b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: calc(16px + 0.4vw);
+            color: var(--text-gray);
+            max-width: 700px;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        /* Премиальная сетка Apple Bento Grid */
+        .grid-section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: calc(24px + 1.5vw);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+        }
+
+        .bento-card {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-subtle);
+            border-radius: 28px; /* Округлые яблочные углы */
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition-smooth);
+            min-height: 440px;
+        }
+
+        /* Эффект глубокого парения при наведении */
+        .bento-card:hover {
+            transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 50px rgba(47, 128, 237, 0.1);
+        }
+
+        /* Размеры карточек в сетке */
+        .col-6 { grid-column: span 6; }
+        .col-12 { grid-column: span 12; }
+
+        .bento-card h3 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .bento-card p {
+            color: var(--text-gray);
+            font-size: 15px;
+            max-width: 420px;
+            line-height: 1.6;
+        }
+
+        /* Интерактивная область внутри карточек */
+        .visual-area {
+            width: 100%;
+            height: 180px;
+            margin-top: 30px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.03) 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ссылки-кнопки */
+        .apple-btn {
+            display: inline-block;
+            background-color: var(--text-white);
+            color: var(--bg-pure);
+            padding: 16px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .apple-btn:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .footer {
+            padding: 80px 0;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        /* Адаптивность для мобильных девайсов */
+        @media (max-width: 992px) {
+            .col-6, .col-12 { grid-column: span 12; }
+            .bento-card { min-height: 380px; padding: 30px; }
+            .hero { padding-top: 140px; }
+        }
+    </style>
+</head>
+
+
+
+
+
+
+
+
+<body>
+
+    <!-- Навигационная панель iOS/Apple style -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">ИП КИРПАНЬ</div>
+            <div class="geo-badge">📍 РАБОТА ПО ВСЕЙ РОССИИ</div>
+        </div>
+    </nav>
+
+    <!-- Главный экран презентации продукта -->
+    <section class="hero">
+        <div class="container">
+            <h1>Инженерия.<br>Возведенная в абсолют.</h1>
+            <p>Безупречный монтаж, интеллектуальное программирование автоматики и прецизионный ремонт технологических систем. Промышленные решения нового поколения.</p>
+            <a href="#contact" class="apple-btn">Связаться с инженером</a>
+        </div>
+    </section>
+
+    <!-- Раздел услуг: Bento Grid Премьера -->
+    <section class="grid-section">
+        <div class="container">
+            <h2 class="section-title">Три направления. Одна экосистема.</h2>
+            
+            <div class="bento-grid">
+                
+                <!-- Категория 1: Монтаж промышленного оборудования (Широкая карточка) -->
+                <div class="bento-card col-12">
+                    <div>
+                        <span style="color: var(--accent-glow); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 12px;">Масштаб и надежность</span>
+                        <h3>Монтаж промышленного оборудования<br>и инженерных сетей</h3>
+                        <p>Интеграция тяжелых технологических узлов, создание магистралей и разводка трубопроводных комплексов с идеальной точностью сварных соединений.</p>
+                    </div>
+                    
+                    <!-- Живой векторный интерактив циркуляции потоков сетей -->
+                    <div class="visual-area">
+                        <svg xmlns="http://w3.org" viewBox="0 0 1000 180" width="100%" height="100%" style="position: absolute; top: 0; left: 0;">
+                            <!-- Основа промышленных труб -->
+                            <path d="M -50 90 L 450 90 A 40 40 0 0 1 490 130 L 490 140 A 40 40 0 0 1 450 180 L -50 180" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="24"/>
+                            <path d="M 1050 90 L 550 90 A 40 40 0 0 0 510 130 L 510 140 A 40 40 0 0 0 550 180 L 1050 180" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="24"/>
+                            
+                            <!-- Тонкие неоновые линии движения энергии (Анимируются через CSS) -->
+                            <path d="M -50 90 L 450 90 A 40 40 0 0 1 490 130 L 490 140 A 40 40 0 0 1 450 180 L -50 180" class="flow-line" fill="none" stroke="var(--accent-glow)" stroke-width="2" opacity="0.6"/>
+                            <path d="M 1050 90 L 550 90 A 40 40 0 0 0 510 130 L 510 140 A 40 40 0 0 0 550 180 L 1050 180" class="flow-line" fill="none" stroke="var(--accent-glow)" stroke-width="2" opacity="0.6"/>
+                            
+                            <!-- Центральный массивный гидроузел -->
+                            <circle cx="500" cy="90" r="45" fill="#0c0c0e" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                            <circle cx="500" cy="90" r="35" fill="none" stroke="var(--accent-glow)" stroke-width="1" stroke-dasharray="6,4"/>
+                            
+                            <!-- Динамический датчик давления (манометр) -->
+                            <g transform="translate(220, 35)">
+                                <circle cx="0" cy="0" r="20" fill="#050507" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                                <line x1="0" y1="0" x2="10" y2="-10" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round" id="js-gauge-arrow"/>
+                                <text x="0" y="28" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="9" text-anchor="middle">P_SYS</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+                <!-- Категория 2: Программирование и пусконаладочные работы щитов автоматики -->
+                <div class="bento-card col-6">
+                    <div>
+                        <span style="color: var(--accent-green); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 12px;">Интеллект систем</span>
+                        <h3>Программирование щитов автоматики</h3>
+                        <p>Написание отказоустойчивого софта для контроллеров (ОВЕН, Schneider Electric, Siemens и др.). Превращаем разрозненное железо в слаженно работающий автоматизированный комплекс.</p>
+                    </div>
+                    
+                    <div class="visual-area" style="display: flex; align-items: center; justify-content: center; background: #050507;">
+                        <!-- Элемент симуляции триггеров кода -->
+                        <div style="font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.4); text-align: left; width: 80%; padding: 15px;">
+                            <div><span style="color: #6c5ce7;">#define</span> FILTER_COEFF <span style="color: var(--accent-green);">0.85</span></div>
+                            <div style="margin-bottom: 8px;"><span style="color: #e84393;">if</span> (system_init == <span style="color: var(--accent-glow);">TRUE</span>) {</div>
+                            <div style="padding-left: 15px;">PWM_Signal = <span id="js-apple-code-val" style="color: #fdcb6e; font-weight: bold;">0</span>;</div>
+                            <div style="padding-left: 15px; color: var(--accent-green);">// ПНР щитов запущена</div>
+                            <div>}</div>
+                        </div>
+                        
+                        <!-- Переключатель режима симулятора -->
+                        <div style="position: absolute; right: 20px; top: 20px;">
+                            <label style="position: relative; display: inline-block; width: 34px; height: 20px;">
+                                <input type="checkbox" id="js-apple-toggle" checked style="opacity: 0; width: 0; height: 0;">
+                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #222; border-radius: 20px; transition: 0.4s;" id="js-apple-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Категория 3: Диагностика и ремонт (Премиум-инфографика Segnetics) -->
+                <div class="bento-card col-6">
+                    <div>
+                        <span style="color: #ff9f43; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 12px;">Аппаратная точность</span>
+                        <h3>Диагностика и ремонт автоматики</h3>
+                        <p>Восстановление и компонентная реанимация электроники промышленного класса: контроллеров Segnetics, модулей сбора данных и датчиков.</p>
+                    </div>
+                    
+                    <!-- Высокотехнологичная SVG модель контроллера Segnetics в стиле Apple -->
+                    <div class="visual-area">
+                        <svg xmlns="http://w3.org" viewBox="0 0 400 180" width="100%" height="100%">
+                            <!-- Корпус Segnetics -->
+                            <rect x="110" y="20" width="180" height="130" rx="16" fill="#0d0d11" stroke="rgba(255,255,255,0.06)" stroke-width="2"/>
+                            
+                            <!-- Глянцевая OLED панель экрана -->
+                            <rect x="125" y="35" width="150" height="70" rx="8" fill="#020203" stroke="rgba(47, 128, 237, 0.15)" stroke-width="1"/>
+                            
+                            <!-- Строки данных на дисплее -->
+                            <text id="js-seg-oled-1" x="140" y="55" fill="var(--accent-green)" font-family="monospace" font-size="9" font-weight="bold" letter-spacing="0.05em">● SEGNETICS OK</text>
+                            <text id="js-seg-oled-2" x="140" y="73" fill="#ffffff" font-family="monospace" font-size="9" letter-spacing="0.02em">Hz: 50.00</text>
+                            <text id="js-seg-oled-3" x="140" y="90" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="8">DIAG_STABLE_NODE</text>
+                            
+                            <!-- Светодиодные индикаторы состояния снизу -->
+                            <g transform="translate(135, 125)">
+                                <circle cx="0" cy="0" r="3" fill="var(--accent-green)" id="js-seg-led-pwr" style="filter: drop-shadow(0 0 4px var(--accent-green));"/>
+                                <text x="8" y="3" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="7">PWR</text>
+                                
+                                <circle cx="45" cy="0" r="3" fill="var(--accent-glow)" id="js-seg-led-com"/>
+                                <text x="53" y="3" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="7">COM</text>
+                                
+                                <circle cx="95" cy="0" r="3" fill="#222" id="js-seg-led-alarm"/>
+                                <text x="103" y="3" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="7">ALARM</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция обратной связи в стиле Apple Card -->
+    <section id="contact" style="padding: 120px 0 160px 0; background: linear-gradient(180deg, var(--bg-pure) 0%, #050507 100%);">
+        <div class="container" style="text-align: center;">
+            <div style="max-width: 600px; margin: 0 auto; background: var(--bg-dark); border: 1px solid var(--border-subtle); padding: 60px 40px; border-radius: 36px; box-shadow: 0 40px 100px rgba(0,0,0,0.6);">
+                <span style="color: var(--accent-glow); font-size: 14px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;">ИП Кирпань</span>
+                <h2 style="font-size: 32px; font-weight: 800; letter-spacing: -0.04em; margin: 16px 0 24px 0;">Начнем ваш проект?</h2>
+                <p style="color: var(--text-gray); font-size: 16px; margin-bottom: 40px; line-height: 1.5;">Оставьте заявку на монтаж инженерных сетей, сборку и пусконаладку щитов автоматики или ремонт оборудования в любой точке Российской Федерации.</p>
+                <a href="https://max.ru" class="apple-btn" target="_blank" style="background: var(--accent-glow); color: #fff; box-shadow: 0 10px 30px rgba(47, 128, 237, 0.3);">Обсудить ТЗ в мессенджере</a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <!-- Минималистичный футер Apple Style -->
+    <footer class="footer">
+        <div class="container">
+            <p style="margin-bottom: 12px; font-weight: 600; color: #fff;">&copy; 2026 ИП Кирпань. Все права защищены.</p>
+            <p>Проектирование, монтаж, пусконаладочные работы и компонентный ремонт средств автоматизации инженерных сетей.</p>
+            <p style="margin-top: 8px; font-size: 11px; opacity: 0.5;">Выезд инженерных групп по всей территории Российской Федерации.</p>
+        </div>
+    </footer>
+
+    <!-- Движок интерактивной презентации сайта -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Элементы интерактивного кода ПЛК (Карточка 2)
+            const appleCodeVal = document.getElementById("js-apple-code-val");
+            const appleToggle = document.getElementById("js-apple-toggle");
+            const appleSwitch = document.getElementById("js-apple-switch");
+
+            // Элементы дисплея контроллера Segnetics (Карточка 3)
+            const segOled1 = document.getElementById("js-seg-oled-1");
+            const segOled2 = document.getElementById("js-seg-oled-2");
+            const segOled3 = document.getElementById("js-seg-oled-3");
+            const ledCom = document.getElementById("js-seg-led-com");
+            const ledAlarm = document.getElementById("js-seg-led-alarm");
+
+            // Стрелка манометра (Карточка 1)
+            const gaugeArrow = document.getElementById("js-gauge-arrow");
+
+            // Внутренние переменные симуляции техпроцессов
+            let pwmSignalValue = 0;
+            let currentFrequency = 50.00;
+            let toggleState = true;
+
+            // Стилизация премиального переключателя iOS при инициализации
+            if (appleSwitch) {
+                appleSwitch.style.boxShadow = "inset 0 0 0 10px var(--accent-green)";
+                appleSwitch.innerHTML = "<div style='position:absolute; width:16px; height:16px; border-radius:50%; background:#fff; top:2px; left:16px; transition:0.4s;'></div>";
+            }
+
+            // Обработка клика по переключателю
+            if (appleToggle && appleSwitch) {
+                appleToggle.addEventListener("change", (e) => {
+                    toggleState = e.target.checked;
+                    if (toggleState) {
+                        appleSwitch.style.boxShadow = "inset 0 0 0 10px var(--accent-green)";
+                        appleSwitch.querySelector("div").style.left = "16px";
+                    } else {
+                        appleSwitch.style.boxShadow = "inset 0 0 0 0px #222";
+                        appleSwitch.querySelector("div").style.left = "2px";
+                    }
+                });
+            }
+
+            // Высокоскоростной математический цикл (Обновление каждые 900мс для живой презентации)
+            setInterval(() => {
+                // 1. Анимация стрелки манометра монтажного узла
+                if (gaugeArrow) {
+                    let randomAngle = (Math.random() - 0.5) * 35 - 45; // Колебания вокруг рабочей точки
+                    gaugeArrow.setAttribute("transform", `rotate(${randomAngle} 0 0)`);
+                }
+
+                // 2. Симуляция логики кода ПЛК
+                if (toggleState) {
+                    pwmSignalValue = Math.floor(Math.random() * 255);
+                    if (appleCodeVal) {
+                        appleCodeVal.textContent = pwmSignalValue;
+                        appleCodeVal.style.color = "var(--accent-green)";
+                    }
+                } else {
+                    if (appleCodeVal) {
+                        appleCodeVal.textContent = "0 (HALT)";
+                        appleCodeVal.style.color = "var(--accent-red)";
+                    }
+                }
+
+                // 3. Симуляция OLED дисплея и индикации Segnetics
+                if (toggleState) {
+                    // Генерация плавного дрейфа промышленной частоты сети
+                    currentFrequency += (Math.random() - 0.5) * 0.15;
+                    if (currentFrequency < 48.5) currentFrequency = 48.5;
+                    if (currentFrequency > 51.5) currentFrequency = 51.5;
+
+                    if (segOled1) {
+                        segOled1.textContent = "● SEGNETICS RUN";
+                        segOled1.setAttribute("fill", "var(--accent-green)");
+                    }
+                    if (segOled2) segOled2.textContent = `Hz: ${currentFrequency.toFixed(2)}`;
+                    
+                    // Мигание светодиода связи COM-порта
+                    if (ledCom) {
+                        let flash = Math.random() > 0.4;
+                        ledCom.setAttribute("fill", flash ? "var(--accent-glow)" : "#111");
+                        ledCom.style.filter = flash ? "drop-shadow(0 0 4px var(--accent-glow))" : "none";
+                    }
+
+                    // Симуляция редких логов диагностики / аварийных кодов
+                    if (Math.random() > 0.88) {
+                        if (segOled3) {
+                            segOled3.textContent = "WARN: MIS_VAL_NET";
+                            segOled3.setAttribute("fill", "var(--accent-red)");
+                        }
+                        if (ledAlarm) {
+                            ledAlarm.setAttribute("fill", "var(--accent-red)");
+                            ledAlarm.style.filter = "drop-shadow(0 0 4px var(--accent-red))";
+                        }
+                    } else {
+                        if (segOled3) {
+                            segOled3.textContent = "DIAG_STABLE_NODE";
+                            segOled3.setAttribute("fill", "rgba(255,255,255,0.4)");
+                        }
+                        if (ledAlarm) {
+                            ledAlarm.setAttribute("fill", "#222");
+                            ledAlarm.style.filter = "none";
+                        }
+                    }
+                } else {
+                    // Состояние контроллера при выключении ПНР щитов
+                    if (segOled1) {
+                        segOled1.textContent = "○ SEGNETICS STOP";
+                        segOled1.setAttribute("fill", "rgba(255,255,255,0.2)");
+                    }
+                    if (segOled2) segOled2.textContent = "Hz: 0.00";
+                    if (segOled3) {
+                        segOled3.textContent = "NODE_DISCONNECTED";
+                        segOled3.setAttribute("fill", "var(--text-gray)");
+                    }
+                    if (ledCom) { ledCom.setAttribute("fill", "#111"); ledCom.style.filter = "none"; }
+                    if (ledAlarm) { ledAlarm.setAttribute("fill", "#222"); ledAlarm.style.filter = "none"; }
+                }
+
+            }, 900);
+        });
+    </script>
+</body>
+</html>
+
+
