@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Калькулятор стоимости: программирование ПЛК и пусконаладка</title>
+<meta name="description" content="Онлайн-калькулятор стоимости программирования ПЛК и пусконаладки: дискретные и аналоговые точки I/O, HMI, обмен данными. Скидки от объёма.">
+<style>
+/* ==== Стили калькулятора — изолированы под #plc-calc, с сайтом не конфликтуют ==== */
+#plc-calc{
+  --ac:#ff6b00; --ac-d:#e05f00; --txt:#1b2430; --mut:#68727f; --brd:#e3e7ec; --ok:#1a7f37;
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--txt); max-width:1000px; margin:0 auto; padding:24px 16px 40px;
+}
+#plc-calc *{box-sizing:border-box}
+#plc-calc .plc-h1{font-size:clamp(22px,4vw,30px);line-height:1.25;margin:0 0 6px}
+#plc-calc .plc-sub{margin:0 0 22px;color:var(--mut)}
+#plc-calc .plc-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;align-items:start}
+@media(max-width:840px){#plc-calc .plc-grid{grid-template-columns:1fr}}
+#plc-calc .plc-card{background:#fff;border:1px solid var(--brd);border-radius:12px;
+  box-shadow:0 1px 3px rgba(20,30,40,.07),0 10px 26px rgba(20,30,40,.05)}
+#plc-calc .plc-group+.plc-group{border-top:1px dashed var(--brd)}
+#plc-calc .plc-gtitle{font-size:12.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);padding:16px 18px 2px}
+#plc-calc .plc-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 18px}
+@media(max-width:430px){#plc-calc .plc-row{grid-template-columns:minmax(0,1fr) auto}#plc-calc .plc-row-price{display:none}}
+#plc-calc .plc-name b{display:block;font-weight:600}
+#plc-calc .plc-hint{display:block;font-size:12.5px;color:var(--mut);font-weight:400}
+#plc-calc .plc-row-price{font-size:13.5px;color:var(--mut);white-space:nowrap;text-align:right;min-width:84px}
+#plc-calc .plc-st{display:flex;border:1px solid var(--brd);border-radius:8px;overflow:hidden;background:#fff}
+#plc-calc .plc-st button{width:34px;height:36px;border:0;background:#f1f3f6;color:var(--txt);font-size:18px;line-height:1;cursor:pointer;user-select:none}
+#plc-calc .plc-st button:hover{background:#e5e9ee}
+#plc-calc .plc-st button:active{background:#d9dee5}
+#plc-calc .plc-st input{width:52px;height:36px;border:0;border-left:1px solid var(--brd);border-right:1px solid var(--brd);
+  text-align:center;font:inherit;font-weight:600;appearance:textfield;-moz-appearance:textfield}
+#plc-calc .plc-st input::-webkit-outer-spin-button,#plc-calc .plc-st input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+#plc-calc .plc-st input:focus{outline:2px solid var(--ac);outline-offset:-2px}
+#plc-calc .plc-sum{position:sticky;top:16px;padding:18px}
+@media(max-width:840px){#plc-calc .plc-sum{position:static}}
+#plc-calc .plc-sum h2{margin:0 0 4px;font-size:18px}
+#plc-calc .plc-badge{display:inline-block;background:#eef7ef;color:var(--ok);font-size:12.5px;font-weight:600;border-radius:6px;padding:2px 8px;vertical-align:middle}
+#plc-calc .plc-slines{margin-top:10px;border-top:1px solid var(--brd)}
+#plc-calc .plc-sline{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--brd);font-size:14px}
+#plc-calc .plc-sline span:first-child{color:var(--mut)}
+#plc-calc .plc-sline b{white-space:nowrap}
+#plc-calc .plc-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 0 0;font-size:16px;font-weight:600}
+#plc-calc .plc-total b{font-size:26px;color:var(--ac-d);white-space:nowrap}
+#plc-calc .plc-tier{font-size:13px;color:var(--mut);margin:10px 0 0}
+#plc-calc .plc-warn{background:#fff6e6;border:1px solid #f0dcae;border-radius:8px;padding:8px 10px;font-size:13px;margin-top:10px}
+#plc-calc .plc-notes{font-size:12.5px;color:var(--mut);margin-top:14px;line-height:1.6}
+#plc-calc .plc-actions{display:grid;gap:10px;margin-top:16px}
+#plc-calc .plc-btn{display:block;width:100%;text-align:center;padding:12px 14px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;border:1px solid transparent;font-family:inherit}
+#plc-calc .plc-btn-p{background:var(--ac);color:#fff}
+#plc-calc .plc-btn-p:hover{background:var(--ac-d)}
+#plc-calc .plc-btn-g{background:#fff;color:var(--txt);border-color:var(--brd)}
+#plc-calc .plc-btn-g:hover{border-color:#c8ced6}
+#plc-calc .plc-example{font-size:13.5px;margin:0 18px 14px;color:var(--mut)}
+#plc-calc .plc-example button{background:none;border:0;color:var(--ac-d);font:inherit;font-size:inherit;padding:0;cursor:pointer;text-decoration:underline}
+#plc-calc .plc-disclaimer{margin-top:20px;font-size:12px;color:var(--mut);text-align:center}
+</style>
+</head>
+<body>
+
+<div id="plc-calc">
+  <h1 class="plc-h1">Калькулятор стоимости: ПЛК под ключ</h1>
+  <p class="plc-sub">Программирование, офлайн-тестирование, пусконаладка и инструктаж уже включены в цену точки. Двигайте счётчики — сумма пересчитается мгновенно.</p>
+
+  <div class="plc-grid">
+    <!-- ===== ВВОД ===== -->
+    <div class="plc-card">
+      <div class="plc-group">
+        <div class="plc-gtitle">Точки ввода/вывода</div>
+
+        <div class="plc-row" data-key="di" data-name="Дискретные входы (DI)" data-price="3500">
+          <div class="plc-name"><b>Дискретные входы (DI)</b><span class="plc-hint">кнопки, концевики, датчики, обратная связь</span></div>
+          <div class="plc-row-price">3 500 ₽/точка</div>
+          <div class="plc-st"><button type="button" data-d="-1">−</button><input type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" aria-label="Количество дискретных входов"><button type="button" data-d="1">+</button></div>
+        </div>
+
+        <div class="plc-row" data-key="do" data-name="Дискретные выходы (DO)" data-price="3500">
+          <div class="plc-name"><b>Дискретные выходы (DO)</b><span class="plc-hint">пускатели, клапаны, световая/звуковая сигнализация</span></div>
+          <div class="plc-row-price">3 500 ₽/точка</div>
+          <div class="plc-st"><button type="button" data-d="-1">−</button><input type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" aria-label="Количество дискретных выходов"><button type="button" data-d="1">+</button></div>
+        </div>
+
+        <div class="plc-row" data-key="ai" data-name="Аналоговые входы (AI)" data-price="5500">
+          <div class="plc-name"><b>Аналоговые входы (AI)</b><span class="plc-hint">давление, температура, уровень, расход (4–20 мА)</span></div>
+          <div class="plc-row-price">5 500 ₽/точка</div>
+          <div class="plc-st"><button type="button" data-d="-1">−</button><input type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" aria-label="Количество аналоговых входов"><button type="button" data-d="1">+</button></div>
+        </div>
+
+        <div class="plc-row" data-key="ao" data-name="Аналоговые выходы (AO)" data-price="5500">
+          <div class="plc-name"><b>Аналоговые выходы (AO)</b><span class="plc-hint">задание регулятору, управление клапаном</span></div>
+          <div class="plc-row-price">5 500 ₽/точка</div>
+          <div class="plc-st"><button type="button" data-d="-1">−</button><input type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" aria-label="Количество аналоговых выходов"><button type="button" data-d="1">+</button></div>
+        </div>
+
+        <div class="plc-row" data-key="spec" data-name="Спецсигналы" data-price="6500">
+          <div class="plc-name"><b>Спецсигналы</b><span class="plc-hint">Pt100/RTD, HART, энкодеры, импульсные входы</span></div>
+          <div class="plc-row-price">от 6 500 ₽/точка</div>
+          <div class="plc-st"><button type="button" data-d="-1">−</button><input type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" aria-label="Количество спецсигналов"><button type="button" data-d="1">+</button></div>
+        </div>
+      </div>
+
+      <div class="plc-group">
+        <div class="plc-gtitle">Дополнительно</div>
+
+        <div class="plc-row" data-key="hmi" data-name="Экраны HMI" data-price="2500">
+          <div class="plc-name"><b>Экраны HMI</b><span class="plc-hint">мнемосхема, тренды, рецепты — за экран</span></div>
+          <div class="plc-row-price">от 2 500 ₽</div>
+          <div class="plc-st"><button type="button" data-d="-1">−</button><input type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" aria-label="Количество экранов HMI"><button type="button" data-d="1">+</button></div>
+        </div>
+
+        <div class="plc-row" data-key="net" data-name="Обмен данными" data-price="4000">
+          <div class="plc-name"><b>Обмен данными</b><span class="plc-hint">Modbus RTU/TCP, Profibus и др. — за сеть/устройство</span></div>
+          <div class="plc-row-price">от 4 000 ₽</div>
+          <div class="plc-st"><button type="button" data-d="-1">−</button><input type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" aria-label="Количество сетей/устройств"><button type="button" data-d="1">+</button></div>
+        </div>
+
+        <div class="plc-row" data-key="algo" data-name="Сложные алгоритмы, ч" data-price="1000">
+          <div class="plc-name"><b>Сложные алгоритмы</b><span class="plc-hint">ПИД, автоматические цепочки, блокировки — за час</span></div>
+          <div class="plc-row-price">1 000 ₽/ч</div>
+          <div class="plc-st"><button type="button" data-d="-1">−</button><input type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" aria-label="Часы на сложные алгоритмы"><button type="button" data-d="1">+</button></div>
+        </div>
+      </div>
+
+      <p class="plc-example">Посмотреть на примере: <button type="button" id="plcExample">насосная станция, 26 точек</button></p>
+    </div>
+
+    <!-- ===== ИТОГ ===== -->
+    <aside class="plc-card plc-sum">
+      <h2>Ваш расчёт <span class="plc-badge" id="plcBadge" hidden>скидка</span></h2>
+      <div class="plc-slines" id="plcLines"></div>
+      <div class="plc-total"><span>Итого</span><b id="plcTotal">0 ₽</b></div>
+      <p class="plc-tier" id="plcTier"></p>
+      <div id="plcWarns"></div>
+      <p class="plc-notes">Предоплата 50 %, остаток — после пусконаладки.<br>Скидка за объём применяется автоматически.<br>По вашему перечню сигналов пришлём точную смету и сроки.</p>
+      <div class="plc-actions">
+        <button class="plc-btn plc-btn-p" id="plcMail">Отправить расчёт на email</button>
+        <button class="plc-btn plc-btn-g" id="plcCopy">Скопировать расчёт</button>
+      </div>
+    </aside>
+  </div>
+
+  <p class="plc-disclaimer">Расчёт носит справочный характер и не является публичной офертой (ст. 437 ГК РФ). Итоговая стоимость и сроки фиксируются в договоре после анализа технического задания.</p>
+</div>
+
+<script>
+(function(){
+  var EMAIL = 'you@example.com'; // ← ЗАМЕНИТЕ на свой email
+
+  var $ = function(s){ return document.querySelector(s); };
+  var calc = $('#plc-calc');
+  var rows = [].slice.call(calc.querySelectorAll('.plc-row'));
+  var linesEl = $('#plcLines'), totalEl = $('#plcTotal'), badgeEl = $('#plcBadge'),
+      tierEl = $('#plcTier'), warnsEl = $('#plcWarns'),
+      mailBtn = $('#plcMail'), copyBtn = $('#plcCopy');
+
+  var POINT_KEYS = ['di','do','ai','ao','spec'];
+  var fmt = function(n){ return n.toLocaleString('ru-RU'); };
+
+  function val(input){
+    var v = parseInt(input.value, 10);
+    return (isNaN(v) || v < 0) ? 0 : Math.min(v, 9999);
+  }
+
+  function getData(){
+    var items = [], points = 0, subtotal = 0;
+    rows.forEach(function(r){
+      var qty = val(r.querySelector('input'));
+      if(!qty) return;
+      var price = +r.getAttribute('data-price');
+      items.push({ name: r.getAttribute('data-name'), qty: qty, price: price, sum: qty * price });
+      subtotal += qty * price;
+      if(POINT_KEYS.indexOf(r.getAttribute('data-key')) > -1) points += qty;
+    });
+    return { items: items, points: points, subtotal: subtotal };
+  }
+
+  function discountFor(p){ return p >= 49 ? 0.15 : (p >= 11 ? 0.10 : 0); }
+
+  function plural(n, one, few, many){
+    var m10 = n % 10, m100 = n % 100;
+    if(m10 === 1 && m100 !== 11) return one;
+    if(m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+    return many;
+  }
+
+  function tierText(p){
+    if(p === 0) return 'Добавьте точки — скидка за объём посчитается автоматически.';
+    if(p < 11)  return 'До скидки 10 % — ещё ' + (11 - p) + ' ' + plural(11 - p, 'точка', 'точки', 'точек') + '.';
+    if(p < 49)  return 'Скидка 10 % применена. До 15 % — ещё ' + (49 - p) + ' ' + plural(49 - p, 'точка', 'точки', 'точек') + '.';
+    if(p < 97)  return 'Скидка 15 % применена — максимум в базовой сетке.';
+    return 'Проект от 97 точек — свяжитесь с нами: условия индивидуальные.';
+  }
+
+  function buildText(d, disc, total){
+    var L = ['Расчёт стоимости работ — ПЛК под ключ', '------------------------------------'];
+    d.items.forEach(function(it){
+      L.push(it.name + ': ' + it.qty + ' × ' + fmt(it.price) + ' ₽ = ' + fmt(it.sum) + ' ₽');
+    });
+    L.push('Точек ввода/вывода: ' + d.points);
+    if(disc > 0) L.push('Скидка за объём (' + Math.round(disc * 100) + ' %): −' + fmt(Math.round(d.subtotal * disc)) + ' ₽');
+    L.push('ИТОГО: ' + fmt(total) + ' ₽', '------------------------------------',
+           'Расчёт справочный, не является офертой.');
+    return L.join('\n');
+  }
+
+  function render(){
+    var d = getData();
+    var disc = discountFor(d.points);
+    var discSum = Math.round(d.subtotal * disc);
+    var total = d.subtotal - discSum;
+
+    linesEl.innerHTML = '';
+    if(!d.items.length){
+      linesEl.innerHTML = '<div class="plc-sline" style="border:0"><span>Выберите количество точек слева</span></div>';
+    } else {
+      d.items.forEach(function(it){
+        var el = document.createElement('div');
+        el.className = 'plc-sline';
+        el.innerHTML = '<span>' + it.name + '<br>' + it.qty + ' × ' + fmt(it.price) + ' ₽</span><b>' + fmt(it.sum) + ' ₽</b>';
+        linesEl.appendChild(el);
+      });
+      if(disc > 0){
+        var el = document.createElement('div');
+        el.className = 'plc-sline';
+        el.innerHTML = '<span>Скидка за объём</span><b style="color:var(--ok)">−' + fmt(discSum) + ' ₽</b>';
+        linesEl.appendChild(el);
+      }
+    }
+
+    totalEl.textContent = fmt(total) + ' ₽';
+    badgeEl.hidden = (disc === 0);
+    badgeEl.textContent = 'скидка ' + Math.round(disc * 100) + ' %';
+    tierEl.textContent = tierText(d.points);
+
+    warnsEl.innerHTML = '';
+    if(d.subtotal > 0 && total < 10000){
+      var w = document.createElement('div');
+      w.className = 'plc-warn';
+      w.textContent = 'Итог меньше минимального заказа (10 000 ₽) — отправьте расчёт, предложим решение.';
+      warnsEl.appendChild(w);
+    }
+    if(d.points >= 97){
+      var w2 = document.createElement('div');
+      w2.className = 'plc-warn';
+      w2.textContent = 'Крупный проект: скидка 15 % уже учтена, индивидуальные условия — ещё выгоднее.';
+      warnsEl.appendChild(w2);
+    }
+
+    var text = buildText(d, disc, total);
+
+    mailBtn.onclick = function(){
+      location.href = 'mailto:' + EMAIL +
+        '?subject=' + encodeURIComponent('Расчёт стоимости работ — ПЛК') +
+        '&body=' + encodeURIComponent(text);
+    };
+
+    copyBtn.onclick = function(){
+      var done = function(){
+        copyBtn.textContent = 'Скопировано ✓';
+        setTimeout(function(){ copyBtn.textContent = 'Скопировать расчёт'; }, 1800);
+      };
+      var fallback = function(){
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); done(); }catch(e){}
+        document.body.removeChild(ta);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else fallback();
+    };
+  }
+
+  /* кнопки − и + */
+  calc.addEventListener('click', function(e){
+    var b = e.target.closest('.plc-st button');
+    if(!b) return;
+    var input = b.parentNode.querySelector('input');
+    input.value = Math.min(9999, Math.max(0, val(input) + (+b.getAttribute('data-d'))));
+    render();
+  });
+
+  /* ручной ввод */
+  calc.addEventListener('input', function(e){
+    if(e.target.matches('.plc-st input')) render();
+  });
+  calc.addEventListener('blur', function(e){
+    if(e.target.matches('.plc-st input')){ e.target.value = val(e.target); render(); }
+  }, true);
+
+  /* пример-пресет */
+  $('#plcExample').addEventListener('click', function(){
+    var preset = { di:12, do:8, ai:6, ao:0, spec:0, hmi:2, net:0, algo:0 };
+    rows.forEach(function(r){
+      r.querySelector('input').value = preset[r.getAttribute('data-key')] || 0;
+    });
+    render();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
