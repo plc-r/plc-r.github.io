@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Понятная стоимость — ИП Фролов Р.А.</title>
+    <meta name="description" content="Прозрачное ценообразование: 1 100 ₽/час, оплата за фактически затраченное время.">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg?v=2">
+    <link rel="stylesheet" href="../../assets/base.css">
+    <style>
+        body { padding: 2px; }
+
+        .price-card {
+            display: flex;
+            flex-direction: column;
+            max-width: none;
+            padding: 28px 30px;
+            border: 1px solid rgba(0, 210, 255, 0.22);
+            border-radius: var(--radius-card);
+            background:
+                radial-gradient(ellipse at top left, rgba(0, 210, 255, 0.07), transparent 55%),
+                linear-gradient(145deg, #111e35 0%, #0d1527 60%);
+            box-shadow: 0 15px 35px -15px rgba(0, 210, 255, 0.12), 0 18px 40px -18px rgba(0,0,0,.7);
+            font-family: var(--font-main);
+            color: var(--text-main);
+        }
+
+        .price-card__top {
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .price-card__label {
+            color: var(--accent-blue);
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 0.14em;
+        }
+        .price-card__dot {
+            width: 9px; height: 9px; border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.65);
+            animation: dot-pulse 2.6s ease-in-out infinite;
+        }
+        @keyframes dot-pulse {
+            0%, 100% { box-shadow: 0 0 6px rgba(16,185,129,.5); opacity: .85; }
+            50%      { box-shadow: 0 0 16px rgba(16,185,129,.9); opacity: 1; }
+        }
+
+        .price-card__amount {
+            margin: 18px 0 8px;
+            font-size: clamp(40px, 6vw, 54px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            font-variant-numeric: tabular-nums;
+        }
+        .price-card__amount span {
+            color: var(--text-muted);
+            font-size: 16px; font-weight: 400; letter-spacing: 0;
+        }
+
+        .price-card__description {
+            color: var(--text-soft);
+            font-size: 15px; line-height: 1.65;
+            max-width: 480px;
+        }
+
+        .price-card__divider {
+            height: 1px; margin: 22px 0;
+            background: linear-gradient(90deg, rgba(0,210,255,.35), rgba(255,255,255,.06) 70%, transparent);
+        }
+
+        .price-card__services {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 13px 22px;
+            margin: 0; padding: 0; list-style: none;
+        }
+        .price-card__services li { font-size: 14px; line-height: 1.5; color: #cbd5e1; }
+        .price-card__services li span {
+            margin-right: 8px; color: var(--accent-blue); font-weight: 700;
+        }
+
+        .price-card__note {
+            margin: 20px 0 0; padding-top: 16px;
+            border-top: 1px dashed rgba(255,255,255,.07);
+            color: var(--text-muted); font-size: 13px; line-height: 1.6;
+            margin-top: auto;
+        }
+
+        @media (max-width: 560px) {
+            .price-card { padding: 22px; }
+            .price-card__services { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body data-block="pricing">
+
+<section class="price-card">
+    <div class="price-card__top">
+        <span class="price-card__label">ПОНЯТНАЯ СТОИМОСТЬ</span>
+        <span class="price-card__dot" aria-hidden="true"></span>
+    </div>
+
+    <div class="price-card__amount">1 100 <span>₽ / час</span></div>
+
+    <p class="price-card__description">
+        Работаю прозрачно: заранее обсуждаем задачу, объём и порядок расчёта.
+        Оплата — за фактически затраченное время.
+    </p>
+
+    <div class="price-card__divider"></div>
+
+    <ul class="price-card__services">
+        <li><span>✓</span> Программирование и настройка ПЛК</li>
+        <li><span>✓</span> Разработка и настройка SCADA</li>
+        <li><span>✓</span> Пусконаладка на объекте</li>
+        <li><span>✓</span> Проверка прокладки слаботочных линий</li>
+        <li><span>✓</span> Поиск и устранение ошибок</li>
+    </ul>
+
+    <p class="price-card__note">
+        Выезд на объект и дополнительные расходы согласовываем заранее.
+    </p>
+</section>
+
+<script src="../../assets/js/block.js"></script>
+</body>
+</html>
