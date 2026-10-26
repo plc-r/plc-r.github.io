@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Понятная стоимость — ИП Фролов Р.А.</title>
+    <meta name="description" content="Прозрачное ценообразование: 1 100 ₽/час, оплата за фактически затраченное время.">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg?v=2">
+    <link rel="stylesheet" href="../../assets/base.css">
+    <style>
+        body { padding: 2px; }
+
+        /* ---------- Карточка ---------- */
+        .price-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            max-width: none;
+            padding: 26px 28px 24px;
+            border-radius: 20px;
+            background:
+                radial-gradient(120% 90% at 8% -12%, rgba(167, 139, 250, 0.10), transparent 52%),
+                radial-gradient(90% 70% at 100% 115%, rgba(16, 185, 129, 0.06), transparent 55%),
+                linear-gradient(165deg, #0f1a30 0%, #0e0e17 62%);
+            font-family: var(--font-main);
+            color: var(--text-main);
+        }
+        /* Градиентная волосяная рамка */
+        .price-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(140deg,
+                rgba(167, 139, 250, 0.5),
+                rgba(35, 35, 54, 0.55) 34%,
+                rgba(35, 35, 54, 0.35) 68%,
+                rgba(16, 185, 129, 0.28));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+                    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                    mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* ---------- Шапка ---------- */
+        .pc-head {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 12px;
+        }
+        .pc-kicker {
+            font-family: var(--font-mono);
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            white-space: nowrap;
+        }
+        .pc-tag {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 5px 11px;
+            border-radius: 99px;
+            border: 1px solid rgba(16, 185, 129, 0.28);
+            background: rgba(16, 185, 129, 0.07);
+            color: #6ee7b7;
+            font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        .pc-tag-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+        }
+
+        /* ---------- Цена ---------- */
+        .pc-price {
+            display: flex; align-items: baseline; gap: 8px;
+            margin: 20px 0 10px;
+        }
+        .pc-num, .pc-cur {
+            font-size: clamp(42px, 7vw, 56px);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            background: linear-gradient(120deg, #ffffff 30%, #d8b4fe 68%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+                    background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+        .pc-cur { font-size: clamp(26px, 4vw, 34px); }
+        .pc-per {
+            font-size: 14px; color: var(--text-muted);
+            margin-left: 2px; letter-spacing: 0.01em;
+        }
+
+        .pc-desc {
+            color: var(--text-soft);
+            font-size: 14px; line-height: 1.65;
+            max-width: 500px;
+        }
+
+        /* ---------- Чипы «что входит» ---------- */
+        .pc-chips {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            margin: 20px 0 0; padding: 0; list-style: none;
+        }
+        .pc-chips li {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 7px 13px;
+            border-radius: 99px;
+            border: 1px solid rgba(35, 35, 54, 0.9);
+            background: rgba(18, 18, 29, 0.55);
+            color: #cbd5e1;
+            font-size: 12.5px; font-weight: 600; line-height: 1.2;
+            cursor: default;
+            transition: border-color .25s ease, color .25s ease, transform .25s ease;
+        }
+        .pc-chips li:hover {
+            border-color: rgba(167, 139, 250, 0.45);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .pc-chips svg { flex: 0 0 auto; }
+
+        /* ---------- Прикидка бюджета ---------- */
+        .pc-est {
+            margin-top: auto; /* прижимается к низу, если ряд растянут */
+            padding: 16px 18px 13px;
+            border: 1px solid rgba(167, 139, 250, 0.13);
+            border-radius: 14px;
+            background: rgba(5, 5, 10, 0.5);
+        }
+        .pc-chips { margin-bottom: 20px; } /* минимальный зазор перед прикидкой */
+
+        .pc-est-top {
+            display: flex; align-items: baseline; justify-content: space-between;
+            gap: 10px;
+        }
+        .pc-est-label {
+            font-family: var(--font-mono);
+            font-size: 10.5px; letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .pc-est-sum {
+            font-family: var(--font-mono);
+            font-size: 23px; font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--accent-blue);
+            text-shadow: 0 0 18px rgba(167, 139, 250, 0.35);
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+            transform-origin: right center;
+        }
+        .pc-est-sum.tick { animation: pc-tick .28s ease; }
+        @keyframes pc-tick { from { transform: scale(1.06); } to { transform: scale(1); } }
+
+        /* Ползунок */
+        .pc-range {
+            -webkit-appearance: none; appearance: none;
+            display: block; width: 100%; height: 22px;
+            margin: 12px 0 4px;
+            background: transparent;
+            cursor: pointer;
+            touch-action: none;
+        }
+        .pc-range::-webkit-slider-runnable-track {
+            height: 6px; border-radius: 99px;
+            background: linear-gradient(90deg,
+                var(--accent-blue) 0%,
+                #8b5cf6 var(--fill, 50%),
+                rgba(35, 35, 54, 0.9) var(--fill, 50%));
+        }
+        .pc-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px; height: 18px; margin-top: -6px;
+            border-radius: 50%;
+            background: #f5f3ff;
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 0 0 5px rgba(167, 139, 250, 0.14), 0 2px 10px rgba(167, 139, 250, 0.5);
+            transition: box-shadow .2s ease, transform .2s ease;
+        }
+        .pc-range:hover::-webkit-slider-thumb,
+        .pc-range:active::-webkit-slider-thumb {
+            transform: scale(1.12);
+            box-shadow: 0 0 0 8px rgba(167, 139, 250, 0.2), 0 2px 14px rgba(167, 139, 250, 0.6);
+        }
+        .pc-range::-moz-range-track {
+            height: 6px; border-radius: 99px;
+            background: rgba(35, 35, 54, 0.9);
+        }
+        .pc-range::-moz-range-progress {
+            height: 6px; border-radius: 99px;
+            background: linear-gradient(90deg, var(--accent-blue), #8b5cf6);
+        }
+        .pc-range::-moz-range-thumb {
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: #f5f3ff;
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 0 0 5px rgba(167, 139, 250, 0.14), 0 2px 10px rgba(167, 139, 250, 0.5);
+        }
+        .pc-range:focus-visible { outline: 2px solid rgba(167, 139, 250, 0.5); outline-offset: 4px; border-radius: 6px; }
+
+        .pc-est-scale {
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: var(--font-mono);
+            font-size: 10.5px; color: var(--text-muted);
+        }
+        .pc-est-scale #pc-hours { color: var(--text-soft); }
+
+        /* ---------- Сноска ---------- */
+        .pc-note {
+            display: flex; align-items: center; gap: 8px;
+            margin: 14px 0 0;
+            color: var(--text-muted);
+            font-size: 12.5px; line-height: 1.5;
+        }
+        .pc-note svg { flex: 0 0 auto; opacity: .7; }
+
+        /* ---------- Адаптив ---------- */
+        @media (max-width: 560px) {
+            .price-card { padding: 22px 20px; }
+            .pc-est { padding: 14px 15px 12px; }
+            .pc-est-sum { font-size: 20px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .pc-chips li, .pc-range::-webkit-slider-thumb { transition: none !important; }
+            .pc-est-sum.tick { animation: none !important; }
+        }
+    </style>
+</head>
+<body data-block="pricing">
+
+<section class="price-card">
+    <header class="pc-head">
+        <span class="pc-kicker">Понятная стоимость</span>
+        <span class="pc-tag"><i class="pc-tag-dot" aria-hidden="true"></i>оплата по факту</span>
+    </header>
+
+    <div class="pc-price" aria-label="Ставка: 1 100 рублей за час работы">
+        <span class="pc-num">1&nbsp;100</span><span class="pc-cur">₽</span>
+        <span class="pc-per">/ час работы</span>
+    </div>
+
+    <p class="pc-desc">
+        Обсудили задачу — назвали порядок цифр. Платите за факт работы, без скрытых начислений.
+    </p>
+
+    <ul class="pc-chips" aria-label="Что входит в работу">
+        <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke="#a78bfa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Программирование ПЛК</li>
+        <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke="#a78bfa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Разработка SCADA</li>
+        <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke="#a78bfa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Пусконаладка</li>
+        <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke="#a78bfa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Слаботочные линии</li>
+        <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke="#a78bfa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Поиск ошибок</li>
+    </ul>
+
+    <div class="pc-est" role="group" aria-label="Прикидка бюджета">
+        <div class="pc-est-top">
+            <span class="pc-est-label">прикидка бюджета</span>
+            <output class="pc-est-sum" id="pc-sum" aria-live="polite">≈ 44 000 ₽</output>
+        </div>
+        <input class="pc-range" id="pc-range" type="range"
+               min="4" max="80" step="2" value="40"
+               aria-label="Примерный объём работ, часов">
+        <div class="pc-est-scale" aria-hidden="true">
+            <span>4 ч</span>
+            <span id="pc-hours">объём · 40 ч</span>
+            <span>80 ч</span>
+        </div>
+    </div>
+
+    <p class="pc-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 10.8v5.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="12" cy="7.6" r="1.15" fill="currentColor"/>
+        </svg>
+        Выезд на объект и дополнительные расходы согласовываем заранее.
+    </p>
+</section>
+
+<script>
+(function () {
+    var RATE = 1100;
+    var range = document.getElementById('pc-range');
+    var sum   = document.getElementById('pc-sum');
+    var hours = document.getElementById('pc-hours');
+    var fmt   = new Intl.NumberFormat('ru-RU');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function render() {
+        var h = +range.value;
+        sum.textContent = '\u2248 ' + fmt.format(h * RATE) + ' \u20BD';
+        hours.textContent = '\u043e\u0431\u044a\u0451\u043c \u00b7 ' + h + ' \u0447';
+
+        var min = +range.min, max = +range.max;
+        range.style.setProperty('--fill', ((h - min) / (max - min)) * 100 + '%');
+
+        if (!reduceMotion.matches) {
+            sum.classList.remove('tick');
+            void sum.offsetWidth; /* перезапуск анимации */
+            sum.classList.add('tick');
+        }
+    }
+
+    range.addEventListener('input', render);
+    /* колесо мыши над ползунком не должно менять значение / ломать скролл страницы */
+    range.addEventListener('wheel', function (e) { e.preventDefault(); }, { passive: false });
+
+    render();
+})();
+</script>
+
+<script src="../../assets/js/block.js"></script>
+</body>
+</html>
