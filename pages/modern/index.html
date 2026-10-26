@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адаптация и модернизация — ИП Фролов Р.А.</title>
+    <meta name="description" content="Объединение разнородного оборудования в единую экосистему: шлюзы Modbus, M-Bus, CAN, диспетчеризация со смартфона.">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg?v=2">
+    <link rel="stylesheet" href="../../assets/base.css">
+    <style>
+        body { padding: 2px; }
+        .service-card { border-top: 3px solid var(--accent-orange); }
+        .service-card:hover h3 { color: var(--accent-orange); }
+        .flow-line { stroke-dasharray: 8, 6; animation: flow-anim 1.2s linear infinite; }
+        @keyframes flow-anim { 100% { stroke-dashoffset: -14; } }
+    </style>
+</head>
+<body data-block="modern">
+
+<div class="service-card">
+    <div class="svg-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180" width="100%" height="100%">
+          <rect width="400" height="180" fill="#060913" opacity="0.4"/>
+
+          <!-- Центральный шлюз -->
+          <g transform="translate(135, 55)">
+            <title>GW-100: Промышленный шлюз конвертации протоколов</title>
+            <rect width="80" height="55" rx="5" fill="var(--card-bg)" stroke="var(--accent-blue)" stroke-width="2"/>
+            <text x="40" y="24" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">GW-100</text>
+            <g transform="translate(12, 42)">
+              <circle cx="0" cy="-3" r="2.5" fill="var(--accent-green)"/>
+              <text x="8" y="0" fill="var(--accent-blue)" font-family="monospace" font-size="9" font-weight="bold">ETH / VNC</text>
+            </g>
+          </g>
+
+          <!-- ЛЕВЫЙ ПОТОК: Modbus RTU -->
+          <g>
+            <title>Преобразователь частоты: регулирование скорости двигателей (Modbus RTU)</title>
+            <path d="M 135 65 L 85 65" stroke="var(--accent-orange)" stroke-width="1.5" fill="none"/>
+            <path d="M 135 65 L 85 65" class="flow-line" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+            <text x="110" y="58" fill="var(--accent-orange)" font-family="monospace" font-size="8" text-anchor="middle">Modbus RTU</text>
+            <rect x="20" y="45" width="65" height="40" rx="3" fill="#0b0f19" stroke="#334155" stroke-width="1.5"/>
+            <text x="52.5" y="62" fill="#9ca3af" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">FC_DRIVE</text>
+            <text id="js-modbus-hz" x="52.5" y="76" fill="var(--accent-orange)" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">50.0 Hz</text>
+          </g>
+
+          <!-- НИЖНИЙ ПОТОК: M-Bus -->
+          <g>
+            <title>Теплосчетчик: коммерческий учет энергоресурсов (M-Bus)</title>
+            <path d="M 175 110 L 175 135" stroke="var(--accent-green)" stroke-width="1.5" fill="none"/>
+            <text x="182" y="125" fill="var(--accent-green)" font-family="monospace" font-size="8">M-Bus</text>
+            <rect x="135" y="135" width="80" height="35" rx="3" fill="#0b0f19" stroke="#334155" stroke-width="1.5"/>
+            <text x="175" y="149" fill="#9ca3af" font-family="monospace" font-size="9" text-anchor="middle">HEAT_METER</text>
+            <text id="js-mbus-gcal" x="175" y="162" fill="var(--accent-green)" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">142.7 Gcal</text>
+          </g>
+
+          <!-- ВЕРХНИЙ ПОТОК: CAN -->
+          <g>
+            <path d="M 175 55 L 175 30 L 20 30" stroke="#eab308" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+            <text x="95" y="24" fill="#eab308" font-family="monospace" font-size="8">CAN Bus Link</text>
+          </g>
+
+          <!-- Смартфон по Wi-Fi -->
+          <g transform="translate(245, 55)">
+            <title>VNC-клиент: удаленный беспроводной мониторинг и управление оборудованием со смартфона</title>
+            <path d="M -30 22 L 5 22" stroke="var(--accent-blue)" stroke-width="1.5" fill="none"/>
+            <path d="M -30 22 L 5 22" class="flow-line" stroke="#ffffff" stroke-width="1" opacity="0.6"/>
+            <text x="-12" y="14" fill="var(--accent-blue)" font-family="monospace" font-size="8" text-anchor="middle">Wi-Fi</text>
+            <rect x="5" y="-12" width="36" height="68" rx="4" fill="#060913" stroke="#2d3748" stroke-width="1.5"/>
+            <rect x="8" y="-8" width="30" height="60" rx="2" fill="var(--card-bg)"/>
+            <g transform="translate(15, 4)">
+              <circle cx="0" cy="-3" r="1.5" fill="var(--accent-green)"/>
+              <text x="5" y="0" fill="var(--accent-blue)" font-family="monospace" font-size="6" font-weight="bold">VNC</text>
+            </g>
+            <text id="js-vnc-hz" x="23" y="22" fill="var(--accent-orange)" font-family="monospace" font-size="7" font-weight="bold" text-anchor="middle">50.0Hz</text>
+            <text id="js-vnc-gcal" x="23" y="36" fill="var(--accent-green)" font-family="monospace" font-size="6" font-weight="bold" text-anchor="middle">142.7 Gc</text>
+          </g>
+
+          <!-- Робот Optimus (танцует) -->
+          <g transform="translate(320, 25)">
+            <title>Tesla Optimus: Робот танцует</title>
+            <rect x="14" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
+            <rect x="30" y="115" width="6" height="25" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
+            <rect x="12" y="140" width="10" height="4" rx="1" fill="#1e293b"/>
+            <rect x="28" y="140" width="10" height="4" rx="1" fill="#1e293b"/>
+            <g>
+              <path d="M 2 45 L 48 45 L 38 115 L 12 115 Z" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
+              <path d="M 16 45 L 34 45 L 30 85 L 20 85 Z" fill="#0f172a"/>
+              <line x1="16" y1="95" x2="34" y2="95" stroke="#94a3b8" stroke-width="0.8"/>
+              <rect x="19" y="37" width="12" height="8" fill="#334155"/>
+              <ellipse cx="25" cy="24" rx="13" ry="14" fill="#f8fafc" stroke="#475569" stroke-width="1.2"/>
+              <ellipse cx="25" cy="23" rx="10" ry="11" fill="#020617"/>
+              <circle cx="25" cy="20" r="1" fill="var(--accent-blue)" opacity="0.8"/>
+              <animateTransform id="js-robot-body" attributeName="transform" type="rotate" values="-2 25 80; 2 25 80; -2 25 80" dur="0s" repeatCount="indefinite" additive="sum"/>
+            </g>
+            <g transform="translate(2, 48)">
+              <path d="M 0 0 L -8 20 L 15 20" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 0 0 L -8 20 L 15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="15" cy="20" r="1.5" fill="#1e293b"/>
+              <animateTransform id="js-robot-arm-l" attributeName="transform" type="rotate" values="-15 0 0; 20 0 0; -15 0 0" dur="0s" repeatCount="indefinite" additive="sum"/>
+            </g>
+            <g transform="translate(46, 48)">
+              <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 0 0 L 8 20 L -15 20" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="-15" cy="20" r="1.5" fill="#1e293b"/>
+              <animateTransform id="js-robot-arm-r" attributeName="transform" type="rotate" values="20 0 0; -15 0 0; 20 0 0" dur="0s" repeatCount="indefinite" additive="sum"/>
+            </g>
+          </g>
+
+          <!-- Тумблер танца -->
+          <foreignObject x="240" y="148" width="55" height="28">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; box-sizing: border-box;">
+              <label style="position: relative; display: block; width: 30px; height: 16px; margin: 0; cursor: pointer; -webkit-tap-highlight-color: transparent;">
+                <input type="checkbox" id="js-dance-toggle" style="position: absolute; opacity: 0; width: 0; height: 0; margin: 0;">
+                <span style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #020617; border: 1px solid #1e293b; border-radius: 16px; transition: .3s;"></span>
+                <style>
+                  #js-dance-toggle:checked + span { background-color: rgba(16, 185, 129, 0.15); border-color: var(--accent-green); }
+                  #js-dance-toggle:checked + span:before { transform: translateX(14px); background-color: var(--accent-green); }
+                  #js-dance-toggle + span:before { position: absolute; content: ""; height: 10px; width: 10px; left: 2px; bottom: 2px; background-color: #64748b; border-radius: 50%; transition: .3s; }
+                </style>
+              </label>
+            </div>
+          </foreignObject>
+        </svg>
+    </div>
+
+    <h3>Адаптация и модернизация</h3>
+    <p style="min-height: 66px;">Оперативная доработка кода для объединения разнородного оборудования в единую цифровую экосистему предприятия. Настройка сетевых шлюзов обеспечивает одновременный сбор данных с приводов, приборов учета и периферийных устройств.</p>
+
+    <div class="card-gallery">
+        <button class="gallery-thumb" data-title="Шлюз mbus"><img src="../../img/mbus.jpg" alt="Шлюз mbus - Ethernet" loading="lazy"></button>
+        <button class="gallery-thumb" data-title="Диспетчеризация со смартфона"><img src="../../img/andr.jpg" alt="Диспетчеризация со смартфона" loading="lazy"></button>
+        <button class="gallery-thumb" data-title="Учет энергоресурсов"><img src="../../img/modern-3.jpg" alt="Учет энергоресурсов" loading="lazy"></button>
+    </div>
+</div>
+
+<script src="../../assets/js/block.js"></script>
+<script src="../../assets/js/gallery.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Симуляция частоты и учета тепла
+    const txtHz = document.getElementById("js-modbus-hz");
+    const txtGcal = document.getElementById("js-mbus-gcal");
+    const vncHz = document.getElementById("js-vnc-hz");
+    const vncGcal = document.getElementById("js-vnc-gcal");
+
+    let frequency = 50.0, gcal = 142.7;
+
+    setInterval(() => {
+        frequency += (Math.random() - 0.5) * 0.4;
+        gcal += 0.01;
+        if (frequency < 45) frequency = 45; if (frequency > 52) frequency = 52;
+
+        const hzStr = `${frequency.toFixed(1)} Hz`;
+        if (txtHz) txtHz.textContent = hzStr;
+        if (txtGcal) txtGcal.textContent = `${gcal.toFixed(1)} Gcal`;
+        if (vncHz) vncHz.textContent = hzStr;
+        if (vncGcal) vncGcal.textContent = `${gcal.toFixed(1)} Gc`;
+    }, 1100);
+
+    // Управление танцем робота
+    const danceToggle = document.getElementById("js-dance-toggle");
+    const rBody = document.getElementById("js-robot-body");
+    const rArmL = document.getElementById("js-robot-arm-l");
+    const rArmR = document.getElementById("js-robot-arm-r");
+
+    if (danceToggle) {
+        danceToggle.addEventListener("change", (e) => {
+            const speed = e.target.checked ? "0.6s" : "0s";
+            if (rBody) rBody.setAttribute("dur", speed);
+            if (rArmL) rArmL.setAttribute("dur", speed);
+            if (rArmR) rArmR.setAttribute("dur", speed);
+        });
+    }
+});
+</script>
+</body>
+</html>

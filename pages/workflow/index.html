@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Этапы работы — ИП Фролов Р.А.</title>
+    <meta name="description" content="Как устроена работа: обсуждение и ТЗ, демоверсия, оплата по факту испытаний, полный запуск.">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg?v=2">
+    <link rel="stylesheet" href="../../assets/base.css">
+    <style>
+        body { padding: 2px; }
+
+        .als-flow-ribbon {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+        .als-ribbon-step {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px;
+            position: relative;
+            display: flex; flex-direction: column; justify-content: flex-start;
+            transition: transform .4s cubic-bezier(.25,1,.5,1), border-color .3s ease, box-shadow .4s ease;
+            cursor: pointer; text-align: left;
+        }
+        .als-ribbon-step:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 229, 255, 0.35);
+            box-shadow: 0 15px 35px rgba(0, 229, 255, 0.07);
+        }
+        .step-meta {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 22px; width: 100%;
+        }
+        .step-num {
+            font-family: var(--font-mono);
+            font-size: 34px; font-weight: 900;
+            color: rgba(255, 255, 255, 0.1);
+            line-height: 1;
+            transition: color .3s ease;
+        }
+        .als-ribbon-step:hover .step-num { color: var(--accent-cyan); }
+        .meta-right-column {
+            display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+        }
+        .step-badge {
+            font-size: 9px; text-transform: uppercase; letter-spacing: 1px;
+            font-weight: 700; color: var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.06);
+            padding: 3px 8px; border-radius: 4px; line-height: 1;
+        }
+        .step-icon-right { font-size: 22px; line-height: 1; transition: transform .3s ease, filter .3s ease; }
+        .icon-orange { filter: drop-shadow(0 0 6px rgba(255,183,3,.2)); }
+        .icon-cyan   { filter: drop-shadow(0 0 6px rgba(0,229,255,.3)); }
+        .icon-mint   { filter: drop-shadow(0 0 6px rgba(0,255,170,.3)); }
+        .als-ribbon-step:hover .step-icon-right { transform: scale(1.1); }
+        .als-ribbon-step:hover .icon-orange { filter: drop-shadow(0 0 10px rgba(255,183,3,.6)); }
+        .als-ribbon-step:hover .icon-cyan   { filter: drop-shadow(0 0 10px rgba(0,229,255,.7)); }
+        .als-ribbon-step:hover .icon-mint   { filter: drop-shadow(0 0 10px rgba(0,255,170,.7)); }
+
+        .als-ribbon-step h3 {
+            font-size: 16px; font-weight: 700;
+            margin: 0 0 12px 0; color: var(--text-main);
+            border-bottom: 1px solid rgba(255,255,255,.05);
+            padding-bottom: 8px;
+        }
+        .step-single-text {
+            font-size: 13px; color: #cbd5e1; line-height: 1.5;
+            margin: 0; min-height: 60px;
+        }
+        .step-sub-note {
+            font-size: 11px; color: var(--text-muted);
+            margin-top: auto; padding-top: 14px; font-weight: 500;
+            letter-spacing: .3px;
+            border-top: 1px dashed rgba(255,255,255,.03);
+            width: 100%;
+        }
+
+        @media (min-width: 992px) {
+            .als-ribbon-step:not(:last-child)::after {
+                content: '→';
+                position: absolute; right: -14px; top: 50%;
+                transform: translateY(-50%);
+                font-size: 20px; font-weight: bold;
+                color: #27354a; z-index: 10;
+            }
+        }
+        @media (max-width: 991px) {
+            .als-flow-ribbon { grid-template-columns: 1fr; gap: 16px; }
+            .als-ribbon-step:hover { transform: translateX(4px); }
+            .meta-right-column { flex-direction: row; align-items: center; gap: 10px; }
+            .als-ribbon-step:not(:last-child)::after { display: none; }
+        }
+    </style>
+</head>
+<body data-block="workflow">
+
+<div class="als-flow-ribbon">
+    <!-- Шаг 1 -->
+    <div class="als-ribbon-step">
+        <div class="step-meta">
+            <span class="step-num">01</span>
+            <div class="meta-right-column">
+                <span class="step-badge">Старт</span>
+                <div class="step-icon-right icon-orange">📋</div>
+            </div>
+        </div>
+        <h3>Обсуждение и ТЗ</h3>
+        <p class="step-single-text">Рассказываете, что хотите получить, или присылаете ТЗ.</p>
+        <span class="step-sub-note">Сделаем как удобнее вам</span>
+    </div>
+
+    <!-- Шаг 2 -->
+    <div class="als-ribbon-step">
+        <div class="step-meta">
+            <span class="step-num">02</span>
+            <div class="meta-right-column">
+                <span class="step-badge">Разработка и демо</span>
+                <div class="step-icon-right icon-cyan">🖥️</div>
+            </div>
+        </div>
+        <h3>Передача ПО</h3>
+        <p class="step-single-text">Высылаю оферту и демоверсию. При необходимости скорректирую ТЗ.</p>
+        <span class="step-sub-note">И начинаете тестировать 4 недели</span>
+    </div>
+
+    <!-- Шаг 3 -->
+    <div class="als-ribbon-step">
+        <div class="step-meta">
+            <span class="step-num">03</span>
+            <div class="meta-right-column">
+                <span class="step-badge">Расчет</span>
+                <div class="step-icon-right icon-mint">🤝</div>
+            </div>
+        </div>
+        <h3>Оплата</h3>
+        <p class="step-single-text">По факту испытаний согласно договор-счету.</p>
+        <span class="step-sub-note">Инженерная поддержка при ПНР</span>
+    </div>
+
+    <!-- Шаг 4 -->
+    <div class="als-ribbon-step">
+        <div class="step-meta">
+            <span class="step-num">04</span>
+            <div class="meta-right-column">
+                <span class="step-badge">Финиш</span>
+                <div class="step-icon-right icon-cyan">🚀</div>
+            </div>
+        </div>
+        <h3>Полный запуск</h3>
+        <p class="step-single-text">После оплаты высылаю полную версию без ограничений, а также инструкции и документацию.</p>
+        <span class="step-sub-note">Система готова к бесперебойной работе</span>
+    </div>
+</div>
+
+<script src="../../assets/js/block.js"></script>
+</body>
+</html>
