@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разработка SCADA — ИП Фролов Р.А.</title>
+    <meta name="description" content="Создание эргономичных интерфейсов оператора HMI/SCADA, трендов, архивации и систем аварийных сообщений.">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg?v=2">
+    <link rel="stylesheet" href="../../assets/base.css">
+    <style>
+        body { padding: 2px; }
+        .service-card { border-top: 3px solid var(--accent-green); }
+        .service-card:hover h3 { color: var(--accent-green); }
+    </style>
+</head>
+<body data-block="scada">
+
+<div class="service-card">
+    <div class="svg-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="100%" height="100%">
+          <style>
+            :root { --hvac-bg:#060913; --hvac-panel-bg:#020617; --hvac-stroke:#334155; --hvac-red:#ef4444; --hvac-blue:#00d2ff; --hvac-green:#10b981; --hvac-purple:#a855f7; --hvac-gray:#64748b; }
+            .js-filter-in { transition: transform 0.5s ease; transform-origin: left; transform-box: fill-box; }
+            .js-filter-out { transition: transform 0.5s ease; transform-origin: right; transform-box: fill-box; }
+            .js-damper-blade { transition: transform 0.6s ease; transform-origin: center; transform-box: fill-box; }
+          </style>
+
+          <rect width="400" height="220" fill="var(--hvac-bg)" opacity="0.4"/>
+          <text x="15" y="16" fill="var(--hvac-gray)" font-family="monospace" font-size="10" font-weight="bold">HVAC_SCADA // LIVE_TREND_MONITOR</text>
+          <title>SCADA-интерфейс: 4-ступенчатая приточная система</title>
+
+          <rect x="15" y="25" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
+
+          <!-- Фильтр вытяжки -->
+          <g transform="translate(345, 25)">
+            <rect width="25" height="45" rx="6" fill="rgba(239, 68, 68, 0.08)" stroke="var(--hvac-red)"/>
+            <g class="js-filter-out">
+              <polygon points="3,11 22,5 22,17" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+              <polygon points="3,22.5 22,16.5 22,28.5" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+              <polygon points="3,34 22,28 22,40" fill="var(--hvac-red)" stroke="var(--hvac-red)" stroke-width="1" stroke-linejoin="round"/>
+            </g>
+          </g>
+
+          <!-- Вытяжной вентилятор -->
+          <g transform="translate(285, 25)">
+            <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="var(--hvac-purple)" stroke-width="1.8"/>
+            <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="var(--hvac-purple)" stroke-width="1" stroke-dasharray="2,2"/>
+            <g transform="translate(22.5, 22.5)">
+              <g>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
+                <animateTransform id="js-fan-anim1" attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="2s" repeatCount="indefinite"/>
+              </g>
+              <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
+            </g>
+          </g>
+
+          <!-- Жалюзи вытяжки -->
+          <g transform="translate(30, 25)">
+            <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
+            <line class="js-damper-blade" x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)"/>
+            <line class="js-damper-blade" x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)"/>
+            <line class="js-damper-blade" x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)"/>
+            <line class="js-damper-blade" x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)"/>
+          </g>
+
+          <!-- НИЖНИЙ КАНАЛ: ПРИТОК -->
+          <rect x="15" y="75" width="370" height="45" rx="4" fill="var(--hvac-panel-bg)" stroke="var(--hvac-stroke)" stroke-width="1.5"/>
+
+          <g transform="translate(30, 75)">
+            <rect width="18" height="45" rx="5" fill="rgba(100, 116, 139, 0.05)" stroke="var(--hvac-gray)" stroke-width="1.8"/>
+            <line class="js-damper-blade" x1="3" y1="9" x2="15" y2="9" stroke="var(--hvac-gray)"/>
+            <line class="js-damper-blade" x1="3" y1="18" x2="15" y2="18" stroke="var(--hvac-gray)"/>
+            <line class="js-damper-blade" x1="3" y1="27" x2="15" y2="27" stroke="var(--hvac-gray)"/>
+            <line class="js-damper-blade" x1="3" y1="36" x2="15" y2="36" stroke="var(--hvac-gray)"/>
+          </g>
+
+          <!-- Фильтр притока -->
+          <g transform="translate(60, 75)">
+            <rect width="25" height="45" rx="6" fill="rgba(16, 185, 129, 0.08)" stroke="var(--hvac-green)"/>
+            <g class="js-filter-in">
+              <polygon points="22,11 3,5 3,17" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
+              <polygon points="22,22.5 3,16.5 3,28.5" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
+              <polygon points="22,34 3,28 3,40" fill="var(--hvac-green)" stroke="var(--hvac-green)" stroke-width="1" stroke-linejoin="round"/>
+            </g>
+          </g>
+
+          <!-- Калорифер преднагрева -->
+          <g transform="translate(130, 75)">
+            <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
+            <path d="M 15 5 L 8.5 18 L 13.5 18 L 10 31 L 17.5 15 L 12.5 15 Z" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+            <path d="M 10 37 L 16 37 M 13 34 L 13 40" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+
+          <!-- Фреоновый охладитель -->
+          <g transform="translate(160, 75)">
+            <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
+            <path d="M 15 5 L 8.5 18 L 13.5 18 L 10 31 L 17.5 15 L 12.5 15 Z" fill="none" stroke="var(--hvac-blue)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+            <line x1="10" y1="37" x2="16" y2="37" stroke="var(--hvac-blue)" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+
+          <!-- Секция увлажнения -->
+          <g transform="translate(190, 75)">
+            <rect width="25" height="45" rx="6" fill="rgba(0, 210, 255, 0.05)" stroke="var(--hvac-blue)" stroke-width="1.8"/>
+            <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--hvac-blue)"/>
+            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--hvac-blue)" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
+            <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-blue)" stroke-width="0.8"/>
+            <polygon points="15,62 23,58 23,66" fill="var(--hvac-blue)"/>
+            <polygon points="23,62 15,58 15,66" fill="var(--hvac-blue)"/>
+          </g>
+
+          <!-- Водяной догрев -->
+          <g transform="translate(220, 75)">
+            <rect width="25" height="45" rx="6" fill="rgba(245, 158, 11, 0.05)" stroke="var(--accent-orange)" stroke-width="1.8"/>
+            <path d="M 12.5 7 C 12.5 7 6 15 6 19 C 6 22.5 9 25 12.5 25 C 16 25 19 22.5 19 19 C 19 15 12.5 7 12.5 7 Z" fill="var(--accent-orange)"/>
+            <line x1="9" y1="35" x2="17" y2="35" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="13" y1="31" x2="13" y2="39" stroke="var(--accent-orange)" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M 6 45 L 6 62 L 19 62 L 19 45" fill="none" stroke="var(--hvac-stroke)" stroke-width="1.2"/>
+            <circle cx="6" cy="54" r="3" fill="var(--hvac-panel-bg)" stroke="var(--hvac-green)" stroke-width="0.8"/>
+            <polygon points="15,62 23,58 23,66" fill="var(--accent-orange)"/>
+            <polygon points="23,62 15,58 15,66" fill="var(--accent-orange)"/>
+          </g>
+
+          <!-- Приточный вентилятор -->
+          <g transform="translate(285, 75)">
+            <rect width="45" height="45" rx="6" fill="rgba(168, 85, 247, 0.06)" stroke="var(--hvac-purple)" stroke-width="1.8"/>
+            <circle cx="22.5" cy="22.5" r="16" fill="none" stroke="var(--hvac-purple)" stroke-width="1" stroke-dasharray="2,2"/>
+            <g transform="translate(22.5, 22.5)">
+              <g>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(60)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(120)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(180)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(240)"/>
+                <line x1="0" y1="0" x2="0" y2="-13" stroke="var(--hvac-purple)" stroke-width="6" stroke-linecap="round" transform="rotate(300)"/>
+                <animateTransform id="js-fan-anim2" attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="1.6s" repeatCount="indefinite"/>
+              </g>
+              <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
+            </g>
+          </g>
+
+          <!-- Тренды -->
+          <g transform="translate(15, 153)">
+            <rect width="250" height="34" fill="#020617" stroke="#1e293b" stroke-width="1"/>
+            <line x1="0" y1="9" x2="250" y2="9" stroke="#0f172a" stroke-width="0.8"/>
+            <line x1="0" y1="17" x2="250" y2="17" stroke="#0f172a" stroke-width="0.8"/>
+            <line x1="0" y1="25" x2="250" y2="25" stroke="#0f172a" stroke-width="0.8"/>
+            <path id="js-trend-sup" d="M 0 17 L 50 15 L 100 22 L 150 12 L 200 18 L 250 14" fill="none" stroke="var(--hvac-green)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path id="js-trend-ext" d="M 0 25 L 60 28 L 120 23 L 180 27 L 250 24" fill="none" stroke="var(--hvac-blue)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path id="js-trend-room" d="M 0 9 L 70 11 L 140 8 L 210 10 L 250 9" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+
+          <!-- Телеметрия -->
+          <g transform="translate(275, 153)">
+            <rect width="110" height="34" rx="4" fill="#020617" stroke="#1e293b" stroke-width="1"/>
+            <text id="js-hvac-tout" x="6" y="11" fill="var(--hvac-green)" font-family="monospace" font-size="9" font-weight="bold">T_sup:21.4°C</text>
+            <text id="js-hvac-text" x="6" y="21" fill="var(--hvac-blue)" font-family="monospace" font-size="9" font-weight="bold">T_ext:-10.0C</text>
+            <text id="js-hvac-troom" x="6" y="30" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold">T_rm:22.0°C</text>
+          </g>
+
+          <!-- Кнопки управления -->
+          <g id="js-btn-start" style="cursor: pointer;">
+            <rect x="15" y="195" width="55" height="18" rx="4" fill="rgba(16, 185, 129, 0.1)" stroke="var(--hvac-green)" stroke-width="1"/>
+            <text x="42.5" y="207" fill="var(--hvac-green)" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">START</text>
+          </g>
+          <g id="js-btn-stop" style="cursor: pointer;">
+            <rect x="80" y="195" width="55" height="18" rx="4" fill="rgba(239, 64, 64, 0.1)" stroke="var(--hvac-red)" stroke-width="1"/>
+            <text x="107.5" y="207" fill="var(--hvac-red)" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">STOP</text>
+          </g>
+
+          <!-- Ползунок уставки -->
+          <g transform="translate(150, 195)">
+            <text x="0" y="12" fill="var(--hvac-gray)" font-family="monospace" font-size="8" font-weight="bold">SP:</text>
+            <foreignObject x="18" y="0" width="180" height="18">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: center; width: 100%; height: 100%;">
+                <input type="range" id="js-hvac-slider" min="15" max="30" step="0.1" value="21.4" style="width: 100%; accent-color: var(--hvac-green); cursor: pointer; margin: 0; background: #020617; border: 1px solid #1e293b; border-radius: 4px; height: 5px; outline: none;">
+              </div>
+            </foreignObject>
+            <text id="js-sp-val" x="235" y="12" fill="var(--hvac-green)" font-family="monospace" font-size="8" font-weight="bold" text-anchor="end">21.4°C</text>
+          </g>
+        </svg>
+    </div>
+
+    <h3>Разработка SCADA</h3>
+    <p style="min-height: 66px;">Создание интуитивно понятных, информативных и эргономичных интерфейсов оператора (HMI/SCADA). Качественная настройка исторических трендов, архивации и интеллектуальных систем аварийных сообщений.</p>
+
+    <div class="card-gallery">
+        <button class="gallery-thumb" data-title="SCADA"><img src="img/4d.jpg" alt="SCADA" loading="lazy"></button>
+        <button class="gallery-thumb" data-title="HMI"><img src="img/zhmi.jpg" alt="HMI" loading="lazy"></button>
+        <button class="gallery-thumb" data-title="HMI"><img src="img/sehmi.jpg" alt="HMI" loading="lazy"></button>
+    </div>
+</div>
+
+<script src="../../assets/js/block.js"></script>
+<script src="../../assets/js/gallery.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Симуляция ПВУ вентиляции + тренды (полностью автономная)
+    const hvacTout = document.getElementById("js-hvac-tout");
+    const hvacText = document.getElementById("js-hvac-text");
+    const hvacTrm = document.getElementById("js-hvac-troom");
+    const trendSupPath = document.getElementById("js-trend-sup");
+    const trendExtPath = document.getElementById("js-trend-ext");
+    const trendRoomPath = document.getElementById("js-trend-room");
+
+    let t_ext = -10.0, t_room = 22.0;
+    const maxPoints = 25;
+    const historySup = [], historyExt = [], historyRoom = [];
+
+    function buildSvgPath(historyArray, minVal, maxVal, heightPx, widthPx) {
+        if (historyArray.length === 0) return "M 0 0";
+        const stepX = widthPx / (maxPoints - 1);
+        return historyArray.map((val, index) => {
+            const x = index * stepX;
+            let pct = (val - minVal) / (maxVal - minVal);
+            if (pct < 0) pct = 0; if (pct > 1) pct = 1;
+            const y = heightPx - (pct * (heightPx - 6)) - 3;
+            return `${index === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
+        }).join(' ');
+    }
+
+    setInterval(() => {
+        t_ext += (Math.random() - 0.5) * 3.5;
+        t_room += (Math.random() - 0.5) * 1.5;
+        if (t_ext < -16) t_ext = -16; if (t_ext > -4) t_ext = -4;
+        if (t_room < 18) t_room = 18; if (t_room > 26) t_room = 26;
+        let t_supply = t_ext + 0.82 * (t_room - t_ext);
+
+        if (hvacTout) hvacTout.textContent = `T_sup:${t_supply.toFixed(1)}°C`;
+        if (hvacText) hvacText.textContent = `T_ext:${t_ext.toFixed(1)}°C`;
+        if (hvacTrm) hvacTrm.textContent = `T_rm:${t_room.toFixed(1)}°C`;
+
+        historySup.push(t_supply); historyExt.push(t_ext); historyRoom.push(t_room);
+        if (historySup.length > maxPoints) historySup.shift();
+        if (historyExt.length > maxPoints) historyExt.shift();
+        if (historyRoom.length > maxPoints) historyRoom.shift();
+
+        if (trendSupPath) trendSupPath.setAttribute("d", buildSvgPath(historySup, -5, 25, 34, 250));
+        if (trendExtPath) trendExtPath.setAttribute("d", buildSvgPath(historyExt, -17, 10, 34, 250));
+        if (trendRoomPath) trendRoomPath.setAttribute("d", buildSvgPath(historyRoom, 10, 27, 34, 250));
+    }, 1100);
+
+    // START / STOP + ползунок уставки
+    const anim1 = document.getElementById("js-fan-anim1");
+    const anim2 = document.getElementById("js-fan-anim2");
+    const filters = document.querySelectorAll(".js-filter-in, .js-filter-out");
+    const dampers = document.querySelectorAll(".js-damper-blade");
+    const btnStop = document.getElementById("js-btn-stop");
+    const btnStart = document.getElementById("js-btn-start");
+
+    if (btnStop) btnStop.addEventListener("click", () => {
+        if (anim1) anim1.setAttribute("dur", "0s");
+        if (anim2) anim2.setAttribute("dur", "0s");
+        filters.forEach(f => f.style.transform = "scaleX(0.15)");
+        dampers.forEach(d => d.style.transform = "rotate(90deg)");
+    });
+    if (btnStart) btnStart.addEventListener("click", () => {
+        if (anim1) anim1.setAttribute("dur", "2s");
+        if (anim2) anim2.setAttribute("dur", "1.6s");
+        filters.forEach(f => f.style.transform = "scaleX(1)");
+        dampers.forEach(d => d.style.transform = "rotate(0deg)");
+    });
+
+    const hvacSlider = document.getElementById("js-hvac-slider");
+    const spVal = document.getElementById("js-sp-val");
+    const txtSup = document.getElementById("js-hvac-tout");
+    if (hvacSlider && spVal && txtSup) {
+        hvacSlider.addEventListener("input", (e) => {
+            const currentVal = parseFloat(e.target.value).toFixed(1);
+            spVal.textContent = `${currentVal}°C`;
+            txtSup.textContent = `T_sup:${currentVal}°C`;
+        });
+    }
+});
+</script>
+</body>
+</html>

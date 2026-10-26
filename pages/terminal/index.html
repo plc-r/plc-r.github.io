@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Терминал опроса — ИП Фролов Р.А.</title>
+    <meta name="description" content="Демонстрация живого журнала опроса промышленных протоколов: Modbus RTU, M-Bus, CAN, PLC.">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg?v=2">
+    <link rel="stylesheet" href="../../assets/base.css">
+    <style>
+        body { padding: 2px; }
+
+        .term {
+            background: #020617;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            box-shadow: 0 14px 40px -18px rgba(0,0,0,.85);
+        }
+
+        /* ---- Строка заголовка терминала ---- */
+        .term-head {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 12px; flex-wrap: wrap;
+            padding: 12px 18px;
+            border-bottom: 1px solid #1e293b;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.55), rgba(2, 6, 23, 0));
+        }
+        .term-head-left { display: flex; align-items: center; gap: 6px; }
+        .term-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+        .term-dot.r { background: var(--accent-red); }
+        .term-dot.o { background: var(--accent-orange); }
+        .term-dot.g { background: var(--accent-green); }
+        .term-title {
+            color: var(--text-soft);
+            font-family: var(--font-mono);
+            font-size: 11.5px; font-weight: bold; margin-left: 8px;
+            letter-spacing: .5px;
+        }
+        .term-live {
+            color: var(--accent-green);
+            font-family: var(--font-mono); font-size: 11px;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .term-live::before {
+            content: ''; width: 7px; height: 7px; border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 10px rgba(16,185,129,.9);
+            animation: live-blink 1.6s ease-in-out infinite;
+        }
+        @keyframes live-blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+        /* ---- Панель фильтров протоколов ---- */
+        .term-filters {
+            display: flex; gap: 8px; flex-wrap: wrap;
+            padding: 10px 18px 0 18px;
+        }
+        .term-chip {
+            font-family: var(--font-mono);
+            font-size: 10.5px; font-weight: 600; letter-spacing: .5px;
+            color: var(--text-muted);
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 4px 12px;
+            cursor: pointer; user-select: none;
+            transition: all .2s ease;
+        }
+        .term-chip:hover { color: var(--text-main); border-color: #334155; }
+        .term-chip.on { color: var(--accent-blue); border-color: rgba(0,210,255,.45); background: rgba(0,210,255,.07); }
+        .term-chip .cnt { opacity: .55; margin-left: 4px; }
+
+        /* ---- Окно логов ---- */
+        .term-screen {
+            position: relative;
+            padding: 12px 18px 10px 18px;
+        }
+        /* Легкие CRT-полосы — деликатно */
+        .term-screen::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);
+        }
+        #js-console-log {
+            height: 190px; overflow-y: auto;
+            font-family: var(--font-mono);
+            font-size: 11.5px; line-height: 1.75;
+            color: #94a3b8; padding-right: 6px;
+        }
+        #js-console-log .lg-time { color: #475569; }
+        #js-console-log .lg-tag { font-weight: bold; }
+
+        /* Мигающий курсор */
+        .term-cursor-line {
+            font-family: var(--font-mono); font-size: 11.5px;
+            color: var(--accent-blue);
+            padding: 2px 18px 12px 18px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .term-cursor-line .prompt { color: var(--accent-green); font-weight: bold; }
+        .cursor {
+            display: inline-block; width: 8px; height: 14px;
+            background: var(--accent-blue);
+            animation: cursor-blink 1.05s steps(1) infinite;
+            box-shadow: 0 0 8px rgba(0,210,255,.7);
+        }
+        @keyframes cursor-blink { 0%,55% { opacity: 1; } 56%,100% { opacity: 0; } }
+
+        @media (max-width: 640px) {
+            #js-console-log { height: 150px; }
+            .term-title { display: none; }
+        }
+    </style>
+</head>
+<body data-block="terminal">
+
+<div class="term">
+    <div class="term-head">
+        <div class="term-head-left">
+            <span class="term-dot r"></span><span class="term-dot o"></span><span class="term-dot g"></span>
+            <span class="term-title">SYS_LOGGER // TERM_O1 — ОПРОС ОБОРУДОВАНИЯ</span>
+        </div>
+        <span class="term-live">LIVE</span>
+    </div>
+
+    <div class="term-filters" id="js-term-filters">
+        <span class="term-chip on" data-type="modbus">MODBUS RTU<span class="cnt"></span></span>
+        <span class="term-chip on" data-type="mbus">M-BUS<span class="cnt"></span></span>
+        <span class="term-chip on" data-type="plc">PLC<span class="cnt"></span></span>
+        <span class="term-chip on" data-type="hvac">HVAC / BMS<span class="cnt"></span></span>
+        <span class="term-chip on" data-type="can">CAN<span class="cnt"></span></span>
+    </div>
+
+    <div class="term-screen">
+        <div id="js-console-log">
+            <div><span class="lg-time">[--:--:--]</span> <span class="lg-tag" style="color: var(--accent-blue);">[SYSTEM]</span> Initializing industrial protocol gateway GW-100...</div>
+            <div><span class="lg-time">[--:--:--]</span> <span class="lg-tag" style="color: var(--accent-green);">[MODBUS]</span> Port COM1 opened successfully. Baudrate 115200.</div>
+        </div>
+    </div>
+
+    <div class="term-cursor-line"><span class="prompt">gw-100:~$</span> polling all slaves <span class="cursor"></span></div>
+</div>
+
+<script src="../../assets/js/block.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const consoleLog = document.getElementById("js-console-log");
+
+    // Локальные переменные техпроцесса (терминал полностью автономен)
+    let intValue = 0, frequency = 50.0, gcal = 142.7, t_ext = -10.0, t_room = 22.0;
+
+    setInterval(() => {
+        intValue = Math.floor(Math.random() * 1024);
+        frequency += (Math.random() - 0.5) * 0.4;
+        gcal += 0.01;
+        t_ext += (Math.random() - 0.5) * 1.2;
+        t_room += (Math.random() - 0.5) * 0.8;
+        if (frequency < 45) frequency = 45; if (frequency > 52) frequency = 52;
+        if (t_ext < -16) t_ext = -16; if (t_ext > -4) t_ext = -4;
+        if (t_room < 18) t_room = 18; if (t_room > 26) t_room = 26;
+    }, 1100);
+
+    const t_supply = () => (t_ext + 0.82 * (t_room - t_ext));
+
+    const logTemplates = [
+        { type: 'modbus', tag: '[MODBUS RTU]', color: 'var(--accent-orange)', text: () => `Tx: [01 03 00 20 00 02 C5 41] // Rx: Ok, Freq=${frequency.toFixed(1)}Hz` },
+        { type: 'mbus',   tag: '[M-BUS]',      color: 'var(--accent-green)',  text: () => `Requesting Heat Meter SL01... Answer: ${gcal.toFixed(3)} Gcal` },
+        { type: 'plc',    tag: '[PLC_CPU]',    color: 'var(--accent-blue)',   text: () => `Unpacked INT=${intValue} to binary string: ${intValue.toString(2).padStart(10, '0')}` },
+        { type: 'hvac',   tag: '[BMS_HVAC]',   color: '#a855f7',              text: () => `Live trends updated. T_sup=${t_supply().toFixed(1)}°C. History buffer pool OK.` },
+        { type: 'can',    tag: '[CAN_BUS]',    color: '#eab308',              text: () => `Broadcast heartbeat ID=0x10A length=8 [00 FF 22 00 00 11 AA BB]` }
+    ];
+
+    // Счётчики сообщений для чипов-фильтров
+    const counters = { modbus: 0, mbus: 0, plc: 0, hvac: 0, can: 0 };
+    const activeTypes = new Set(Object.keys(counters));
+
+    // Фильтр по протоколам
+    document.querySelectorAll('#js-term-filters .term-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            const t = chip.dataset.type;
+            if (activeTypes.has(t)) { activeTypes.delete(t); chip.classList.remove('on'); }
+            else { activeTypes.add(t); chip.classList.add('on'); }
+            consoleLog.querySelectorAll('.lg-line').forEach(line => {
+                line.style.display = activeTypes.has(line.dataset.type) ? '' : 'none';
+            });
+        });
+    });
+
+    // Автоскролл останавливается, пока курсор над логом (можно спокойно читать/копировать)
+    let hoverPause = false;
+    consoleLog.addEventListener('mouseenter', () => hoverPause = true);
+    consoleLog.addEventListener('mouseleave', () => hoverPause = false);
+
+    setInterval(() => {
+        if (!consoleLog) return;
+        const item = logTemplates[Math.floor(Math.random() * logTemplates.length)];
+        counters[item.type]++;
+        const timeStr = new Date().toLocaleTimeString();
+
+        const line = document.createElement("div");
+        line.className = 'lg-line';
+        line.dataset.type = item.type;
+        line.style.marginBottom = "3px";
+        line.style.display = activeTypes.has(item.type) ? '' : 'none';
+
+        const time = document.createElement("span");
+        time.className = 'lg-time'; time.textContent = `[${timeStr}] `;
+        const tag = document.createElement("span");
+        tag.className = 'lg-tag'; tag.style.color = item.color; tag.textContent = item.tag;
+        const msg = document.createElement("span");
+        msg.textContent = ' ' + item.text();
+
+        line.appendChild(time); line.appendChild(tag); line.appendChild(msg);
+        consoleLog.appendChild(line);
+        if (consoleLog.children.length > 40) consoleLog.removeChild(consoleLog.firstChild);
+        if (!hoverPause) consoleLog.scrollTop = consoleLog.scrollHeight;
+
+        const chip = document.querySelector(`#js-term-filters .term-chip[data-type="${item.type}"] .cnt`);
+        if (chip) chip.textContent = counters[item.type];
+    }, 1000);
+});
+</script>
+</body>
+</html>

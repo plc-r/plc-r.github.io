@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разработка ПО для ПЛК и SCADA | ИП Фролов Р.А.</title>
+    <meta property="og:title" content="Инженерные решения для автоматизации" />
+    <meta property="og:description" content="Профессиональная разработка и адаптация программного обеспечения для промышленного оборудования и диспетчеризации" />
+    <meta property="og:type" content="website" />
+    <meta name="description" content="Разработка ПО для ПЛК и SCADA-систем: Siemens, ОВЕН, Schneider Electric. Диспетчеризация, шлюзы Modbus, M-Bus, настройка HMI-интерфейсов." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+
+    <!--
+        СТРУКТУРА САЙТА (каждый блок — самодостаточная папка):
+          pages/plc/        — карточка «Программирование ПЛК» (+ img/ со своими скриншотами)
+          pages/scada/      — карточка «Разработка SCADA»   (+ img/)
+          pages/modern/     — карточка «Адаптация и модернизация» (+ img/)
+          pages/pricing/    — «Понятная стоимость»
+          pages/contact/    — CTA «Нужен надежный софт?»
+          pages/workflow/   — «Этапы работы»
+          pages/terminal/   — «Терминал опроса с логом»
+        Картинки блока лежат рядом с ним в pages/<блок>/img/.
+        Скрипты блока — инлайн в его index.html; общие для всех блоков
+        block.js / gallery.js и стили base.css — в assets/.
+        Блоки вставляются через <iframe> и автоматически подстраивают
+        высоту (assets/js/block.js).
+    -->
+    <style>
+        :root {
+            --bg-color: #060913;
+            --card-bg: #0d1527;
+            --accent-blue: #00d2ff;
+            --accent-cyan: #00e5ff;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #64748b;
+            --text-soft: #94a3b8;
+            --border-color: #1e293b;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 78px; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(rgba(0, 210, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 210, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ---------- Амбиентная подсветка фона (деликатная, в hero) ---------- */
+        .ambient {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+        }
+        .ambient span {
+            position: absolute; border-radius: 50%; filter: blur(90px);
+            opacity: .08; will-change: transform;
+        }
+        .ambient .a1 { width: 480px; height: 480px; background: #00d2ff; top: -180px; left: -120px; animation: drift1 46s ease-in-out infinite alternate; }
+        .ambient .a2 { width: 420px; height: 420px; background: #10b981; bottom: -200px; right: -140px; animation: drift2 58s ease-in-out infinite alternate; }
+        .ambient .a3 { width: 380px; height: 380px; background: #a855f7; bottom: -220px; left: 18%; opacity: .06; animation: drift1 64s ease-in-out infinite alternate-reverse; }
+        @keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(90px, 60px); } }
+        @keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-70px, -50px); } }
+
+        .page { position: relative; z-index: 1; }
+
+        /* ---------- Липкая навигация (стекло) ---------- */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            height: 60px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; padding: 0 22px;
+            background: rgba(6, 9, 19, 0.72);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(30, 41, 59, 0.7);
+        }
+        .nav-brand {
+            display: flex; align-items: center; gap: 10px;
+            text-decoration: none; color: var(--text-main);
+            font-weight: 700; font-size: 15px; letter-spacing: -.2px;
+            white-space: nowrap;
+        }
+        .nav-brand svg { display: block; }
+        .nav-brand .sub { color: var(--text-muted); font-weight: 500; font-size: 13px; }
+        .nav-links { display: flex; align-items: center; gap: 4px; }
+        .nav-links a {
+            color: var(--text-soft); text-decoration: none;
+            font-size: 13.5px; font-weight: 500;
+            padding: 7px 12px; border-radius: 8px;
+            transition: color .2s ease, background .2s ease;
+            white-space: nowrap;
+        }
+        .nav-links a:hover { color: var(--accent-blue); background: rgba(0, 210, 255, 0.06); }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--accent-blue), #0090ff);
+            color: #001018 !important;
+            font-weight: 700 !important;
+            border-radius: 9px !important;
+            padding: 8px 18px !important;
+            box-shadow: 0 3px 16px rgba(0, 210, 255, 0.3);
+            transition: transform .2s ease, box-shadow .2s ease !important;
+        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,210,255,.45); background: rgba(0,210,255,.9) !important; color: #001018 !important; }
+        @media (max-width: 860px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+        /* ---------- Hero ---------- */
+        header.hero {
+            position: relative;
+            padding: 128px 20px 44px 20px;
+            text-align: center;
+            overflow: hidden;
+        }
+        /* Мягкое свечение под заголовком */
+        .hero::before {
+            content: ''; position: absolute; left: 50%; top: 30px;
+            width: 720px; max-width: 95vw; height: 300px;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, rgba(0, 210, 255, 0.09), transparent 65%);
+            pointer-events: none;
+        }
+        .badge {
+            background-color: rgba(0, 210, 255, 0.08);
+            color: var(--accent-blue);
+            padding: 6px 18px; border-radius: 20px;
+            font-size: 13px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            display: inline-flex; align-items: center; gap: 8px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            box-shadow: inset 0 0 8px rgba(0, 210, 255, 0.1);
+        }
+        .badge .pulse {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 10px rgba(16, 185, 129, .9);
+            animation: badge-pulse 2.4s ease-in-out infinite;
+        }
+        @keyframes badge-pulse {
+            0%, 100% { box-shadow: 0 0 4px rgba(16,185,129,.6); }
+            50%      { box-shadow: 0 0 14px rgba(16,185,129,1); }
+        }
+
+        h1 {
+            font-size: clamp(26px, 4.6vw, 40px);
+            margin: 0 0 12px 0;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(120deg, #ffffff 35%, var(--accent-blue) 65%, #7dd3fc 80%, #ffffff 100%);
+            background-size: 220% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: h1-shimmer 9s ease-in-out infinite alternate;
+        }
+        @keyframes h1-shimmer { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 15.5px;
+            max-width: 650px;
+            margin: 0 auto 22px auto;
+        }
+
+        /* Чипы технологий */
+        .tech-chips {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 8px; max-width: 760px; margin: 0 auto;
+        }
+        .tech-chips span {
+            font-family: var(--font-mono);
+            font-size: 11px; font-weight: 600; letter-spacing: .6px;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            background: rgba(13, 21, 39, 0.55);
+            padding: 5px 12px; border-radius: 20px;
+            transition: color .25s ease, border-color .25s ease, transform .25s ease;
+            cursor: default;
+        }
+        .tech-chips span:hover {
+            color: var(--accent-blue);
+            border-color: rgba(0, 210, 255, .4);
+            transform: translateY(-2px);
+        }
+
+        .scroll-cue {
+            display: inline-flex; flex-direction: column; align-items: center; gap: 2px;
+            margin-top: 30px; color: var(--text-muted);
+            text-decoration: none; font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color .25s ease;
+        }
+        .scroll-cue:hover { color: var(--accent-blue); }
+        .scroll-cue svg { animation: cue-bounce 2.2s ease-in-out infinite; }
+        @keyframes cue-bounce { 0%,100% { transform: translateY(0); opacity:.7; } 50% { transform: translateY(6px); opacity:1; } }
+
+        /* ---------- Контейнер и секции ---------- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+
+        .section { margin-top: 46px; }
+        .section-head { display: flex; align-items: baseline; gap: 14px; margin: 0 2px 18px 2px; }
+        .section-kicker {
+            font-family: var(--font-mono);
+            font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+            color: var(--accent-blue); white-space: nowrap;
+        }
+        .section-head h2 {
+            font-size: 20px; font-weight: 650; color: #fff; letter-spacing: -.3px;
+        }
+        .section-head::after {
+            content: ''; flex: 1; height: 1px; align-self: center;
+            background: linear-gradient(90deg, rgba(0,210,255,.25), transparent 80%);
+        }
+
+        /* ---------- Сетка iframe-блоков ---------- */
+        .block-iframe {
+            display: block; width: 100%;
+            border: none; background: transparent;
+            color-scheme: dark;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .duo-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+        .duo-grid > iframe { flex: 1; min-width: 320px; }
+
+        footer {
+            text-align: center; padding: 46px 20px 42px 20px;
+            color: var(--text-muted); font-size: 14px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 70px;
+            position: relative; z-index: 1;
+        }
+        footer .foot-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 18px; margin-bottom: 14px; }
+        footer .foot-nav a { color: var(--text-soft); text-decoration: none; font-size: 13px; transition: color .2s ease; }
+        footer .foot-nav a:hover { color: var(--accent-blue); }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            h1, .badge .pulse, .scroll-cue svg, .ambient span { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Навигация -->
+<nav class="nav">
+    <a class="nav-brand" href="#top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="5" y="5" width="14" height="14" rx="2.5" stroke="#00d2ff" stroke-width="1.8"/>
+            <rect x="9.2" y="9.2" width="5.6" height="5.6" rx="1" fill="#00d2ff"/>
+            <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="#00d2ff" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        Фролов Р.А. <span class="sub">· АСУ ТП</span>
+    </a>
+    <div class="nav-links">
+        <a href="#services">Услуги</a>
+        <a href="#pricing">Стоимость</a>
+        <a href="#workflow">Этапы</a>
+        <a href="#terminal">Терминал</a>
+        <a href="https://max.ru/u/f9LHodD0cOLeS2-JO2himf5QTSC2o-nzjBdjfhF7tbSGjMuS_N56za1CAN4" target="_blank" rel="noopener" class="nav-cta">Написать</a>
+    </div>
+</nav>
+
+<div class="page" id="top">
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="ambient" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+        <div class="badge"><span class="pulse"></span> Услуги для АСУ ТП</div>
+        <h1>Инженерные решения для автоматизации</h1>
+        <p class="subtitle">Профессиональная разработка и адаптация программного обеспечения для промышленного оборудования и диспетчеризации.</p>
+        <div class="tech-chips" aria-label="Технологии">
+            <span>SIEMENS</span><span>ОВЕН</span><span>SCHNEIDER ELECTRIC</span>
+            <span>MODBUS RTU</span><span>M-BUS</span><span>CAN</span>
+            <span>SCADA / HMI</span><span>VNC</span>
+        </div>
+        <a class="scroll-cue" href="#services">
+            смотреть возможности
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. УСЛУГИ -->
+        <section class="section" id="services">
+            <div class="section-head reveal">
+                <span class="section-kicker">// 01 · УСЛУГИ</span>
+                <h2>Что я делаю</h2>
+            </div>
+            <div class="services-grid">
+                <iframe class="block-iframe reveal" data-block="plc"     src="pages/plc/index.html"     title="Программирование ПЛК" loading="eager"  height="560"></iframe>
+                <iframe class="block-iframe reveal" data-block="scada"   src="pages/scada/index.html"   title="Разработка SCADA"     loading="eager"  height="560"></iframe>
+                <iframe class="block-iframe reveal" data-block="modern"  src="pages/modern/index.html"  title="Адаптация и модернизация" loading="eager" height="560"></iframe>
+            </div>
+        </section>
+
+        <!-- 2. СТОИМОСТЬ + СВЯЗЬ (блок «Понятная стоимость» перенесён выше) -->
+        <section class="section" id="pricing">
+            <div class="section-head reveal">
+                <span class="section-kicker">// 02 · УСЛОВИЯ</span>
+                <h2>Стоимость и связь</h2>
+            </div>
+            <div class="duo-grid">
+                <iframe class="block-iframe reveal" data-block="pricing" src="pages/pricing/index.html" title="Понятная стоимость"        loading="lazy" height="560"></iframe>
+                <iframe class="block-iframe reveal" data-block="contact" src="pages/contact/index.html" title="Связь"                     loading="lazy" height="560"></iframe>
+            </div>
+        </section>
+
+        <!-- 3. ЭТАПЫ РАБОТЫ -->
+        <section class="section" id="workflow">
+            <div class="section-head reveal">
+                <span class="section-kicker">// 03 · ПРОЦЕСС</span>
+                <h2>Как устроена работа</h2>
+            </div>
+            <iframe class="block-iframe reveal" data-block="workflow" src="pages/workflow/index.html" title="Этапы работы" loading="lazy" height="320"></iframe>
+        </section>
+
+        <!-- 4. ЖИВОЙ ТЕРМИНАЛ ОПРОСА (перенесён вниз, к футеру) -->
+        <section class="section" id="terminal">
+            <div class="section-head reveal">
+                <span class="section-kicker">// 04 · ДЕМО</span>
+                <h2>Терминал опроса оборудования</h2>
+            </div>
+            <iframe class="block-iframe reveal" data-block="terminal" src="pages/terminal/index.html" title="Терминал опроса с логом" loading="lazy" height="320"></iframe>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="foot-nav">
+            <a href="#services">Услуги</a>
+            <a href="#pricing">Стоимость</a>
+            <a href="#workflow">Этапы</a>
+            <a href="#terminal">Терминал</a>
+        </div>
+        <p>&copy; 2026 ИП Фролов Р.А. Все права защищены. Разработка систем АСУ ТП.</p>
+    </footer>
+
+</div>
+
+<!-- ================= ЛАЙТБОКС (общий для всех блоков) ================= -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Просмотр примеров">
+    <button class="lightbox-close" id="lb-close" title="Закрыть (Esc)">✕</button>
+    <button class="lightbox-arrow prev" id="lb-prev" title="Предыдущее (←)">‹</button>
+    <button class="lightbox-arrow next" id="lb-next" title="Следующее (→)">›</button>
+    <div class="lightbox-content">
+        <img class="lightbox-img" id="lb-img" src="" alt="">
+        <div class="lightbox-caption" id="lb-caption"></div>
+        <div class="lightbox-counter" id="lb-counter"></div>
+    </div>
+</div>
+
+<style>
+    /* Стили лайтбокса берём из общей темы: дублируем здесь минимально,
+       чтобы главная не тянула весь base.css */
+    .lightbox { position: fixed; inset: 0; z-index: 10000; background: rgba(2,6,23,.93); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease; }
+    .lightbox.open { opacity: 1; visibility: visible; }
+    .lightbox-content { max-width: 94vw; text-align: center; }
+    .lightbox-img { display: block; margin: 0 auto; max-width: 94vw; max-height: 78vh; width: auto; height: auto; border-radius: 12px; border: 1px solid #1e293b; box-shadow: 0 25px 80px rgba(0,0,0,.7); transform: scale(.95); transition: transform .25s ease; }
+    .lightbox.open .lightbox-img { transform: scale(1); }
+    .lightbox-caption { margin-top: 14px; font-size: 15px; font-weight: 600; color: #f3f4f6; }
+    .lightbox-counter { margin-top: 4px; font-family: monospace; font-size: 12px; color: #64748b; }
+    .lightbox-arrow { position: fixed; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; border: 1px solid #1e293b; background: rgba(13,21,39,.85); color: #00d2ff; font-size: 26px; cursor: pointer; z-index: 10001; display: flex; align-items: center; justify-content: center; user-select: none; transition: all .2s ease; }
+    .lightbox-arrow:hover { border-color: #00d2ff; background: rgba(0,210,255,.12); box-shadow: 0 0 20px rgba(0,210,255,.35); }
+    .lightbox-arrow.prev { left: 24px; } .lightbox-arrow.next { right: 24px; }
+    .lightbox-close { position: fixed; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #1e293b; background: rgba(13,21,39,.85); color: #f3f4f6; font-size: 19px; cursor: pointer; z-index: 10001; transition: all .2s ease; }
+    .lightbox-close:hover { color: #ef4444; border-color: #ef4444; box-shadow: 0 0 15px rgba(239,68,68,.35); }
+    @media (max-width: 640px) { .lightbox-arrow { width: 44px; height: 44px; font-size: 22px; } .lightbox-arrow.prev { left: 8px; } .lightbox-arrow.next { right: 8px; } }
+</style>
+
+<script>
+/* ============================================================
+   include.js — логика главной страницы
+   1) Авто-высота iframe-блоков (сообщает сам блок)
+   2) Общий лайтбокс для галерей всех карточек
+   3) Появление секций при скролле
+   ============================================================ */
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* ---------- 1. Высота блоков + выравнивание рядов ----------
+       Блок сообщает натуральную высоту; блоки одного ряда (side-by-side)
+       выравниваются по максимальной, контент растягивается внутри. */
+    const naturals = {};
+    const groups = [
+        ['plc', 'scada', 'modern'],   // ряд услуг
+        ['pricing', 'contact']        // ряд «стоимость + связь»
+    ];
+
+    function iframeById(id) {
+        return document.querySelector(`iframe[data-block="${id}"]`);
+    }
+
+    function applyRowHeights() {
+        groups.forEach(g => {
+            const fs = g.map(iframeById).filter(Boolean);
+            if (!fs.length) return;
+            const tops = fs.map(f => f.getBoundingClientRect().top);
+            const sameRow = tops.every(t => Math.abs(t - tops[0]) < 8);
+            fs.forEach(f => {
+                const nat = naturals[f.dataset.block];
+                const target = sameRow && nat
+                    ? Math.max(...fs.map(x => naturals[x.dataset.block] || 0), nat)
+                    : nat;
+                if (target && target > 40) f.style.height = target + 'px';
+            });
+        });
+    }
+
+    window.addEventListener('message', (e) => {
+        const d = e.data;
+        if (!d || typeof d !== 'object') return;
+
+        if (d.type === 'block-height' && d.id && d.h > 40) {
+            naturals[d.id] = d.h;
+            const f = iframeById(d.id);
+            const inGroup = groups.some(g => g.includes(d.id));
+            if (f && !inGroup) f.style.height = d.h + 'px';   // одиночные блоки
+            requestAnimationFrame(applyRowHeights);           // ряды
+        }
+
+        if (d.type === 'open-lightbox' && Array.isArray(d.items)) {
+            openParentLightbox(d.items, d.index || 0, e.source);
+        }
+    });
+
+    window.addEventListener('resize', () => requestAnimationFrame(applyRowHeights));
+
+    /* ---------- 2. Общий лайтбокс ---------- */
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCaption = document.getElementById('lb-caption');
+    const lbCounter = document.getElementById('lb-counter');
+    const btnPrev = document.getElementById('lb-prev');
+    const btnNext = document.getElementById('lb-next');
+    const btnClose = document.getElementById('lb-close');
+
+    let items = [], index = 0, sourceFrame = null;
+
+    function render() {
+        const it = items[index];
+        lbImg.src = it.src;
+        lbImg.alt = it.alt || '';
+        lbCaption.textContent = it.title || it.alt || '';
+        lbCounter.textContent = (index + 1) + ' / ' + items.length;
+    }
+    function openParentLightbox(arr, i, source) {
+        items = arr; index = i; sourceFrame = source || null;
+        const single = items.length < 2;
+        btnPrev.style.display = single ? 'none' : '';
+        btnNext.style.display = single ? 'none' : '';
+        render();
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        if (sourceFrame) { try { sourceFrame.postMessage({ type: 'lightbox-ack' }, '*'); } catch (e) {} }
+    }
+    function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+    function next() { index = (index + 1) % items.length; render(); }
+    function prev() { index = (index - 1 + items.length) % items.length; render(); }
+
+    btnClose.addEventListener('click', closeLightbox);
+    btnNext.addEventListener('click', next);
+    btnPrev.addEventListener('click', prev);
+    lightbox.addEventListener('click', e => {
+        if (e.target === lightbox || e.target.classList.contains('lightbox-content')) closeLightbox();
+    });
+    document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') next();
+        if (e.key === 'ArrowLeft') prev();
+    });
+    let touchX = 0;
+    lightbox.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+    lightbox.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 50) (dx < 0 ? next() : prev());
+    }, { passive: true });
+
+    /* ---------- 3. Появление при скролле ---------- */
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('visible'), i * 90);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+});
+</script>
+</body>
+</html>
