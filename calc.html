@@ -1,0 +1,134 @@
+<section class="price-section">
+  <div class="price-card">
+    <div class="price-card__top">
+      <span class="price-card__label">ПОНЯТНАЯ СТОИМОСТЬ</span>
+      <span class="price-card__dot" aria-hidden="true"></span>
+    </div>
+
+    <div class="price-card__amount">
+      1 000 <span>₽ / час</span>
+    </div>
+
+    <p class="price-card__description">
+      Работаю прозрачно: заранее обсуждаем задачу, объём и порядок расчёта.
+      Оплата — за фактически затраченное время.
+    </p>
+
+    <div class="price-card__divider"></div>
+
+    <ul class="price-card__services">
+      <li><span>✓</span> Программирование и настройка ПЛК</li>
+      <li><span>✓</span> Разработка и настройка SCADA</li>
+      <li><span>✓</span> Пусконаладка на объекте</li>
+      <li><span>✓</span> Проверка прокладки слаботочных линий</li>
+      <li><span>✓</span> Поиск и устранение ошибок</li>
+    </ul>
+
+    <p class="price-card__note">
+      Выезд на объект и дополнительные расходы согласовываем заранее.
+    </p>
+  </div>
+</section>
+
+<style>
+  .price-section {
+    padding: 40px 20px;
+    color: #f4f7fb;
+    background: #0b1220;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .price-card {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    background: linear-gradient(145deg, #162436, #0f1927);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  }
+
+  .price-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .price-card__label {
+    color: #aab7c8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .price-card__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #75e0b2;
+    box-shadow: 0 0 14px rgba(117, 224, 178, 0.6);
+  }
+
+  .price-card__amount {
+    margin: 22px 0 8px;
+    font-size: clamp(42px, 8vw, 58px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .price-card__amount span {
+    color: #aab7c8;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .price-card__description {
+    color: #aab7c8;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .price-card__divider {
+    height: 1px;
+    margin: 24px 0;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .price-card__services {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .price-card__services li {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .price-card__services li span {
+    margin-right: 8px;
+    color: #75e0b2;
+    font-weight: 700;
+  }
+
+  .price-card__note {
+    margin: 22px 0 0;
+    color: #aab7c8;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 560px) {
+    .price-card {
+      padding: 22px;
+    }
+
+    .price-card__services {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
